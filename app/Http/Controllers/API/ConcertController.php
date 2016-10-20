@@ -6,18 +6,19 @@ use Illuminate\Http\Request;
 use App\Concert;
 use App\Http\Requests;
 use Carbon\Carbon;
+use App\Http\Controllers\API\ApiLogger;
 
 class ConcertController extends Controller
 {
     //
     /**
      * Retrives List of all concerts (paged)
-     *
+     * @param Request
      * @return string
      */
-    public function allConcerts(){
+    public function allConcerts(Request $request){
         $concert = Concert::paginate(env('PAGINATE_DEFAULT'));
-
+        ApiLogger::logInfo($request);
         return $concert->toJson();
     }
 
