@@ -20,12 +20,12 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 Route::get('/test', function(){
-	return view('welcome');
+	echo var_dump(request()->getHttpHost());
 });
 Route::group(['middleware' => 'auth'], function()
 {
     Route::get('dashboard', function() {
-       return view('index');
+       return view('dashboard');
     } );
 
     Route::post('/music-album', 'WEB\MusicAlbumController@Create');
@@ -53,3 +53,10 @@ Route::group(['middleware' => 'auth'], function()
     Route::delete('/photo{id}', 'WEB\PhotoController@Delete');
 
 });
+
+/*
+Route::get('makelink', function(){
+    if (symlink ('/home/horizor0/public_html/kohar/storage/app/images', '/home/horizor0/public_html/kohar/public/images' ))
+        echo 'symlink created';
+});
+*/

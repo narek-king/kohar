@@ -9,9 +9,18 @@
 
                 <div class="panel-body">
                     You are logged in!
+                    @if (count($errors) > 0)
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                 </div>
                 <div class="panel-body">
-                    <form class="form-horizontal" method="post" action="/music-album">
+                    <form class="form-horizontal" method="post" action="/music-album" enctype="multipart/form-data">
                         <fieldset>
 
                             <!-- Form Name -->
@@ -33,6 +42,7 @@
                                     <input id="cover" name="cover" class="input-file" type="file">
                                 </div>
                             </div>
+
                             <!-- Button -->
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="submit">Create</label>

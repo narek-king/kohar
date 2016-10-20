@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Concert;
 use App\Http\Requests;
 use Carbon\Carbon;
+
 use App\Http\Controllers\API\ApiLogger;
 
 class ConcertController extends Controller
