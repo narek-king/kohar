@@ -25,7 +25,7 @@ Route::get('/test', function(){
 Route::group(['middleware' => 'auth'], function()
 {
     Route::get('dashboard', function() {
-       return view('dashboard');
+       return view('index');
     } );
 
     Route::post('/music-album', 'WEB\MusicAlbumController@Create');
