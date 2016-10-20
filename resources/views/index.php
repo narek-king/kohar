@@ -21,7 +21,6 @@
 <body>
 <div class="container">
   <header>
-
       <div class="row">
           <div class="col-md-12">
             <div class="logo">
@@ -29,7 +28,6 @@
             </div>
           </div>
       </div>
-
   </header>
   <div class="k_wrapper">
 
