@@ -20,15 +20,17 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
+
 Route::get('/test', function(){
 	echo var_dump(request()->getHttpHost());
 });
 Route::group(['middleware' => 'auth'], function()
 {
     Route::get('dashboard', function() {
-        $list = MusicAlbum::find(14);
+//        $list = MusicAlbum::find(14);
 
-       return view('dashboard', compact('list'));
+       return view('dashboard');
+//       return view('dashboard', compact('list'));
     } );
 
     Route::post('/music-album', 'WEB\MusicAlbumController@Create');

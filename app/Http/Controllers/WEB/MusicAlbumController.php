@@ -17,7 +17,11 @@ class MusicAlbumController extends Controller
     {
         $this->middleware('auth');
     }
-
+    /**
+     * Create new instance
+     *
+     * @return string
+     */
     public function Create(){
         $newInstance = new MusicAlbum();
         $this->validate(request(), ['name' => 'required|unique:music_albums', 'cover' => 'required']);
@@ -35,7 +39,11 @@ class MusicAlbumController extends Controller
     }
 
 
-
+    /**
+     * Update existing  instance
+     * @param  int
+     * @return string
+     */
     public function Update($id){
         $instance = MusicAlbum::find($id);
         $this->validate(request(), ['name' => 'required']);
@@ -49,6 +57,11 @@ class MusicAlbumController extends Controller
         return back();
     }
 
+    /**
+     * Delete existing  instance
+     * @param  int
+     * @return string
+     */
     public function Delete($id){
         $instance = MusicAlbum::find($id);
         Storage::delete($instance->cover);

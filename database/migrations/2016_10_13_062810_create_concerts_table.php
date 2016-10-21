@@ -11,6 +11,7 @@ class CreateConcertsTable extends Migration
         //
         Schema::create('concerts', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('cover');
             $table->string('country');
             $table->string('city');
             $table->string('place');
