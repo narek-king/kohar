@@ -13,7 +13,6 @@
   <link rel="stylesheet" href="app/bower_components/reset-css/reset.css">
   <link rel="stylesheet" href="app/bower_components/html5-boilerplate/dist/css/main.css">
   <link rel="stylesheet" href="app/bower_components/bootstrap/dist/css/bootstrap.min.css" />
-
   <link rel="stylesheet" href="app/bower_components/angular-bootstrap/ui-bootstrap-csp.css">
   <link rel="stylesheet" href="app/app.css">
   <script src="app/bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
@@ -53,7 +52,6 @@
                     </div>
                 </div>
                 <div class="push"></div>
-
         </div><!--.k_wrapper-->
           <footer style="border: 1px solid red;">
                 <div class="footer_inside">
