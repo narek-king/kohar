@@ -34,11 +34,25 @@ class MusicAlbumController extends Controller
         return ' <img src=http://'. request()->getHttpHost() .'/'.$newInstance->cover.'> <br> title: '. $newInstance->name;
     }
 
+
+
     public function Update($id){
-        return 'updated';
+        $instance = MusicAlbum::find($id);
+        $this->validate(request(), ['name' => 'required']);
+        $instance->name = request()->input('name');
+        if (request()->hasFile('cover')){
+            Storage::delete($instance->cover);
+            $instance->cover = request()->file('cover')->store('images/music-album-covers');
+        }
+        $instance->save();
+
+        return back();
     }
 
     public function Delete($id){
+        $instance = MusicAlbum::find($id);
+        Storage::delete($instance->cover);
+        $instance->delete();
         return 'deleted';
     }
 }
