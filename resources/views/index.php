@@ -19,11 +19,8 @@
   <script src="app/bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
 <body>
-
-
 <div class="container full_h">
     <div class="k_wrapper" style="border: 1px solid red;">
-
           <header>
             <div class="header_inside">
             <div class="row">
@@ -70,7 +67,6 @@
         </div>
   </footer>
 </div>
-
   <!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
   -->
@@ -90,7 +86,6 @@
   <script src="app/components/version/version.js"></script>
   <script src="app/components/version/version-directive.js"></script>
   <script src="app/components/version/interpolate-filter.js"></script>
-
 
 </body>
 </html>
