@@ -1,0 +1,137 @@
+/* app css stylesheet */
+
+html, body {
+  height: 100%;
+}
+
+body{
+  background: #000;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  font-family: Arial, Helvetica, sans-serif;
+}
+input.k_input,
+select.k_input,
+textarea.k_input{
+  color: #666;
+  border: 2px solid #b7a261;
+}
+input.k_submit{
+  background: #666;
+  color: #ffffff;
+  border: 2px solid #666;
+  border-radius: 4px;
+  padding: 6px 12px;
+  text-align: center;
+  outline: none;
+}
+input.k_checkbox{
+  float: right;
+  display: inline-block;
+  vertical-align: bottom;
+  width: 34px;
+  height: 34px;
+}
+label.k_checkbox_label{
+  display: inline-block;
+  vertical-align: middle;
+  height: 34px;
+  line-height: 42px;
+}
+
+h1,h2,h3,h4,h5,h6{
+  font-style: normal;
+  font-weight: bold;
+}
+h1{
+  font-size: 32px;
+}
+h2{
+  font-size: 24px;
+}
+h3{
+  font-size: 19px;
+}
+h4{
+  font-size: 16px;
+}
+h5{
+  font-size: 14px;
+}
+h6{
+  font-size: 13px;
+}
+label{
+  margin-bottom: 5px;
+  font-weight: 700;
+}
+header{
+
+  overflow: hidden;
+}
+.header_inside{
+  padding: 10px 0;
+  background: #1a1a1a;
+  color: #ffffff;
+}
+.full_h{
+  height: 100%;
+}
+.k_wrapper{
+  background:#fff;
+  min-height: 100%;
+  height: auto !important;
+  margin-bottom: -120px;
+  overflow: hidden;
+}
+.k_layout{
+
+}
+footer{
+  position: relative;
+  overflow: hidden;
+}
+.footer_inside{
+  padding: 30px 0 30px 15px;
+  background: #1a1a1a;
+  color: #ffffff;
+}
+.footer_inside, .push {
+  height: 120px;
+}
+
+#k_sidebar{
+  background: #666;
+  color: #ffffff;
+   margin-bottom: -99999px;
+  padding-bottom: 99999px;
+}
+
+#k_sidebar .list_entries li a{
+  display: block;
+  text-align: center;
+  text-transform: uppercase;
+  padding: 20px;
+  color: #ffffff;
+  margin: 0 -15px;
+}
+#k_sidebar .list_entries li a.active,
+#k_sidebar .list_entries li a:hover{
+  background: #484848;
+  color: #ffffff;
+  text-decoration: none;
+}
+#k_content{
+  background: #ffffff;
+  color: #666;
+  padding-top: 30px;
+  /* margin-bottom: -99999px;
+  padding-bottom: 99999px; */
+}
+.k_content_title, .k_content_sub_title{
+  margin: 10px 0 20px 0;
+}
+.el_value{
+  padding: 0 10px;
+}
