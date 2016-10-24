@@ -9,35 +9,24 @@
   <title>My AngularJS App</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="app/bower_components/html5-boilerplate/dist/css/normalize.css">
   <link rel="stylesheet" href="app/bower_components/reset-css/reset.css">
-  <link rel="stylesheet" href="app/bower_components/html5-boilerplate/dist/css/main.css">
-  <link rel="stylesheet" href="app/bower_components/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="app/bower_components/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="app/bower_components/angular-bootstrap/ui-bootstrap-csp.css">
+  <link rel="stylesheet" type="text/css" href="app/bower_components/angular-ui-grid/ui-grid.min.css">
   <link rel="stylesheet" href="app/app.css">
-  <script src="app/bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
+
 </head>
 <body>
     <div class="container full_h">
-        <div class="k_wrapper" style="border: 1px solid red;">
-              <header>
-                <div class="header_inside">
-                <div class="row">
-                     <div class="col-md-12">
-                       <div class="logo">
-                         <a href="#"><img src="app/resources/img/logo.png" alt="Logo"></a>
-                       </div>
-                     </div>
-                 </div>
-                 </div>
-              </header>
+        <div class="k_wrapper">
                 <div class="k_layout">
                     <div class="row">
                         <div id="k_sidebar" class="col-md-2">
                           <aside>
                             <nav>
                               <ul class="list_entries">
-                                <li><a href="#!/music" class="active" title="Music">Music</a></li>
+                                <li><a href="#!/music-albums" class="active" title="Music">Music Albums</a></li>
+                                <li><a href="#!/music" title="Music">Music</a></li>
                                 <li><a href="#!/videos" title="Videos">Videos</a></li>
                                 <li><a href="#!/concerts" title="Concerts">concerts</a></li>
                                 <li><a href="#!/news" title="News">News</a></li>
@@ -47,13 +36,26 @@
                           </aside>
                         </div>
                         <div id="k_content" class="col-md-10">
+
+                            <div class="row">
+                                <div class="header">
+                                    <div class="header_inside">
+
+                                           <div class="logo">
+                                             <a href="#"><img src="app/resources/img/logo.png" alt="Logo"></a>
+                                           </div>
+
+                                     </div>
+                                </div>
+                            </div>
+
                             <div ng-view></div>
                         </div>
                     </div>
                 </div>
                 <div class="push"></div>
         </div><!--.k_wrapper-->
-          <footer style="border: 1px solid red;">
+          <footer>
                 <div class="footer_inside">
                     <div class="row">
                       <div class="col-md-12">
@@ -70,6 +72,10 @@
   -->
   <script src="app/bower_components/angular/angular.js"></script>
   <script src="app/bower_components/angular-route/angular-route.js"></script>
+  <script src="app/bower_components/angular-animate/angular-animate.js"></script>
+  <script src="app/bower_components/angular-touch/angular-touch.js"></script>
+  <script src="app/bower_components/angular-ui-grid/ui-grid.min.js"></script>
+
 <script src="app/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
   <script src="app/app.js"></script>
   <script src="app/view1/view1.js"></script>
@@ -79,6 +85,7 @@
   <script src="app/views/news/news.js"></script><!---1-->
   <script src="app/views/photo/photo.js"></script>
   <script src="app/views/music/music.js"></script>
+  <script src="app/views/music-albums/music-albums.js"></script>
   <script src="app/components/version/version.js"></script>
   <script src="app/components/version/version-directive.js"></script>
   <script src="app/components/version/interpolate-filter.js"></script>
