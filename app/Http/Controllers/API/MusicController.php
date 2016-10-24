@@ -17,8 +17,8 @@ class MusicController extends Controller
      */
     public function musicList(){
         $music = Music::paginate(env('PAGINATE_DEFAULT'));
-
-       echo $music->toJson();
+        ApiLogger::logInfo();
+        return response()->json($music);
     }
 
     /**
@@ -28,16 +28,18 @@ class MusicController extends Controller
      */
     public function show ($id){
         $track = Music::find($id);
+        ApiLogger::logInfo();
+        return response()->json($track);
 
-        //
-        return $track->toJson();
+
 
     }
 
     public function search ($track){
 
         $result = Music::where('track', 'LIKE', '%'.$track.'%')->get();
-//        $result::paginate(env('PAGINATE_DEFAULT'));
-        return $result->toJson();
+      ApiLogger::logInfo();
+        return response()->json($result);
+
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use Illuminate\Auth\Access\Response;
 use Illuminate\Http\Request;
 use App\Concert;
 use App\Http\Requests;
@@ -17,10 +18,10 @@ class ConcertController extends Controller
      * @param Request
      * @return string
      */
-    public function allConcerts(Request $request){
+    public function allConcerts(){
         $concert = Concert::paginate(env('PAGINATE_DEFAULT'));
-        ApiLogger::logInfo($request);
-        return $concert->toJson();
+        ApiLogger::logInfo();
+        return response()->json($concert);
     }
 
     /**
@@ -30,8 +31,8 @@ class ConcertController extends Controller
      */
     public function show ($id){
         $concert = Concert::find($id);
-
-        return $concert->toJson();
+        ApiLogger::logInfo();
+        return response()->json($concert);
 
     }
 
@@ -49,9 +50,7 @@ class ConcertController extends Controller
                array_push($result, $concert);
             }
         }
-
-
-        return json_encode($result);
-
+        ApiLogger::logInfo();
+        return response()->json($result);
     }
 }

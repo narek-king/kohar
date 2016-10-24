@@ -14,8 +14,8 @@ use Illuminate\Http\Request;
 
 class ApiLogger
 {
-    public static function logInfo (Request $request){
+    public static function logInfo (){
 
-        Log::info('User action:', ['ip' => $request->ip(), 'URL' => $request->path()]);
+        Log::info('User action:', ['ip' => request()->ip(), 'URL' => request()->path()]);
     }
 }

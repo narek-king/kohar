@@ -16,8 +16,8 @@ class NewsController extends Controller
      */
     public function allNews(){
         $news = News::paginate(env('PAGINATE_DEFAULT'));
-
-        return $news->toJson();
+        ApiLogger::logInfo();
+        return response()->json($news);
     }
 
     /**
@@ -27,9 +27,8 @@ class NewsController extends Controller
      */
     public function show ($id){
         $track = News::find($id);
-
-        //
-        return $track->toJson();
+        ApiLogger::logInfo();
+        return response()->json($track);
 
     }
 }

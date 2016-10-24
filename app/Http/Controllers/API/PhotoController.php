@@ -16,8 +16,8 @@ class PhotoController extends Controller
      */
     public function photolist(){
         $albums = Photo::paginate(env('PAGINATE_DEFAULT'));
-
-        return $albums->toJson();
+        ApiLogger::logInfo();
+        return response()->json($albums);
     }
     /**
      * RRetrives singel music album whith its list of tracks
@@ -26,9 +26,7 @@ class PhotoController extends Controller
      */
     public function show ($id){
         $tracks = Photo::find($id);
-
-        //
-        return $tracks->toJson();
-
+        ApiLogger::logInfo();
+        return response()->json($tracks);
     }
 }

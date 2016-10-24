@@ -17,8 +17,8 @@ class MusicAlbumController extends Controller
      */
     public function musicAlbums(){
         $musicAlbums = MusicAlbum::paginate(env('PAGINATE_DEFAULT'));
-
-        return $musicAlbums->toJson();
+        ApiLogger::logInfo();
+        return response()->json($musicAlbums);
     }
     /**
      * RRetrives singel music album whith its list of tracks
@@ -27,9 +27,8 @@ class MusicAlbumController extends Controller
      */
     public function show ($id){
         $tracks = MusicAlbum::find($id)->musics;
-
-            //
-            return $tracks->toJson();
+        ApiLogger::logInfo();
+        return response()->json($tracks);
 
     }
 
