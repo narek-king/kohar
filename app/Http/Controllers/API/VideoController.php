@@ -17,8 +17,8 @@ class VideoController extends Controller
      */
     public function videoList(){
         $video = Video::paginate(env('PAGINATE_DEFAULT'));
-
-        return $video->toJson();
+        ApiLogger::logInfo();
+        return response()->json($video);
     }
 
 }
