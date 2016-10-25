@@ -42,8 +42,8 @@ angular.module('kohar.music-albums', ['ngAnimate', 'ngRoute', 'ngTouch', 'ui.boo
                     name : "Image",
                     cellClass:'k_height',
                     enableCellEdit: true,
-                    width: 80
-                    //cellTemplate: '<div class="ui-grid-cell-contents"><img class="k_image_admin" src="app/resources/img/1.jpg" alt="my image"></div>'
+                    width: 80,
+                    cellTemplate: '<div class="ui-grid-cell-contents"><img class="k_image_admin" src="app/resources/img/1.jpg" alt="my image"></div>'
                 },
                 { field: 'created_at', name : "Created", type: 'date', width: '15%'},
                 { field: 'updated_at', name : "Updated", type: 'date', width: '15%'},
