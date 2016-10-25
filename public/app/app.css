@@ -135,6 +135,29 @@ footer{
   padding: 0 10px;
 }
 
+/* UI Grid */
+.ui-grid-cell{
+  border-color: #b7a261;
+}
+.ui-grid-top-panel{
+  background: #ffffff;
+}
+.ui-grid-row:nth-child(even) .ui-grid-cell {
 
+}
+.k_wrap_buttons{
+  margin-bottom: 10px;
+}
+.k_success{
+  background: #dcbf66;
+  color: #ffffff;
+  font-size: 16px;
+  outline: none;
+}
+.k_success:hover{
+  background: #804882;
+  color: #ffffff;
+  font-size: 16px;
+}
 .red { color: red;  background-color: yellow !important; }
 .blue { color: blue;  }

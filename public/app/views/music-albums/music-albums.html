@@ -1,23 +1,24 @@
-<div ng-controller="MusicAlbumsCtrl">
+
+    <div class="photo">
     <div class="row">
         <div class="col-md-12">
             <h3 class="k_content_sub_title">Music Albums</h3>
         </div>
     </div>
     <div class="row">
-
-        <div class="col-md-12">
-            <button type="button" id="addData" class="btn btn-success" ng-click="addData()">Add Data</button>
-            <button type="button" class="btn btn-success" ng-click="clearAll()">Clear All</button>
-            <button type="button" class="btn btn-success" ng-click="deleteSelected()">Delete Selected</button>
+        <div class="k_wrap_buttons col-md-12">
+            <button type="button" id="addData" class="btn k_success" ng-click="addData()">Add Row</button>
+            <button type="button" class="btn k_success" ng-click="clearAll()">Clear All</button>
+            <button type="button" class="btn k_success" ng-click="deleteSelected()">Delete Selected</button>
         </div>
+    </div>
+    <div class="row">
         <div class="col-md-12">
             <div id="grid1" ui-grid-pagination ui-grid-edit ui-grid-resize-columns ui-grid-validate ui-grid-selection ui-grid="gridOptions" class="grid"></div>
         </div>
     </div>
 
-    <div class="photo">
-        <div class="row">
+    <!--    <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <form action="/">
                     <div class="form-group">
@@ -36,6 +37,6 @@
                     </div>
                 </form>
             </div>
-        </div>
+        </div>-->
+
     </div>
-</div>

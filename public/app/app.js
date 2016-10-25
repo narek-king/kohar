@@ -5,6 +5,7 @@ angular.module('kohar', [
   'ngRoute',
   'ngAnimate',
   'ngTouch',
+  'kohar.services',
   'kohar.version',
   'ui.bootstrap',
   'ui.grid',

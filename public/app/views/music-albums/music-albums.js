@@ -9,8 +9,8 @@ angular.module('kohar.music-albums', ['ngAnimate', 'ngRoute', 'ngTouch', 'ui.boo
             controller: 'MusicAlbumsCtrl'
         });
     }])
-
-    .controller('MusicAlbumsCtrl', ['$scope', '$http', '$timeout', 'uiGridValidateService', 'uiGridConstants', function($scope, $http, $timeout, uiGridValidateService, uiGridConstants) {
+    .controller('MusicAlbumsCtrl', ['$scope', '$http', '$timeout', 'uiGridValidateService', 'uiGridConstants', 'connectWithDb',
+        function($scope, $http, $timeout, uiGridValidateService, uiGridConstants, connectWithDb) {
 
         $scope.gridOptions = {
             enableSorting: true,
@@ -41,6 +41,14 @@ angular.module('kohar.music-albums', ['ngAnimate', 'ngRoute', 'ngTouch', 'ui.boo
             }
         };
 
+        // connect with custom service
+        // receive results from http.get() request
+        connectWithDb.getAll().then(function successCallback(response) {
+            console.log(response);
+            $scope.gridOptions.data = response.data.data;
+
+        });
+
         // add row
         $scope.addData = function() {
             console.log("addData ");
@@ -55,34 +63,6 @@ angular.module('kohar.music-albums', ['ngAnimate', 'ngRoute', 'ngTouch', 'ui.boo
             });
         };
 
-        // add horizontal scrolling
-        /*
-        var colCount = 4;
-        var rowCount = 4;
-
-        $scope.gridOptions.columnDefs = [];
-        $timeout( function() {
-            for (var colIndex = 0; colIndex < colCount; colIndex++) {
-                $scope.gridOptions.columnDefs.push({
-                    name: 'col' + colIndex,
-                    width: Math.floor(Math.random() * (120 - 50 + 1)) + 50
-                });
-            }
-        }); */
-
-
-        $http({
-            method: 'GET',
-            url: 'http://kohar.horizondvp.org/api/music-album'
-        }).then(function successCallback(response) {
-
-            $scope.gridOptions.data = response.data.data;
-
-        }, function errorCallback(response) {
-
-            console.log('http request error');
-        });
-
         $scope.deleteSelected = function(){
             angular.forEach($scope.gridApi.selection.getSelectedRows(), function (data, index) {
                 $scope.gridOptions.data.splice($scope.gridOptions.data.lastIndexOf(data), 1);
@@ -91,7 +71,5 @@ angular.module('kohar.music-albums', ['ngAnimate', 'ngRoute', 'ngTouch', 'ui.boo
         $scope.clearAll = function() {
             $scope.gridApi.selection.clearSelectedRows();
         };
-
-
 
     }]);

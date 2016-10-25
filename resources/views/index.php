@@ -78,6 +78,7 @@
 
 <script src="app/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
   <script src="app/app.js"></script>
+
   <script src="app/view1/view1.js"></script>
   <script src="app/view2/view2.js"></script>
   <script src="app/views/videos/videos.js"></script>
@@ -90,5 +91,7 @@
   <script src="app/components/version/version-directive.js"></script>
   <script src="app/components/version/interpolate-filter.js"></script>
 
+<!--include services-->
+  <script src="app/views/music/musicServices.js"></script>
 </body>
 </html>
