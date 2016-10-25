@@ -41,6 +41,35 @@ angular.module('kohar.music-albums', ['ngAnimate', 'ngRoute', 'ngTouch', 'ui.boo
             }
         };
 
+        // add row
+        $scope.addData = function() {
+            console.log("addData ");
+            var n = $scope.gridOptions.data.length + 1;
+
+            $scope.gridOptions.data.push({
+                "id": n,
+                "name": "name",
+                "cover": "",
+                "created_at": "",
+                "updated_at": ""
+            });
+        };
+
+        // add horizontal scrolling
+        /*
+        var colCount = 4;
+        var rowCount = 4;
+
+        $scope.gridOptions.columnDefs = [];
+        $timeout( function() {
+            for (var colIndex = 0; colIndex < colCount; colIndex++) {
+                $scope.gridOptions.columnDefs.push({
+                    name: 'col' + colIndex,
+                    width: Math.floor(Math.random() * (120 - 50 + 1)) + 50
+                });
+            }
+        }); */
+
 
         $http({
             method: 'GET',
@@ -54,10 +83,6 @@ angular.module('kohar.music-albums', ['ngAnimate', 'ngRoute', 'ngTouch', 'ui.boo
             console.log('http request error');
         });
 
-        $scope.clearAll = function() {
-            $scope.gridApi.selection.clearSelectedRows();
-        };
-
         $scope.deleteSelected = function(){
             angular.forEach($scope.gridApi.selection.getSelectedRows(), function (data, index) {
                 $scope.gridOptions.data.splice($scope.gridOptions.data.lastIndexOf(data), 1);
@@ -66,5 +91,7 @@ angular.module('kohar.music-albums', ['ngAnimate', 'ngRoute', 'ngTouch', 'ui.boo
         $scope.clearAll = function() {
             $scope.gridApi.selection.clearSelectedRows();
         };
+
+
 
     }]);
