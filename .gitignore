@@ -8,3 +8,4 @@ Homestead.yaml
 .env
 /public/images
 /storage/app/images
+/storage/app/img
