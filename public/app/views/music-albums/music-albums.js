@@ -55,46 +55,56 @@ angular.module('kohar.music-albums', ['ngAnimate', 'ngRoute', 'ngTouch', 'ui.boo
 
                 // add new row to database after edit
                 gridApi.edit.on.afterCellEdit($scope, function(rowEntity, colDef, newValue, oldValue) {
-                    //Do your REST call here via $http.get or $http.post
-                    var newRow = {
-                        "column" : colDef.name,
-                        "id": rowEntity.id,
-                        "name": rowEntity.name,
-                        "cover": rowEntity.cover,
-                        "created_at": rowEntity.created_at,
-                        "updated_at": rowEntity.updated_at
-                    };
-                    connectWithDb.insertRow(newRow);
+                    /***************************************************************/
+                    /**************************** UPDATE ***************************/
+                    /***************************************************************/
+                    console.log('updateRow ', rowEntity);
+                    connectWithDb.updateRow(rowEntity);
 
                 });
             }
 
         };
 
-        // connect with custom service
-        // receive results from http.get() request
-        /******************* READ ********************/
+
+        /***************************************************************/
+        /**************************** READ *****************************/
+        /***************************************************************/
+        // connect with custom service and receive results from http.get() request
         connectWithDb.getAll().then(function successCallback(response) {
 
             $scope.gridOptions.data = response.data.data;
 
         });
 
+
+
         // add row
         $scope.addData = function() {
             var n = $scope.gridOptions.data.length + 1;
-            $scope.gridOptions.data.unshift({
-                //"id": n,
+            var newRow = {
                 "name": "",
                 "cover": "",
                 "created_at": "",
                 "updated_at": ""
-            });
+            };
+
+            $scope.gridOptions.data.unshift(newRow);
+
+            connectWithDb.insertRow(newRow);
         };
 
         $scope.deleteSelected = function(){
+
+            var idArray = $scope.gridApi.selection.getSelectedRows();
+            for(var i = 0; i < idArray.length; i++){
+                connectWithDb.deleteRow(idArray[i].id);
+            }
+
             angular.forEach($scope.gridApi.selection.getSelectedRows(), function (data, index) {
+
                 $scope.gridOptions.data.splice($scope.gridOptions.data.lastIndexOf(data), 1);
+
             });
         };
         $scope.clearAll = function() {
