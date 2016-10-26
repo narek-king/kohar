@@ -83,8 +83,8 @@ angular.module('kohar.music-albums', ['ngAnimate', 'ngRoute', 'ngTouch', 'ui.boo
         $scope.addData = function() {
             var n = $scope.gridOptions.data.length + 1;
             var newRow = {
-                "name": "",
-                "cover": "",
+                "name": "Name",
+                "cover": "app/resources/img/1.jpg",
                 "created_at": "",
                 "updated_at": ""
             };

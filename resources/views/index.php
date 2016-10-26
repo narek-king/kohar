@@ -94,6 +94,9 @@
 
 <!--include services-->
   <script src="app/views/music/musicServices.js"></script>
+  <script src="app/views/music-albums/musicAlbumsServices.js"></script>
+
+<!--include custom directive for modal window-->
   <script src="app/components/photo.js"></script>
 </body>
 </html>

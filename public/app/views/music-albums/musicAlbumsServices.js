@@ -1,6 +1,8 @@
-/*
+console.log("musicAlbumsServices ");
+
 angular.module('kohar.services', [])
     .factory('connectWithDb', ['$http', function($http) {
+
     return {
         insertRow : function (data) {
             console.log('insertRow ', data);
@@ -30,5 +32,5 @@ angular.module('kohar.services', [])
         }
 
     };
-}]); */
+}]);
 
