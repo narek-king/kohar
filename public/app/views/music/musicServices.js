@@ -15,10 +15,10 @@ angular.module('kohar.services', [])
                 url: 'http://kohar.horizondvp.org/api/music-album'
             });
         },
-        updateRow : function (id, data) {
+        updateRow : function (id) {
             $http({
                 method: 'PUT',
-                url: 'http://kohar.horizondvp.org/api/music-album/' + id
+                url: 'http://localhost:8000//music-album:' + id
             });
         },
         deleteRow : function (id, data) {

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('kohar.music-albums', ['ngAnimate', 'ngRoute', 'ngTouch', 'ui.bootstrap',
-    'ui.grid', 'ui.grid.pagination', 'ui.grid.edit', 'ui.grid.resizeColumns', 'ui.grid.validate', 'ui.grid.selection'])
+    'ui.grid', 'ui.grid.pagination', 'ui.grid.edit', 'ui.grid.resizeColumns', 'ui.grid.validate', 'ui.grid.selection', 'kohar.photo'])
 
     .config(['$routeProvider', function($routeProvider) {
         $routeProvider.when('/music-albums', {
@@ -35,15 +35,15 @@ angular.module('kohar.music-albums', ['ngAnimate', 'ngRoute', 'ngTouch', 'ui.boo
                     cellClass:'k_height',
                     enableCellEdit: true,
                     minWidth: 150,
-                    cellTemplate: '<div class="ui-grid-cell-contents"><input type="file" class="k_input form-control" value="cover"></div>'
+                    cellTemplate: '<div class="ui-grid-cell-contents"><input type="file" class="form-control" value="cover"></div>'
                 },
                 {
                     field: 'cover',
                     name : "Image",
                     cellClass:'k_height',
-                    enableCellEdit: true,
+                    enableCellEdit: false,
                     width: 80,
-                    cellTemplate: '<div class="ui-grid-cell-contents"><img class="k_image_admin" src="app/resources/img/1.jpg" alt="my image"></div>'
+                    cellTemplate: '<div class="ui-grid-cell-contents"><photo-directive class="k_image_admin" image-src="app/resources/img/1.jpg"></photo-directive></div>'
                 },
                 { field: 'created_at', name : "Created", type: 'date', width: '15%'},
                 { field: 'updated_at', name : "Updated", type: 'date', width: '15%'},
@@ -65,8 +65,6 @@ angular.module('kohar.music-albums', ['ngAnimate', 'ngRoute', 'ngTouch', 'ui.boo
                         "updated_at": rowEntity.updated_at
                     };
                     connectWithDb.insertRow(newRow);
-                    //Alert to show what info about the edit is available
-                    //alert('Name: ' + colDef.name + ' ID: ' + rowEntity.id + ' Name: ' + rowEntity.name + ' Created: ' + rowEntity.created_at);
 
                 });
             }

@@ -6,6 +6,8 @@ angular.module('kohar', [
   'ngAnimate',
   'ngTouch',
   'kohar.services',
+  'kohar.photo',
+  'kohar.version',
   'kohar.version',
   'ui.bootstrap',
   'ui.grid',
@@ -14,7 +16,6 @@ angular.module('kohar', [
   'kohar.music-albums',
   'kohar.music',
   'kohar.videos',
-  'kohar.photo',
   'kohar.concerts',
   'kohar.news',
   'ui.bootstrap.datepickerPopup'
