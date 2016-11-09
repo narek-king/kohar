@@ -20,41 +20,37 @@
 <body>
     <div class="container full_h">
         <div class="k_wrapper">
-                <div class="k_layout">
-                    <div class="row">
-                        <div id="k_sidebar" class="col-md-2">
-                          <aside>
-                            <nav>
-                              <ul class="list_entries">
-                                <li><a href="#!/music-albums" class="active" title="Music">Music Albums</a></li>
-                                <li><a href="#!/music" title="Music">Music</a></li>
-                                <li><a href="#!/videos" title="Videos">Videos</a></li>
-                                <li><a href="#!/concerts" title="Concerts">concerts</a></li>
-                                <li><a href="#!/news" title="News">News</a></li>
-                                <li><a href="#!/photo" title="Photo">Photo</a></li>
-                              </ul>
-                            </nav>
-                          </aside>
-                        </div>
-                        <div id="k_content" class="col-md-10">
-
-                            <div class="row">
-                                <div class="header">
-                                    <div class="header_inside">
-
-                                           <div class="logo">
-                                             <a href="#"><img src="app/resources/img/logo.png" alt="Logo"></a>
-                                           </div>
-
-                                     </div>
-                                </div>
+            <div class="k_layout">
+                <div class="row">
+                    <div id="k_sidebar" class="col-md-2">
+                      <aside>
+                        <nav>
+                          <ul class="list_entries">
+                            <li><a href="#!/music-albums" class="active" title="Music">Music Albums</a></li>
+                            <li><a href="#!/music" title="Music">Music</a></li>
+                            <li><a href="#!/videos" title="Videos">Videos</a></li>
+                            <li><a href="#!/concerts" title="Concerts">concerts</a></li>
+                            <li><a href="#!/news" title="News">News</a></li>
+                            <li><a href="#!/photo" title="Photo">Photo</a></li>
+                          </ul>
+                        </nav>
+                      </aside>
+                    </div>
+                    <div id="k_content" class="col-md-10">
+                        <div class="row">
+                            <div class="header">
+                                <div class="header_inside">
+                                   <div class="logo">
+                                     <a href="#"><img src="app/resources/img/logo.png" alt="Logo"></a>
+                                   </div>
+                                 </div>
                             </div>
-
-                            <div ng-view></div>
                         </div>
+                        <div ng-view></div>
                     </div>
                 </div>
-                <div class="push"></div>
+            </div>
+            <div class="push"></div>
         </div><!--.k_wrapper-->
           <footer>
                 <div class="footer_inside">

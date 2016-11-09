@@ -9,7 +9,6 @@ use App\Http\Requests;
 use App\Http\Input;
 use Illuminate\Support\Facades\Storage;
 use App\MusicAlbum;
-use Validator;
 class MusicAlbumController extends Controller
 {
     //
@@ -25,29 +24,21 @@ class MusicAlbumController extends Controller
      */
     public function Create(){
         $newInstance = new MusicAlbum();
+        $newInstance->name= "DDbajkhsd";
+        $newInstance->cover= "sdkndsbajkhsd";
+        //$this->validate(request(), ['name' => 'required|unique:music_albums', 'cover' => 'required']);
 
-        $validator = Validator::make(request()->all(), [
-            'name' => 'required|unique:music_albums',
-            'cover' => 'required',
-        ]);
+        //if (request()->hasFile('cover')){
+        //    $newInstance->cover = request()->file('cover')->store('images/music-album-covers');
+        //    $newInstance->name = request()->input('name');
+        //    $newInstance->save();
+        //}
+        //else{
+        //    echo 'File upload error';
+        //}
 
-//        $this->validate(request(), ['name' => 'required|unique:music_albums', 'cover' => 'required']);
-
-
-        if ($validator->fails()) {
-            return response()->json([$validator->messages()->getMessages(), 500]);
-        }
-
-        if (request()->hasFile('cover')){
-            $newInstance->cover = request()->file('cover')->store('images/music-album-covers');
-            $newInstance->name = request()->input('name');
-            $newInstance->save();
-        }
-        else{
-            return response()->json([['data' => 'error uploading file'], 500]);
-        }
-
-        return response()->json([['data' => 'success'], 200]);
+        $newInstance->save();
+        return 'success';
     }
 
 
@@ -56,7 +47,7 @@ class MusicAlbumController extends Controller
      * @param  int
      * @return string
      */
-    public function Update(int $id){
+    public function Update($id){
         $instance = MusicAlbum::find($id);
         $this->validate(request(), ['name' => 'required']);
         $instance->name = request()->input('name');
@@ -66,7 +57,7 @@ class MusicAlbumController extends Controller
         }
         $instance->save();
 
-        return response()->json([['data' => 'success'], 200]);
+        return "success";
     }
 
     /**
@@ -78,6 +69,6 @@ class MusicAlbumController extends Controller
         $instance = MusicAlbum::find($id);
         Storage::delete($instance->cover);
         $instance->delete();
-        return response()->json([['data' => 'success'], 200]);
+        return 'deleted';
     }
 }

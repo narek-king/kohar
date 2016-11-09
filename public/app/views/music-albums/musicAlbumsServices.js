@@ -18,8 +18,12 @@ angular.module('kohar.services', [])
             });
         },
         updateRow : function (data) {
-
-            $http.put('http://localhost:8000/music-album/' + data.id);
+            console.log('service');
+            console.log(data);
+            $http.put('http://localhost:8000/music-album/' + data.id, data).then(function(data, status) {
+                console.log('updated data ', data);
+                console.log('updated status ', status);
+            });
         },
         deleteRow : function (id) {
             console.log('id ', id);
