@@ -17,7 +17,6 @@ angular.module('kohar', [
   'kohar.music',
   'kohar.videos',
   'kohar.concerts',
-  'kohar.news',
   'ui.bootstrap.datepickerPopup'
 
 ]).

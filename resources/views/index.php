@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="app/bower_components/angular-bootstrap/ui-bootstrap-csp.css">
   <link rel="stylesheet" type="text/css" href="app/bower_components/angular-ui-grid/ui-grid.min.css">
   <!--<link rel="stylesheet" href="app/bower_components/angular-bootstrap-lightbox/dist/angular-bootstrap-lightbox.css">-->
-  <link rel="stylesheet" href="app/app.css">
+  <link rel="stylesheet" href="/app/app.css">
 
 </head>
 <body>
@@ -30,7 +30,6 @@
                             <li><a href="#!/music" title="Music">Music</a></li>
                             <li><a href="#!/videos" title="Videos">Videos</a></li>
                             <li><a href="#!/concerts" title="Concerts">concerts</a></li>
-                            <li><a href="#!/news" title="News">News</a></li>
                             <li><a href="#!/photo" title="Photo">Photo</a></li>
                           </ul>
                         </nav>
