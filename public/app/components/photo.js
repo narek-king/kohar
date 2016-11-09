@@ -14,7 +14,6 @@ angular.module('kohar.photo', [])
                     var modal;
 
                     $scope.ok = function () {
-                        console.log('ok');
                         modal.close();
                     };
 
