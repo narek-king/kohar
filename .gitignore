@@ -9,3 +9,4 @@ Homestead.yaml
 /public/images
 /storage/app/images
 /storage/app/img
+/routes/web.php

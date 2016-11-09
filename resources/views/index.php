@@ -15,6 +15,7 @@
   <link rel="stylesheet" type="text/css" href="app/bower_components/angular-ui-grid/ui-grid.min.css">
   <!--<link rel="stylesheet" href="app/bower_components/angular-bootstrap-lightbox/dist/angular-bootstrap-lightbox.css">-->
   <link rel="stylesheet" href="/app/app.css">
+
 </head>
 <body>
     <div class="container full_h">
