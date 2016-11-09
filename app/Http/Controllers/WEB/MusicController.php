@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
-
+use kohar\SoundCloudeApi\SoundCloudeClient;
 
 class MusicController extends Controller
 {
@@ -23,6 +23,9 @@ class MusicController extends Controller
      */
     public function Create(){
         $newInstance = new Music();
+        $SCclient = new SoundCloudeClient();
+
+
         $this->validate(request(), ['track' => 'required', 'link' => 'required']);
         $newInstance->track = request()->input('track');
      /*
@@ -33,7 +36,7 @@ class MusicController extends Controller
      */
         $newInstance->lyrics = request()->input('lyrics');
         $newInstance->lyrics_am = request()->input('lyrics_am');
-        $newInstance->link = request()->input('link');
+        $newInstance->link = $SCclient->getStreamURL(request()->input('link'));
         $newInstance->performer = request()->input('performer');
         $newInstance->music_by = request()->input('music_by');
         $newInstance->lyrics_by = request()->input('lyrics_by');

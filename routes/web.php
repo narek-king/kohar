@@ -26,9 +26,9 @@ Route::get('/test', function(){
 Route::group(['middleware' => 'auth'], function()
 {
     Route::get('dashboard', function() {
-//        $list = MusicAlbum::find(14);
-
-       return view('index');
+        $list = MusicAlbum::find(6);
+//        return view('index');
+       return view('dashboard', compact('list'));
     } );
 
     Route::post('/music-album', 'WEB\MusicAlbumController@Create');
@@ -58,6 +58,7 @@ Route::group(['middleware' => 'auth'], function()
 });
 
 /*
+ *
 Route::get('makelink', function(){
     if (symlink ('/home/horizor0/public_html/kohar/storage/app/images', '/home/horizor0/public_html/kohar/public/images' ))
         echo 'symlink created';

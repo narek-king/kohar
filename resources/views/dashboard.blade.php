@@ -57,7 +57,7 @@
                     @endif
                 </div>
                 <div class="panel-body">
-                    <form class="form-horizontal" method="post" action="/music-album/{{$list->id}}" enctype="multipart/form-data">
+                    <form class="form-horizontal" method="post" action="music-album" enctype="multipart/form-data">
                         <fieldset>
 
                             <!-- Form Name -->
@@ -72,7 +72,7 @@
                                 </div>
                             </div>
                                   {{ csrf_field() }}
-                                 {{ method_field('DELETE') }}
+                                 {{ method_field('POST') }}
 
                             <!-- File Button -->
                             <div class="form-group">
