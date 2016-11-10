@@ -7,7 +7,7 @@ angular.module('kohar', [
   'ngTouch',
   'kohar.services',
   'kohar.photo',
-  //'kohar.addrow',
+  'kohar.previewImage',
   'kohar.version',
   'kohar.version',
   'ui.bootstrap',

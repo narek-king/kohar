@@ -92,6 +92,6 @@
 
 <!--include custom directive for modal window-->
   <script src="app/components/photo.js"></script>
-<!--<script src="app/components/addrow.js"></script>-->
+    <script src="app/components/previewImage.js"></script>
 </body>
 </html>

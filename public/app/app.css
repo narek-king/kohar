@@ -175,6 +175,13 @@ footer{
   display: block;
   cursor: pointer;
 }
+.k_image_upload{
+  width: 25px;
+  height: auto;
+  margin: 0 3px;
+  display: inline-block;
+  cursor: pointer;
+}
 .red { color: red;  background-color: yellow !important; }
 .blue { color: blue;  }
 
@@ -182,7 +189,7 @@ footer{
 .file_container {
   display: inline-block;
   vertical-align: middle;
-  width: 90px;
+  width: 70px;
   overflow: hidden;
   position: relative;
   height: 30px;
@@ -200,7 +207,7 @@ footer{
   line-height: 25px;
 }
 .file_container:first-child{
-  margin-right: 10px;
+  margin-right: 3px;
 }
 
 .file_container input[type=file] {

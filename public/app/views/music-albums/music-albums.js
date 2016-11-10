@@ -12,6 +12,7 @@ angular.module('kohar.music-albums', ['ngAnimate', 'ngRoute', 'ngTouch', 'ui.boo
     .controller('MusicAlbumsCtrl', ['$scope', '$http', '$timeout', 'uiGridValidateService', 'uiGridConstants', 'musicAlbumsServices', '$uibModal',
         function($scope, $http, $timeout, uiGridValidateService, uiGridConstants, musicAlbumsServices, $uibModal) {
 
+
         $scope.gridOptions = {
             enableSorting: true,
             paginationPageSizes: [25, 50, 75],
@@ -32,13 +33,13 @@ angular.module('kohar.music-albums', ['ngAnimate', 'ngRoute', 'ngTouch', 'ui.boo
                 },
                 { field: 'name', cellClass:'red', enableCellEdit: true, minWidth: 200, validators: {required: true}, cellTemplate: 'ui-grid/cellTitleValidator'},
                 {
-                    field: 'cover',
+                    field: 'Cover Image',
                     cellClass:'k_height',
                     enableCellEdit: true,
-                    minWidth: 100,
-                    cellTemplate: '<div class="ui-grid-cell-contents">' +
-                        '<div class="file_container">Large file<input type="file" class="form-control" name="large" value="cover large"></div>' +
-                        '<div class="file_container">Small file<input type="file" class="form-control" name="small" value="cover small"></div>' +
+                    width: 220,
+                    cellTemplate : '<div class="ui-grid-cell-contents">' +
+                        '<preview-image image-name="Large"></preview-image>' +
+                        '<preview-image image-name="Small"></preview-image>' +
                     '</div>'
                 },
                 {
