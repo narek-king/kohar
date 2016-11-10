@@ -10,11 +10,15 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use kohar\SoundCloudeApi\SoundCloudeClient;
 
-class MusicController extends Controller
-{
-    public function __construct()
+class MusicController extends Controller {
+
+    protected $SoundCloudeClient;
+
+    public function __construct(SoundCloudeClient $SoundCloudeClient)
     {
         $this->middleware('auth');
+
+        $this->SoundCloudeClient = $SoundCloudeClient;
     }
     /**
      * Create new instance
@@ -23,7 +27,7 @@ class MusicController extends Controller
      */
     public function Create(){
         $newInstance = new Music();
-        $SCclient = new SoundCloudeClient();
+
 
 
         $this->validate(request(), ['track' => 'required', 'link' => 'required']);
@@ -36,7 +40,8 @@ class MusicController extends Controller
      */
         $newInstance->lyrics = request()->input('lyrics');
         $newInstance->lyrics_am = request()->input('lyrics_am');
-        $newInstance->link = $SCclient->getStreamURL(request()->input('link'));
+        $newInstance->link = $this->SoundCloudeClient->getStreamUrlFromURL(request()->input('link'));
+        $newInstance->duration = $this->SoundCloudeClient->getDurationFromURL(request()->input('link'));
         $newInstance->performer = request()->input('performer');
         $newInstance->music_by = request()->input('music_by');
         $newInstance->lyrics_by = request()->input('lyrics_by');

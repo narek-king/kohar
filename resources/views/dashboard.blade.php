@@ -57,7 +57,7 @@
                     @endif
                 </div>
                 <div class="panel-body">
-                    <form class="form-horizontal" method="post" action="music-album" enctype="multipart/form-data">
+                    <form class="form-horizontal" method="post" action="/music-album" enctype="multipart/form-data">
                         <fieldset>
 
                             <!-- Form Name -->
@@ -65,21 +65,42 @@
 
                             <!-- Text input-->
                             <div class="form-group">
-                                <label class="col-md-4 control-label" for="m">Album</label>
+                                <label class="col-md-4 control-label" for="m">track</label>
                                 <div class="col-md-4">
-                                    <input id="name" name="name" value="{{$list->name}}" class="form-control input-md" required="" type="text">
-
+                                    <input id="name" name="name" value="" class="form-control input-md" required="" type="text">
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="m">link</label>
+                                <div class="col-md-4">
+                                    <input id="name" name="link" value="" class="form-control input-md" required="" type="text">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="m">Album id</label>
+                                <div class="col-md-4">
+                                    <input id="name" name="album_id" value="" class="form-control input-md" required="" type="text">
+                                </div>
+                            </div>
+
+
                                   {{ csrf_field() }}
-                                 {{ method_field('POST') }}
+                                 {{--{{ method_field('POST') }}--}}
 
                             <!-- File Button -->
                             <div class="form-group">
-                                <label class="col-md-4 control-label" for="cover">Album Cover</label>
+                                <label class="col-md-4 control-label" for="cover">Lyrics</label>
                                 <div class="col-md-4">
-                                    <input id="cover" name="cover" class="input-file" type="file">
-                                    <img width="100" src=http://{{ request()->getHttpHost() }}/{{$list->cover}}>
+                                    <input id="cover" name="large" class="input-file" type="file">
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="cover">Small</label>
+                                <div class="col-md-4">
+                                    <input id="cover" name="small" class="input-file" type="file">
+
                                 </div>
                             </div>
 
@@ -100,3 +121,4 @@
     </div>
 </div>
 @endsection
+{{--<img width="100" src=http://{{ request()->getHttpHost() }}/{{$list->cover}}>--}}
