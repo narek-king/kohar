@@ -8,7 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use App\PhotoAlbum;
-
+use Validator;
 class PhotoAlbomController extends Controller
 {
     //
@@ -23,20 +23,36 @@ class PhotoAlbomController extends Controller
      * @return string
      */
     public function Create(){
-        $newInstance = new PhotoAlbum();
-        $this->validate(request(), ['name' => 'required|unique:photo_albums', 'cover' => 'required']);
+
+
+        $validator = Validator::make(request()->all(), [
+            'name' => 'required|unique:music_albums',
+            'cover' => 'required'
+        ]);
+
+//        $this->validate(request(), ['name' => 'required|unique:music_albums', 'cover' => 'required']);
+
+
+        if ($validator->fails()) {
+            return response()->json([$validator->messages()->getMessages(), 500]);
+        }
 
         if (request()->hasFile('cover')){
-            $newInstance->cover = request()->file('cover')->store('images/phto-album-covers');
-            $newInstance->name = request()->input('name');
-            $newInstance->save();
+            $image = request()->file('cover');
+            if ($image->extension() != 'png')
+                return response()->json([['data' => 'the file must be png'], 500]);
+
+            $album = PhotoAlbum::forceCreate([
+                'name' => request()->input('name'),
+                'cover' => $image->getClientOriginalName()
+            ]);
+            $image->storeAs('images/photo/'.$album->id, 'image.'.$image->extension());
         }
         else{
-            echo 'File upload error';
+            return response()->json([['data' => 'error uploading file'], 500]);
         }
 
-//        return ' <img src=http://'. request()->getHttpHost() .'/'.$newInstance->cover.'> <br> title: '. $newInstance->name;
-        return 'success';
+        return response()->json([['data' => 'success'], 200]);
     }
 
 
@@ -47,15 +63,28 @@ class PhotoAlbomController extends Controller
      */
     public function Update($id){
         $instance = PhotoAlbum::find($id);
-        $this->validate(request(), ['name' => 'required']);
-        $instance->name = request()->input('name');
-        if (request()->hasFile('cover')){
-            Storage::delete($instance->cover);
-            $instance->cover = request()->file('cover')->store('images/photo-album-covers');
+
+        $validator = Validator::make(request()->all(), [
+            'name' => 'required|unique:photo_albums']);
+
+        if ($validator->fails()) {
+            return response()->json([$validator->messages()->getMessages(), 500]);
         }
+
+
+        if (request()->hasFile('cover')) {
+            $image = request()->file('cover');
+            if ($image->extension() != 'png') {
+                Storage::delete('images/photo/' . $id . '/cover.png');
+                $image->storeAs('images/music/'.$id, 'image.'.$image->extension());
+            }
+        }
+
+        $instance->name = request()->input('name');
+        $instance->cover = 'images/music/'.$id.'/image.png';
         $instance->save();
 
-        return back();
+        return response()->json([['data' => 'edited'], 200]);
     }
 
     /**
@@ -65,8 +94,8 @@ class PhotoAlbomController extends Controller
      */
     public function Delete($id){
         $instance = PhotoAlbum::find($id);
-        Storage::delete($instance->cover);
+        Storage::delete('images/photo/' . $id . '/cover.png');
         $instance->delete();
-        return 'deleted';
+        return response()->json([['data' => 'deleted'], 200]);
     }
 }

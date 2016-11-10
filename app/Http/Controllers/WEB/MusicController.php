@@ -9,6 +9,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use kohar\SoundCloudeApi\SoundCloudeClient;
+use Validator;
 
 class MusicController extends Controller {
 
@@ -26,30 +27,39 @@ class MusicController extends Controller {
      * @return string
      */
     public function Create(){
-        $newInstance = new Music();
 
+        $validator = Validator::make(request()->all(), [
+            'track' => 'required',
+            'link' => 'required',
+            'album_id' => 'required'
+        ]);
 
-
-        $this->validate(request(), ['track' => 'required', 'link' => 'required']);
-        $newInstance->track = request()->input('track');
-     /*
-      *  // The File may be required for uploading lyrics and or music track
-        if (request()->hasFile('image')){
-            $newInstance->image = request()->file('image')->store('images/concerts');
+        if ($validator->fails()) {
+            return response()->json([$validator->messages()->getMessages(), 500]);
         }
-     */
-        $newInstance->lyrics = request()->input('lyrics');
-        $newInstance->lyrics_am = request()->input('lyrics_am');
-        $newInstance->link = $this->SoundCloudeClient->getStreamUrlFromURL(request()->input('link'));
-        $newInstance->duration = $this->SoundCloudeClient->getDurationFromURL(request()->input('link'));
-        $newInstance->performer = request()->input('performer');
-        $newInstance->music_by = request()->input('music_by');
-        $newInstance->lyrics_by = request()->input('lyrics_by');
-        $newInstance->music_album_id = request()->input('album_id');
-        $newInstance->is_published = request()->input('is_published');
-        $newInstance->is_favorite = request()->input('is_favorite');
-        $newInstance->save();
-        return 'success';
+
+        if (request()->hasFile('lyrics_am') && request()->hasFile('lyrics_en')){
+            $am = request()->file('lyrics_am');
+            $en = request()->file('lyrics_en');
+            if ($am->guessClientExtension() != 'json' && $en->guessClientExtension() != 'json')
+                return response()->json([['data' => 'the file format is wrong'], 500]);
+
+            $music = Music::forceCreate([
+                'track' => request()->input('track'),
+                'link' => $this->SoundCloudeClient->getStreamUrlFromURL(request()->input('link')),
+                'duration' => $this->SoundCloudeClient->getDurationFromURL(request()->input('link')),
+                'performer' => request()->input('performer'),
+                'music_by' => request()->input('music_by'),
+                'lyrics_by' => request()->input('lyrics_by'),
+                'music_album_id' => request()->input('album_id'),
+                'is_published' => request()->input('is_published'),
+                'is_favorite' => request()->input('is_favorite'),
+            ]);
+            $am->storeAs('lyrics/'.$music->id, 'am.json');
+            $en->storeAs('lyrics/'.$music->id, 'en.json');
+        }
+        return response()->json([['data' => 'success'], 200]);
+
     }
 
 
@@ -59,6 +69,32 @@ class MusicController extends Controller {
      * @return string
      */
     public function Update($id){
+
+        $validator = Validator::make(request()->all(), [
+            'track' => 'required',
+            'link' => 'required',
+            'album_id' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([$validator->messages()->getMessages(), 500]);
+        }
+
+        if (request()->hasFile('am')) {
+            $am = request()->file('am');
+            if ($am->extension() == 'json') {
+                Storage::delete('lyrics/' . $id . '/am.json');
+                $am->storeAs('lyrics/' . $id , 'am.json');
+            }
+        }
+        if (request()->hasFile('en')) {
+            $en = request()->file('en');
+            if ($en->extension() == 'json') {
+                Storage::delete('lyrics/' . $id . '/en.json');
+                $en->storeAs('lyrics/' . $id , 'en.json');
+            }
+        }
+        
         $instance = Music::find($id);
         /*
              *  // The File may be required for uploading lyrics
@@ -68,18 +104,17 @@ class MusicController extends Controller {
             */
         $this->validate(request(), ['track' => 'required', 'link' => 'required']);
         $instance->track = request()->input('track');
-        $instance->lyrics = request()->input('lyrics');
-        $instance->lyrics_am = request()->input('lyrics_am');
-        $instance->link = request()->input('link');
+        $instance->link = $this->SoundCloudeClient->getStreamUrlFromURL(request()->input('link'));
+        $instance->duration = $this->SoundCloudeClient->getDurationFromURL(request()->input('link'));
         $instance->performer = request()->input('performer');
         $instance->music_by = request()->input('music_by');
         $instance->lyrics_by = request()->input('lyrics_by');
-        $instance->album_id = request()->input('album_id');
+        $instance->music_album_id = request()->input('album_id');
         $instance->is_published = request()->input('is_published');
         $instance->is_favorite = request()->input('is_favorite');
         $instance->save();
 
-        return back();
+        return response()->json([['data' => 'success'], 200]);
     }
 
     /**
@@ -89,8 +124,9 @@ class MusicController extends Controller {
      */
     public function Delete($id){
         $instance = Music::find($id);
-
+        Storage::delete('lyrics/' . $id . '/en.json');
+        Storage::delete('lyrics/' . $id . '/am.json');
         $instance->delete();
-        return 'deleted';
+        return response()->json([['data' => 'deleted'], 200]);
     }
 }
