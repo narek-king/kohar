@@ -79,7 +79,6 @@
   <script src="app/view2/view2.js"></script>
   <script src="app/views/videos/videos.js"></script>
   <script src="app/views/concerts/concerts.js"></script>
-  <script src="app/views/news/news.js"></script><!---1-->
   <script src="app/views/photo/photo.js"></script>
   <script src="app/views/music/music.js"></script>
   <script src="app/views/music-albums/music-albums.js"></script>
@@ -93,5 +92,6 @@
 
 <!--include custom directive for modal window-->
   <script src="app/components/photo.js"></script>
+<!--<script src="app/components/addrow.js"></script>-->
 </body>
 </html>

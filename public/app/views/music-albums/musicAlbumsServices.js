@@ -1,7 +1,7 @@
 console.log("musicAlbumsServices ");
 
 angular.module('kohar.services', [])
-    .factory('connectWithDb', ['$http', function($http) {
+    .factory('musicAlbumsServices', ['$http', function($http) {
 
     return {
         insertRow : function (data) {

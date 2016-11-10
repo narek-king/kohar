@@ -1,5 +1,6 @@
 angular.module('kohar.photo', [])
     .directive('photoDirective', function($uibModal) {
+
         return {
             restrict : "E",
             scope : {
@@ -11,6 +12,7 @@ angular.module('kohar.photo', [])
                 $scope.animationsEnabled = true;
 
                 angular.element(element).bind('click', function () {
+                    console.log('element ', element);
                     var modal;
 
                     $scope.ok = function () {

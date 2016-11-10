@@ -9,8 +9,8 @@ angular.module('kohar.music-albums', ['ngAnimate', 'ngRoute', 'ngTouch', 'ui.boo
             controller: 'MusicAlbumsCtrl'
         });
     }])
-    .controller('MusicAlbumsCtrl', ['$scope', '$http', '$timeout', 'uiGridValidateService', 'uiGridConstants', 'connectWithDb',
-        function($scope, $http, $timeout, uiGridValidateService, uiGridConstants, connectWithDb) {
+    .controller('MusicAlbumsCtrl', ['$scope', '$http', '$timeout', 'uiGridValidateService', 'uiGridConstants', 'musicAlbumsServices', '$uibModal',
+        function($scope, $http, $timeout, uiGridValidateService, uiGridConstants, musicAlbumsServices, $uibModal) {
 
         $scope.gridOptions = {
             enableSorting: true,
@@ -59,7 +59,7 @@ angular.module('kohar.music-albums', ['ngAnimate', 'ngRoute', 'ngTouch', 'ui.boo
                     /**************************** UPDATE ***************************/
                     /***************************************************************/
                     console.log('updateRow ', rowEntity);
-                    connectWithDb.updateRow(rowEntity);
+                    musicAlbumsServices.updateRow(rowEntity);
 
                 });
             }
@@ -71,34 +71,44 @@ angular.module('kohar.music-albums', ['ngAnimate', 'ngRoute', 'ngTouch', 'ui.boo
         /**************************** READ *****************************/
         /***************************************************************/
         // connect with custom service and receive results from http.get() request
-        connectWithDb.getAll().then(function successCallback(response) {
+        musicAlbumsServices.getAll().then(function successCallback(response) {
 
             $scope.gridOptions.data = response.data.data;
 
         });
 
-
-
         // add row
-        $scope.addData = function() {
-            var n = $scope.gridOptions.data.length + 1;
-            var newRow = {
-                "name": "Name",
-                "cover": "app/resources/img/1.jpg",
-                "created_at": "",
-                "updated_at": ""
-            };
+        $scope.addData = function () {
 
-            $scope.gridOptions.data.unshift(newRow);
+            $scope.items = $scope.addrow;
 
-            connectWithDb.insertRow(newRow);
+            var modalInstance = $uibModal.open({
+                animation: this.animationsEnabled,
+                ariaLabelledBy: 'modal-title',
+                ariaDescribedBy: 'modal-body',
+                templateUrl: 'myModalContent.html',
+                controller: ModalInstanceCtrl,
+                controllerAs: 'this',
+                resolve: {
+                    items: function () {
+                        return $scope.items;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function (selectedItem) {
+
+            }, function () {
+                console.log('Modal dismissed at: ' + new Date());
+            });
         };
+
 
         $scope.deleteSelected = function(){
 
             var idArray = $scope.gridApi.selection.getSelectedRows();
             for(var i = 0; i < idArray.length; i++){
-                connectWithDb.deleteRow(idArray[i].id);
+                musicAlbumsServices.deleteRow(idArray[i].id);
             }
 
             angular.forEach($scope.gridApi.selection.getSelectedRows(), function (data, index) {
@@ -112,3 +122,16 @@ angular.module('kohar.music-albums', ['ngAnimate', 'ngRoute', 'ngTouch', 'ui.boo
         };
 
     }]);
+
+
+var ModalInstanceCtrl = function ($scope, $uibModalInstance, musicAlbumsServices) {
+
+    $scope.submit = function (myForm) {
+        musicAlbumsServices.insertRow($scope.addrow);
+        $uibModalInstance.close();
+    };
+
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    };
+};
