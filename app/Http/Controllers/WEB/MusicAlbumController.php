@@ -40,11 +40,14 @@ class MusicAlbumController extends Controller
         }
 
         if (request()->hasFile('small') && request()->hasFile('large')){
-            $album = MusicAlbum::forceCreate(['name' => request()->input('name')]);
             $small = request()->file('small');
             $large = request()->file('large');
+            if ($small->extension() != 'png' && $large->extension() != 'png')
+                return response()->json([['data' => 'the file must be png'], 500]);
+
+            $album = MusicAlbum::forceCreate(['name' => request()->input('name')]);
             $small->storeAs('images/'.$album->id, 'small.'.$small->extension());
-            $large->storeAs('images/'.$album->id, 'large.'.$small->extension());
+            $large->storeAs('images/'.$album->id, 'large.'.$large->extension());
         }
         else{
             return response()->json([['data' => 'error uploading file'], 500]);
@@ -61,15 +64,34 @@ class MusicAlbumController extends Controller
      */
     public function Update(int $id){
         $instance = MusicAlbum::find($id);
-        $this->validate(request(), ['name' => 'required']);
-        $instance->name = request()->input('name');
-        if (request()->hasFile('cover')){
-            Storage::delete($instance->cover);
-            $instance->cover = request()->file('cover')->store('images/music-album-covers');
+
+        $validator = Validator::make(request()->all(), [
+            'name' => 'required|unique:music_albums']);
+
+        if ($validator->fails()) {
+            return response()->json([$validator->messages()->getMessages(), 500]);
         }
+
+
+        if (request()->hasFile('small')) {
+            $small = request()->file('small');
+            if ($small->extension() != 'png') {
+                Storage::delete('images/' . $id . '/small.png');
+                $small->storeAs('images/'.$id, 'small.'.$small->extension());
+            }
+        }
+        if (request()->hasFile('large')) {
+            $large = request()->file('large');
+            if ($large->extension() != 'png') {
+                Storage::delete('images/' . $id . '/large.png');
+                $large->storeAs('images/'.$id, 'large.'.$large->extension());
+            }
+        }
+
+        $instance->name = request()->input('name');
         $instance->save();
 
-        return response()->json([['data' => 'success'], 200]);
+        return response()->json([['data' => 'edited'], 200]);
     }
 
     /**
@@ -79,8 +101,9 @@ class MusicAlbumController extends Controller
      */
     public function Delete($id){
         $instance = MusicAlbum::find($id);
-        Storage::delete($instance->cover);
+        Storage::delete('images/' . $id . '/large.png');
+        Storage::delete('images/' . $id . '/small.png');
         $instance->delete();
-        return response()->json([['data' => 'success'], 200]);
+        return response()->json([['data' => 'deleted'], 200]);
     }
 }
