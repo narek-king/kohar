@@ -19,6 +19,7 @@ angular.module('kohar.music-albums', ['ngAnimate', 'ngRoute', 'ngTouch', 'ui.boo
             enableRowSelection :  true,
             enableSelectAll: true,
             multiSelect : true,
+            rowHeight:35,
             columnDefs: [
                 { field: 'id',
                     cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
@@ -34,8 +35,11 @@ angular.module('kohar.music-albums', ['ngAnimate', 'ngRoute', 'ngTouch', 'ui.boo
                     field: 'cover',
                     cellClass:'k_height',
                     enableCellEdit: true,
-                    minWidth: 150,
-                    cellTemplate: '<div class="ui-grid-cell-contents"><input type="file" class="form-control" value="cover"></div>'
+                    minWidth: 100,
+                    cellTemplate: '<div class="ui-grid-cell-contents">' +
+                        '<div class="file_container">Large file<input type="file" class="form-control" name="large" value="cover large"></div>' +
+                        '<div class="file_container">Small file<input type="file" class="form-control" name="small" value="cover small"></div>' +
+                    '</div>'
                 },
                 {
                     field: 'cover',
