@@ -26,8 +26,9 @@ class PhotoAlbomController extends Controller
 
 
         $validator = Validator::make(request()->all(), [
-            'name' => 'required|unique:music_albums',
-            'cover' => 'required'
+            'name' => 'required|unique:photo_albums',
+            'cover' => 'required',
+            'description' => 'required'
         ]);
 
 //        $this->validate(request(), ['name' => 'required|unique:music_albums', 'cover' => 'required']);
@@ -44,6 +45,7 @@ class PhotoAlbomController extends Controller
 
             $album = PhotoAlbum::forceCreate([
                 'name' => request()->input('name'),
+                'description' => request()->input('description'),
                 'cover' => $image->getClientOriginalName()
             ]);
             $image->storeAs('images/photo/'.$album->id, 'image.'.$image->extension());
@@ -65,7 +67,7 @@ class PhotoAlbomController extends Controller
         $instance = PhotoAlbum::find($id);
 
         $validator = Validator::make(request()->all(), [
-            'name' => 'required|unique:photo_albums']);
+            'name' => 'required|unique:photo_albums', 'description' => 'required']);
 
         if ($validator->fails()) {
             return response()->json([$validator->messages()->getMessages(), 500]);
@@ -81,6 +83,7 @@ class PhotoAlbomController extends Controller
         }
 
         $instance->name = request()->input('name');
+        $instance->description = request()->input('description');
         $instance->cover = 'images/music/'.$id.'/image.png';
         $instance->save();
 

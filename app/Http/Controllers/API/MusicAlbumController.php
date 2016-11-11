@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\MusicAlbum;
 use App\Music;
 use App\Http\Requests;
+use Illuminate\Support\Facades\DB;
 
 class MusicAlbumController extends Controller
 {
@@ -16,9 +17,19 @@ class MusicAlbumController extends Controller
      * @return string
      */
     public function musicAlbums(){
+
+//        $musicAlbumarray = DB::table('music_albums')->get(['*', DB::raw('1 as quantity')]);
+
         $musicAlbums = MusicAlbum::paginate(env('PAGINATE_DEFAULT'));
+        $musicAlbumarray = $musicAlbums->toArray();
+
+
+        foreach ($musicAlbums as $key => $musicAlbum){
+        $musicAlbumarray['data'][$key] += ['quantity' => $musicAlbum->musics->count()];
+        }
+
         ApiLogger::logInfo();
-        return response()->json($musicAlbums);
+        return response()->json($musicAlbumarray);
     }
     /**
      * RRetrives singel music album whith its list of tracks
@@ -29,7 +40,6 @@ class MusicAlbumController extends Controller
         $tracks = MusicAlbum::find($id)->musics;
         ApiLogger::logInfo();
         return response()->json($tracks);
-
     }
 
 

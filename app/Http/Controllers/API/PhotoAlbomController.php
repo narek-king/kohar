@@ -12,17 +12,25 @@ class PhotoAlbomController extends Controller
 {
     //
     /**
-     * Retrives List of music albums (paged)
+     * Retrives List of photo albums (paged)
      *
      * @return string
      */
     public function photoAlbums(){
         $albums = PhotoAlbum::paginate(env('PAGINATE_DEFAULT'));
+
+        $photoAlbumarray = $albums->toArray();
+
+
+        foreach ($albums as $key => $photoAlbum){
+            $photoAlbumarray['data'][$key] += ['quantity' => $photoAlbum->photos->count()];
+        }
+        
         ApiLogger::logInfo();
-        return response()->json($albums);
+        return response()->json($photoAlbumarray);
     }
     /**
-     * RRetrives singel music album whith its list of tracks
+     * RRetrives singel photo album whith its list of tracks
      * @param int
      * @return string
      */
