@@ -57,7 +57,7 @@
                     @endif
                 </div>
                 <div class="panel-body">
-                    <form class="form-horizontal" method="post" action="/music" enctype="multipart/form-data">
+                    <form class="form-horizontal" method="post" action="/music-album" enctype="multipart/form-data">
                         <fieldset>
 
                             <!-- Form Name -->
@@ -67,7 +67,7 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="m">track</label>
                                 <div class="col-md-4">
-                                    <input id="name" name="track" value="" class="form-control input-md" required="" type="text">
+                                    <input id="name" name="name" value="" class="form-control input-md" required="" type="text">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -91,7 +91,7 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="cover">Lyrics am</label>
                                 <div class="col-md-4">
-                                    <input id="cover" name="lyrics_am" class="input-file" type="file">
+                                    <input id="cover" name="large" class="input-file" type="file">
 
                                 </div>
                             </div>
@@ -99,7 +99,7 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="cover">en</label>
                                 <div class="col-md-4">
-                                    <input id="cover" name="lyrics_en" class="input-file" type="file">
+                                    <input id="cover" name="small" class="input-file" type="file">
 
                                 </div>
                             </div>

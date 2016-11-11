@@ -26,6 +26,7 @@ class MusicAlbumController extends Controller
     public function Create(){
 
 
+
         $validator = Validator::make(request()->all(), [
             'name' => 'required|unique:music_albums',
             'small' => 'required',
@@ -38,9 +39,16 @@ class MusicAlbumController extends Controller
             return response()->json([$validator->messages()->getMessages(), 500]);
         }
 
+        print_r($_FILES);
+
         if (request()->hasFile('small') && request()->hasFile('large')){
             $small = request()->file('small');
             $large = request()->file('large');
+
+            print_r($small->extension());
+            echo "<br>";
+            print_r($large->extension());
+
             if ($small->extension() != 'png' && $large->extension() != 'png')
                 return response()->json([['data' => 'the file must be png'], 500]);
 

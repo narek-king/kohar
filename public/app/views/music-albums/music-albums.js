@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('kohar.music-albums', ['ngAnimate', 'ngRoute', 'ngTouch', 'ui.bootstrap',
-    'ui.grid', 'ui.grid.pagination', 'ui.grid.edit', 'ui.grid.resizeColumns', 'ui.grid.validate', 'ui.grid.selection', 'kohar.photo'])
+    'ui.grid', 'ui.grid.pagination', 'ui.grid.edit', 'ui.grid.resizeColumns', 'ui.grid.validate', 'ui.grid.selection', 'kohar.photo', 'angularFileUpload'])
 
     .config(['$routeProvider', function($routeProvider) {
         $routeProvider.when('/music-albums', {
@@ -128,23 +128,28 @@ angular.module('kohar.music-albums', ['ngAnimate', 'ngRoute', 'ngTouch', 'ui.boo
             $scope.gridApi.selection.clearSelectedRows();
         };
 
+
+
+
     }]);
 
 
-var ModalInstanceCtrl = function ($scope, $uibModalInstance, musicAlbumsServices) {
+var ModalInstanceCtrl = function ($scope, $uibModalInstance, musicAlbumsServices, FileUploader ) {
+
+    $scope.uploader = new FileUploader();
 
     $scope.submit = function (myForm) {
         console.log('controller');
-        console.log($scope.add_row);
+        console.log(myForm);
 
-        var formData = new FormData();
-        console.log($scope.add_row);
 
-        formData.append('name', $scope.add_row.name);
-        formData.append('large', $scope.add_row.large);
-        formData.append('small', $scope.add_row.small);
 
-        musicAlbumsServices.insertRow(formData);
+        //var formData = new FormData();
+        //formData.append('name', $scope.add_row.name);
+        //formData.append('large', $scope.add_row.large, "FlagKilikia.png");
+        //formData.append('small', $scope.add_row.small, "FlagKilikia.png");
+
+        //musicAlbumsServices.insertRow(formData);
         $uibModalInstance.close();
     };
 

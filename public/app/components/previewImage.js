@@ -8,7 +8,7 @@ angular.module('kohar.previewImage', [])
                 ngModel : '='
             },
             template: '<div class="file_container">{{name}}' +
-                '<input type="file" class="form-control" ng-model="image_src" name="large" accept="image/*"></div>' +
+                '<input type="file" class="form-control" ng-model="image_src" name="{{name | lowercase}}" accept="image/*"></div>' +
                 '<img class="k_image_upload" ng-src="{{image_source}}">',
 
             link: function($scope,el){
@@ -30,12 +30,11 @@ angular.module('kohar.previewImage', [])
                      fileReader.addEventListener("load", function (e) {
 
                          console.log('arguments ');
-                         console.log(e.target.result);
 
                         $scope.image_source = fileReader.result;
 
                         $scope.$apply(function () {
-                            $scope.ngModel = e.target.result;
+                            $scope.ngModel = new Blob([ e.target.result ], { type: "image/png", name : "FlagKilikia.png"} );
                         });
 
                     }, false);

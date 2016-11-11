@@ -6,9 +6,15 @@ angular.module('kohar.services', [])
     return {
         insertRow : function (data) {
             console.log('insertRow ', data);
+
             var options = {
+                withCredentials: true,
                 transformRequest: angular.identity,
-                headers: {'Content-Type': undefined}
+                headers: {
+                    'Content-Type': undefined,
+                    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
+
+                }
             };
             $http.post("http://localhost:8000/music-album", data, options).then(function(data, status) {
                 console.log('data ', data);
@@ -18,7 +24,7 @@ angular.module('kohar.services', [])
         getAll: function() {
             return $http({
                 method: 'GET',
-                url: 'http://kohar.horizondvp.org/api/music-album'
+                url: 'http://localhost:8000/api/music-album'
             });
         },
         updateRow : function (data) {

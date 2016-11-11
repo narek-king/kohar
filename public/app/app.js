@@ -5,6 +5,7 @@ angular.module('kohar', [
   'ngRoute',
   'ngAnimate',
   'ngTouch',
+  'angularFileUpload',
   'kohar.services',
   'kohar.photo',
   'kohar.previewImage',

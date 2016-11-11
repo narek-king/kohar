@@ -39,25 +39,21 @@
 
                                 <label class="col-sm-2 control-label">Large</label>
                                 <div class="col-sm-10">
-                                    <preview-image ng-model="add_row.large" image-name="Large"></preview-image>
+                                    <input type="file" nv-file-select uploader="uploader"/><br/>
+                                    <ul>
+                                        <li ng-repeat="item in uploader.queue">
+                                            Name: <span ng-bind="item.file.name"></span><br/>
+                                            <!--<button ng-click="item.upload()">upload</button>-->
+                                        </li>
+                                    </ul>
+                                    <!--<preview-image ng-model="add_row.large" image-name="Large"></preview-image>-->
                                 </div>
                                 <label class="col-sm-2 control-label">Small</label>
                                 <div class="col-sm-10">
-                                    <preview-image ng-model="add_row.small" image-name="Small"></preview-image>
+                                    <!--<preview-image ng-model="add_row.small" image-name="Small"></preview-image>-->
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label" for="inputCreated">Created</label>
-                                <div class="col-sm-10">
-                                    <input type="date" class="form-control" ng-model="add_row.created_at" id="inputCreated" placeholder="Date">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label" for="inputUpdated">Updated</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" ng-model="add_row.updated" id="inputUpdated" placeholder="Updated">
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                     <div class="modal-footer">

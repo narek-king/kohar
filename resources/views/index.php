@@ -72,7 +72,11 @@
   <script src="app/bower_components/angular-touch/angular-touch.js"></script>
   <script src="app/bower_components/angular-ui-grid/ui-grid.min.js"></script>
 
-<script src="app/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="app/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+
+    <!--image upload plugin-->
+    <script src="app/bower_components/angular-file-upload/dist/angular-file-upload.js"></script>
+
   <script src="app/app.js"></script>
 
   <script src="app/view1/view1.js"></script>
@@ -93,5 +97,7 @@
 <!--include custom directive for modal window-->
   <script src="app/components/photo.js"></script>
     <script src="app/components/previewImage.js"></script>
+
+
 </body>
 </html>
