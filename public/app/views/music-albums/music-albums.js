@@ -48,7 +48,9 @@ angular.module('kohar.music-albums', ['ngAnimate', 'ngRoute', 'ngTouch', 'ui.boo
                     cellClass:'k_height',
                     enableCellEdit: false,
                     width: 80,
-                    cellTemplate: '<div class="ui-grid-cell-contents"><photo-directive class="k_image_admin" image-src="app/resources/img/1.jpg"></photo-directive></div>'
+                    cellTemplate: '<div class="ui-grid-cell-contents">' +
+                        '<photo-directive class="k_image_admin" image-src="app/resources/img/1.jpg"></photo-directive>' +
+                    '</div>'
                 },
                 { field: 'created_at', name : "Created", type: 'date', width: '15%'},
                 { field: 'updated_at', name : "Updated", type: 'date', width: '15%'},
@@ -85,7 +87,7 @@ angular.module('kohar.music-albums', ['ngAnimate', 'ngRoute', 'ngTouch', 'ui.boo
         // add row
         $scope.addData = function () {
 
-            $scope.items = $scope.addrow;
+            $scope.items = $scope.add_row;
 
             var modalInstance = $uibModal.open({
                 animation: this.animationsEnabled,
@@ -132,7 +134,17 @@ angular.module('kohar.music-albums', ['ngAnimate', 'ngRoute', 'ngTouch', 'ui.boo
 var ModalInstanceCtrl = function ($scope, $uibModalInstance, musicAlbumsServices) {
 
     $scope.submit = function (myForm) {
-        musicAlbumsServices.insertRow($scope.addrow);
+        console.log('controller');
+        console.log($scope.add_row);
+
+        var formData = new FormData();
+        console.log($scope.add_row);
+
+        formData.append('name', $scope.add_row.name);
+        formData.append('large', $scope.add_row.large);
+        formData.append('small', $scope.add_row.small);
+
+        musicAlbumsServices.insertRow(formData);
         $uibModalInstance.close();
     };
 

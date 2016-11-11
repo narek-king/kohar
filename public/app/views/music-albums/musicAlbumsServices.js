@@ -6,7 +6,11 @@ angular.module('kohar.services', [])
     return {
         insertRow : function (data) {
             console.log('insertRow ', data);
-            $http.post("http://localhost:8000/music-album", data).then(function(data, status) {
+            var options = {
+                transformRequest: angular.identity,
+                headers: {'Content-Type': undefined}
+            };
+            $http.post("http://localhost:8000/music-album", data, options).then(function(data, status) {
                 console.log('data ', data);
                 console.log('status ', status);
             });
