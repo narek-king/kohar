@@ -34,7 +34,7 @@ class PhotoController extends Controller
         $newInstance->name = request()->input('name');
         $newInstance->photo_album_id = request()->input('album_id');
         $newInstance->save();
-        return 'success';
+        return response()->json(['data' => 'success'], 200);
     }
 
 
@@ -54,7 +54,7 @@ class PhotoController extends Controller
             $instance->image = request()->file('image')->store('images/gallery');
         }
         $instance->save();
-        return back();
+        return response()->json(['data' => 'success'], 200);
     }
 
     /**
@@ -66,6 +66,6 @@ class PhotoController extends Controller
         $instance = Photo::find($id);
         Storage::delete($instance->image);
         $instance->delete();
-        return 'deleted';
+        return response()->json(['data' => 'success'], 200);
     }
 }

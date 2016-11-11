@@ -25,7 +25,8 @@ class ConcertController extends Controller
      */
     public function Create(){
         $newInstance = new Concert();
-//        $this->validate(request(), ['image' => 'required|unique:music_albums', 'country' => 'required']);
+
+        //        $this->validate(request(), ['image' => 'required|unique:music_albums', 'country' => 'required']);
 
         if (request()->hasFile('image')){
             $newInstance->image = request()->file('image')->store('images/concerts');
@@ -36,7 +37,7 @@ class ConcertController extends Controller
         $newInstance->date = request()->input('date');
         $newInstance->description = request()->input('description');
         $newInstance->save();
-        return 'success';
+        return response()->json(['data' => 'success'], 200);
     }
 
 
@@ -59,7 +60,7 @@ class ConcertController extends Controller
         $instance->description = request()->input('description');
         $instance->save();
 
-        return back();
+        return response()->json(['data' => 'success'], 200);
     }
 
     /**
@@ -71,6 +72,6 @@ class ConcertController extends Controller
         $instance = Concert::find($id);
         Storage::delete($instance->image);
         $instance->delete();
-        return 'deleted';
+        return response()->json(['data' => 'success'], 200);
     }
 }

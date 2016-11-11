@@ -54,7 +54,7 @@ class PhotoAlbomController extends Controller
             return response()->json([['data' => 'error uploading file'], 500]);
         }
 
-        return response()->json([['data' => 'success'], 200]);
+        return response()->json(['data' => 'success'], 200);
     }
 
 
@@ -87,7 +87,7 @@ class PhotoAlbomController extends Controller
         $instance->cover = 'images/music/'.$id.'/image.png';
         $instance->save();
 
-        return response()->json([['data' => 'edited'], 200]);
+        return response()->json(['data' => 'edited'], 200);
     }
 
     /**
@@ -99,6 +99,6 @@ class PhotoAlbomController extends Controller
         $instance = PhotoAlbum::find($id);
         Storage::delete('images/photo/' . $id . '/cover.png');
         $instance->delete();
-        return response()->json([['data' => 'deleted'], 200]);
+        return response()->json(['data' => 'deleted'], 200);
     }
 }

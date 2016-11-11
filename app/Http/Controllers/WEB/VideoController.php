@@ -33,7 +33,7 @@ class VideoController extends Controller
         $newInstance->is_published = request()->input('is_published');
         $newInstance->save();
 
-        return 'success';
+        return response()->json(['data' => 'success'], 200);
     }
 
 
@@ -55,7 +55,7 @@ class VideoController extends Controller
         $instance->save();
 
 
-        return back();
+        return response()->json(['data' => 'success'], 200);
     }
 
     /**
@@ -67,6 +67,6 @@ class VideoController extends Controller
         $instance = Video::find($id);
 
         $instance->delete();
-        return 'deleted';
+        return response()->json(['data' => 'success'], 200);
     }
 }

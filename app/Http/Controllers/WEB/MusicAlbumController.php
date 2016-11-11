@@ -32,7 +32,6 @@ class MusicAlbumController extends Controller
             'large' => 'required',
         ]);
 
-//        $this->validate(request(), ['name' => 'required|unique:music_albums', 'cover' => 'required']);
 
 
         if ($validator->fails()) {
@@ -46,14 +45,15 @@ class MusicAlbumController extends Controller
                 return response()->json([['data' => 'the file must be png'], 500]);
 
             $album = MusicAlbum::forceCreate(['name' => request()->input('name')]);
-            $small->storeAs('images/music/'.$album->id, 'small.'.$small->extension());
-            $large->storeAs('images/music/'.$album->id, 'large.'.$large->extension());
-        }
-        else{
-            return response()->json([['data' => 'error uploading file'], 500]);
-        }
+                    $small->storeAs('images/music/'.$album->id, 'small.'.$small->extension());
+                   $large->storeAs('images/music/'.$album->id, 'large.'.$large->extension());
+               }
+               else{
+                   return response()->json([['data' => 'error uploading file'], 500]);
+               }
 
-        return response()->json([['data' => 'success'], 200]);
+        return response()->json(['data' => 'success'], 200);
+
     }
 
 
@@ -82,7 +82,7 @@ class MusicAlbumController extends Controller
         }
         if (request()->hasFile('large')) {
             $large = request()->file('large');
-            if ($large->extension() == 'png') {
+            if ($large->extension() != 'png') {
                 Storage::delete('images/music/' . $id . '/large.png');
                 $large->storeAs('images/music/'.$id, 'large.'.$large->extension());
             }
@@ -91,7 +91,7 @@ class MusicAlbumController extends Controller
         $instance->name = request()->input('name');
         $instance->save();
 
-        return response()->json([['data' => 'edited'], 200]);
+        return response()->json(['data' => 'success'], 200);
     }
 
     /**
@@ -104,6 +104,6 @@ class MusicAlbumController extends Controller
         Storage::delete('images/music/' . $id . '/large.png');
         Storage::delete('images/music/' . $id . '/small.png');
         $instance->delete();
-        return response()->json([['data' => 'deleted'], 200]);
+        return response()->json(['data' => 'deleted'], 200);
     }
 }

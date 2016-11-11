@@ -58,7 +58,7 @@ class MusicController extends Controller {
             $am->storeAs('lyrics/'.$music->id, 'am.json');
             $en->storeAs('lyrics/'.$music->id, 'en.json');
         }
-        return response()->json([['data' => 'success'], 200]);
+        return response()->json(['data' => 'success'], 200);
 
     }
 
@@ -114,7 +114,7 @@ class MusicController extends Controller {
         $instance->is_favorite = request()->input('is_favorite');
         $instance->save();
 
-        return response()->json([['data' => 'success'], 200]);
+        return response()->json(['data' => 'success'], 200);
     }
 
     /**
@@ -127,6 +127,6 @@ class MusicController extends Controller {
         Storage::delete('lyrics/' . $id . '/en.json');
         Storage::delete('lyrics/' . $id . '/am.json');
         $instance->delete();
-        return response()->json([['data' => 'deleted'], 200]);
+        return response()->json(['data' => 'deleted'], 200);
     }
 }
