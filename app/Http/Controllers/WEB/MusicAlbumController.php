@@ -36,7 +36,7 @@ class MusicAlbumController extends Controller
 
 
         if ($validator->fails()) {
-            return response()->json([$validator->messages()->getMessages(), 500]);
+            return response()->json($validator->messages()->getMessages(), 500);
         }
 
         print_r($_FILES);
@@ -50,17 +50,17 @@ class MusicAlbumController extends Controller
             print_r($large->extension());
 
             if ($small->extension() != 'png' && $large->extension() != 'png')
-                return response()->json([['data' => 'the file must be png'], 500]);
+                return response()->json(['data' => 'the file must be png'], 500);
 
             $album = MusicAlbum::forceCreate(['name' => request()->input('name')]);
                     $small->storeAs('images/music/'.$album->id, 'small.'.$small->extension());
                    $large->storeAs('images/music/'.$album->id, 'large.'.$large->extension());
                }
                else{
-                   return response()->json([['data' => 'error uploading file'], 500]);
+                   return response()->json(['data' => 'error uploading file'], 500);
                }
 
-        return response()->json(['data' => 'success'], 200);
+        return response()->json(['data' => 'success', $album], 200);
 
     }
 
@@ -77,7 +77,7 @@ class MusicAlbumController extends Controller
             'name' => 'required|unique:music_albums']);
 
         if ($validator->fails()) {
-            return response()->json([$validator->messages()->getMessages(), 500]);
+            return response()->json($validator->messages()->getMessages(), 500);
         }
 
 
