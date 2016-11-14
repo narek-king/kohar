@@ -65,11 +65,10 @@ Route::get('makelink', function(){
         echo 'symlink created';
 });*/
 
-/*
+
 
 Route::get('makelink', function(){
-    if (symlink ('/home/projects/Kohar/storage/app/images', '/home/projects/Kohar/public/images' ) &&
-            symlink ('/home/projects/Kohar/storage/app/lyrics', '/home/projects/Kohar/public/lyrics' ))
+    if (symlink ('/home/horizor0/public_html/kohar/storage/app/lyric', '/home/horizor0/public_html/kohar/public/lyric' ))
         echo 'symlink created';
-});*/
+});
 
