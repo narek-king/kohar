@@ -224,3 +224,37 @@ footer{
   top: 0;
   cursor: pointer;
 }
+
+/* uploaded image */
+.thumb {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 28px;
+  height: 28px;
+}
+.btn_short{
+  padding: 3px 12px;
+}
+
+form .progress {
+  line-height: 15px;
+}
+
+.modal-body .progress {
+  display: inline-block;
+  vertical-align: top;
+  height: 30px;
+  line-height: 30px !important;
+  width: 100px;
+  border: 1px groove #CCC;
+  margin-left: 10px;
+  margin-bottom: 0;
+}
+.progress div {
+  font-size: smaller;
+  background: orange;
+  width: 0;
+    padding-left: 5px;
+}

@@ -1,11 +1,12 @@
 'use strict';
 
 // Declare app level module which depends on views, and components
+
 angular.module('kohar', [
   'ngRoute',
   'ngAnimate',
   'ngTouch',
-  'angularFileUpload',
+  'ngFileUpload',
   'kohar.services',
   'kohar.photo',
   'kohar.previewImage',
@@ -13,6 +14,11 @@ angular.module('kohar', [
   'kohar.version',
   'ui.bootstrap',
   'ui.grid',
+  'ui.grid.pagination',
+  'ui.grid.edit',
+  'ui.grid.resizeColumns',
+  'ui.grid.validate',
+  'ui.grid.selection',
   'kohar.view1',
   'kohar.view2',
   'kohar.music-albums',

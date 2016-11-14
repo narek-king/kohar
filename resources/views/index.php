@@ -75,7 +75,8 @@
     <script src="app/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 
     <!--image upload plugin-->
-    <script src="app/bower_components/angular-file-upload/dist/angular-file-upload.js"></script>
+  <script src="app/bower_components/ng-file-upload-shim/ng-file-upload-shim.js"></script>
+  <script src="app/bower_components/ng-file-upload/ng-file-upload.js"></script>
 
   <script src="app/app.js"></script>
 

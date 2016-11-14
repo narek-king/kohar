@@ -1,22 +1,42 @@
 'use strict';
 
-angular.module('kohar.music-albums', ['ngAnimate', 'ngRoute', 'ngTouch', 'ui.bootstrap',
-    'ui.grid', 'ui.grid.pagination', 'ui.grid.edit', 'ui.grid.resizeColumns', 'ui.grid.validate', 'ui.grid.selection', 'kohar.photo', 'angularFileUpload'])
-
+angular.module('kohar.music-albums', [])
     .config(['$routeProvider', function($routeProvider) {
         $routeProvider.when('/music-albums', {
             templateUrl: 'app/views/music-albums/music-albums.html',
             controller: 'MusicAlbumsCtrl'
         });
     }])
-    .controller('MusicAlbumsCtrl', ['$scope', '$http', '$timeout', 'uiGridValidateService', 'uiGridConstants', 'musicAlbumsServices', '$uibModal',
-        function($scope, $http, $timeout, uiGridValidateService, uiGridConstants, musicAlbumsServices, $uibModal) {
+    .controller('MusicAlbumsCtrl', ['$scope', '$http', '$timeout', '$rootScope', 'uiGridValidateService', 'uiGridConstants', 'musicAlbumsServices', '$uibModal',
+        function($scope, $http, $timeout, $rootScope, uiGridValidateService, uiGridConstants, musicAlbumsServices, $uibModal) {
+
+
+            /* Preview updated image */
+            $scope.storeFile = function (gridRow, gridCol, files) {
+                // ignore all but the first file, it can only select one anyway
+                // set the filename into this column
+
+                gridRow.entity.filename = files[0].name;
+
+                console.log(gridRow.entity.filename);
+
+                // read the file and set it into a hidden column, which we may do stuff with later
+                var setFile = function(fileContent){
+                    gridRow.entity.file = fileContent.currentTarget.result;
+                    // put it on scope so we can display it - you'd probably do something else with it
+                    $scope.lastFile = fileContent.currentTarget.result;
+                    $scope.$apply();
+                };
+                var reader = new FileReader();
+                reader.onload = setFile;
+                reader.readAsText( files[0] );
+            };
 
 
         $scope.gridOptions = {
             enableSorting: true,
             paginationPageSizes: [25, 50, 75],
-            paginationPageSize: 4,
+            paginationPageSize: 10,
             enableRowSelection :  true,
             enableSelectAll: true,
             multiSelect : true,
@@ -31,16 +51,29 @@ angular.module('kohar.music-albums', ['ngAnimate', 'ngRoute', 'ngTouch', 'ui.boo
                     enableCellEdit: false,
                     width: "50"
                 },
-                { field: 'name', cellClass:'red', enableCellEdit: true, minWidth: 200, validators: {required: true}, cellTemplate: 'ui-grid/cellTitleValidator'},
                 {
-                    field: 'Cover Image',
+                    field: 'name',
+                    cellClass:'red',
+                    enableCellEdit: true,
+                    minWidth: 200,
+                    validators: {required: true},
+                    cellTemplate: 'ui-grid/cellTitleValidator'
+                },
+                {
+                    field: 'coverImage',
                     cellClass:'k_height',
                     enableCellEdit: true,
+                    type: 'file',
                     width: 220,
-                    cellTemplate : '<div class="ui-grid-cell-contents">' +
-                        '<preview-image image-name="Large"></preview-image>' +
-                        '<preview-image image-name="Small"></preview-image>' +
-                    '</div>'
+                    //cellTemplate : '<div class="ui-grid-cell-contents">' +
+                    //    '<div class="file_container">large' +
+                    //        '<input type="file" class="form-control" ng-model="row.entity.coverImage" name="large" accept="image/*"></div>' +
+                    //        '<img class="k_image_upload" ng-src="images/music/{{row.entity.id}}/large.png">' +
+                        //'<preview-image image-name="large" image-id="{{row.entity.id}}" ng-model="row.entity.coverImage"></preview-image>' +
+                        //'<preview-image image-name="small" ng-model="row.entity.id"></preview-image>' +
+                    //'</div>',
+                    editableCellTemplate: 'ui-grid/fileChooserEditor',
+                    editFileChooserCallback: $scope.storeFile
                 },
                 {
                     field: 'cover',
@@ -52,8 +85,6 @@ angular.module('kohar.music-albums', ['ngAnimate', 'ngRoute', 'ngTouch', 'ui.boo
                         '<photo-directive class="k_image_admin" image-src="app/resources/img/1.jpg"></photo-directive>' +
                     '</div>'
                 },
-                { field: 'created_at', name : "Created", type: 'date', width: '15%'},
-                { field: 'updated_at', name : "Updated", type: 'date', width: '15%'},
             ],
 
             onRegisterApi : function(gridApi){
@@ -65,14 +96,14 @@ angular.module('kohar.music-albums', ['ngAnimate', 'ngRoute', 'ngTouch', 'ui.boo
                     /***************************************************************/
                     /**************************** UPDATE ***************************/
                     /***************************************************************/
-                    console.log('updateRow ', rowEntity);
+                    console.log('afterCellEdit ', rowEntity);
+                    console.log('newValue ', newValue);
                     musicAlbumsServices.updateRow(rowEntity);
 
                 });
             }
 
         };
-
 
         /***************************************************************/
         /**************************** READ *****************************/
@@ -129,29 +160,59 @@ angular.module('kohar.music-albums', ['ngAnimate', 'ngRoute', 'ngTouch', 'ui.boo
         };
 
 
-
+        $scope.$on('setGridOption', function (event, data) {
+            $scope.gridOptions.data.unshift(data);
+        });
 
     }]);
 
 
-var ModalInstanceCtrl = function ($scope, $uibModalInstance, musicAlbumsServices, FileUploader ) {
-
-    $scope.uploader = new FileUploader();
-
-    $scope.submit = function (myForm) {
-        console.log('controller');
-        console.log(myForm);
+var ModalInstanceCtrl = function ($scope, $http, $rootScope, uiGridConstants, $uibModalInstance, musicAlbumsServices, Upload,  $timeout ) {
 
 
+    $scope.uploadPic = function(fileLarge, fileSmall) {
 
-        //var formData = new FormData();
-        //formData.append('name', $scope.add_row.name);
-        //formData.append('large', $scope.add_row.large, "FlagKilikia.png");
-        //formData.append('small', $scope.add_row.small, "FlagKilikia.png");
 
-        //musicAlbumsServices.insertRow(formData);
-        $uibModalInstance.close();
-    };
+        var add_new_row = {
+            name: $scope.name,
+            small: fileSmall,
+            large : fileLarge
+        };
+
+        musicAlbumsServices.insertRow(add_new_row).then(function (response) {
+            $timeout(function () {
+
+                if(response.data.data == "success"){
+
+                    add_new_row.id = response.data[0].id;
+
+                    var large_img_path = "images/music/" + add_new_row.id + "/large.png";
+                    add_new_row.large_img = large_img_path;
+
+                    var small_img_path = "images/music/" + add_new_row.id + "/small.png";
+
+                    add_new_row.small_img = small_img_path;
+                    console.log(add_new_row);
+                    $rootScope.$broadcast('setGridOption', add_new_row);
+
+                    $uibModalInstance.close();
+                }
+            });
+        }, function (response) {
+            if (response.status > 0){
+                $scope.errorMsg = response.status + ': ' + response.data;
+            }
+        }, function (evt) {
+            // Math.min is to fix IE which reports 200% sometimes
+            fileLarge.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+            fileSmall.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+
+        });
+
+
+    }
+
+    $uibModalInstance.close();
 
     $scope.cancel = function () {
         $uibModalInstance.dismiss('cancel');

@@ -1,25 +1,15 @@
 console.log("musicAlbumsServices ");
 
 angular.module('kohar.services', [])
-    .factory('musicAlbumsServices', ['$http', function($http) {
+    .factory('musicAlbumsServices', ['$http', 'Upload', function($http, Upload) {
 
     return {
         insertRow : function (data) {
-            console.log('insertRow ', data);
 
-            var options = {
-                withCredentials: true,
-                transformRequest: angular.identity,
-                headers: {
-                    'Content-Type': undefined,
-                    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
-
-                }
-            };
-            $http.post("http://localhost:8000/music-album", data, options).then(function(data, status) {
-                console.log('data ', data);
-                console.log('status ', status);
-            });
+            return Upload.upload({
+                url: 'http://localhost:8000/music-album',
+                data: data,
+            })
         },
         getAll: function() {
             return $http({
@@ -28,8 +18,13 @@ angular.module('kohar.services', [])
             });
         },
         updateRow : function (data) {
-            console.log('service');
-            console.log(data);
+
+          console.log('updateRow Service');
+          console.log(data);
+        /*    Upload.upload({
+                url: 'http://localhost:8000/music-album',
+                data: data,
+            }); */
             $http.put('http://localhost:8000/music-album/' + data.id, data).then(function(data, status) {
                 console.log('updated data ', data);
                 console.log('updated status ', status);
