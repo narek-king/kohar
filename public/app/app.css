@@ -225,6 +225,19 @@ footer{
   cursor: pointer;
 }
 
+.styled_file_container{
+  text-align: center;
+  color: #708492;
+  font-size: 16px;
+  cursor: pointer;
+  line-height: 27px;
+  border: 1px solid #1ebae5;
+  padding: 2px 3px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+}
+
 /* uploaded image */
 .thumb {
   display: inline-block;

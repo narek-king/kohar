@@ -21,14 +21,17 @@ angular.module('kohar.services', [])
 
           console.log('updateRow Service');
           console.log(data);
-        /*    Upload.upload({
-                url: 'http://localhost:8000/music-album',
-                data: data,
-            }); */
-            $http.put('http://localhost:8000/music-album/' + data.id, data).then(function(data, status) {
-                console.log('updated data ', data);
-                console.log('updated status ', status);
-            });
+
+            if(data.file && data.filename){
+                console.log('data.filename exists');
+                Upload.upload({
+                    url: 'http://localhost:8000/music-album/' + data.id,
+                    data: data,
+                    method: 'PUT',
+                })
+            }
+
+            return $http.put('http://localhost:8000/music-album/' + data.id, data);
         },
         deleteRow : function (id) {
             console.log('id ', id);
