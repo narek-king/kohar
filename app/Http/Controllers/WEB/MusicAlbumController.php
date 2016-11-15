@@ -87,9 +87,10 @@ class MusicAlbumController extends Controller
                 $large->storeAs('images/music/'.$id, 'large.'.$large->extension());
             }
         }
-
+        if (request()->input('name') != ''){
         $instance->name = request()->input('name');
         $instance->save();
+        }
 
         return response()->json(['data' => 'success'], 200);
     }
