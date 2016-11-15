@@ -66,7 +66,7 @@ class MusicAlbumController extends Controller
         $instance = MusicAlbum::find($id);
 
         $validator = Validator::make(request()->all(), [
-            'name' => 'required|unique:music_albums']);
+            'name' => 'unique:music_albums']);
 
         if ($validator->fails()) {
             return response()->json([$validator->messages()->getMessages()], 500);
