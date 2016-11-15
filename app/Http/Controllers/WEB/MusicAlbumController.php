@@ -52,7 +52,7 @@ class MusicAlbumController extends Controller
                    return response()->json(['data' => 'error uploading file'], 500);
                }
 
-        return response()->json(['data' => 'success'], 200);
+        return response()->json(['data' => 'success', $album], 200);
 
     }
 
