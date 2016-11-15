@@ -35,13 +35,13 @@ class PhotoAlbomController extends Controller
 
 
         if ($validator->fails()) {
-            return response()->json([$validator->messages()->getMessages(), 500]);
+            return response()->json([$validator->messages()->getMessages()], 500);
         }
 
         if (request()->hasFile('cover')){
             $image = request()->file('cover');
             if ($image->extension() != 'png')
-                return response()->json([['data' => 'the file must be png'], 500]);
+                return response()->json(['data' => 'the file must be png'], 500);
 
             $album = PhotoAlbum::forceCreate([
                 'name' => request()->input('name'),
@@ -51,10 +51,10 @@ class PhotoAlbomController extends Controller
             $image->storeAs('images/photo/'.$album->id, 'image.'.$image->extension());
         }
         else{
-            return response()->json([['data' => 'error uploading file'], 500]);
+            return response()->json(['data' => 'error uploading file'], 500);
         }
 
-        return response()->json(['data' => 'success'], 200);
+        return response()->json(['data' => 'success', $album], 200);
     }
 
 
@@ -70,7 +70,7 @@ class PhotoAlbomController extends Controller
             'name' => 'required|unique:photo_albums', 'description' => 'required']);
 
         if ($validator->fails()) {
-            return response()->json([$validator->messages()->getMessages(), 500]);
+            return response()->json([$validator->messages()->getMessages()], 500);
         }
 
 

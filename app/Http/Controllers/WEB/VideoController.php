@@ -22,18 +22,18 @@ class VideoController extends Controller
      * @return string
      */
     public function Create(){
-        $newInstance = new Video();
+
         $this->validate(request(), ['link' => 'required']);
 
-        $newInstance->name = request()->input('name');
-        $newInstance->link = request()->input('link');
-        $newInstance->performer = request()->input('performer');
-        $newInstance->music_by = request()->input('music_by');
-        $newInstance->lyrics_by = request()->input('lyrics_by');
-        $newInstance->is_published = request()->input('is_published');
-        $newInstance->save();
+        $instance = Video::forceCreate([
+            'name' => request()->input('name'),
+            'link' => request()->input('link'),
+            'performer' => request()->input('performer'),
+            'music_by' => request()->input('music_by'),
+            'lyrics_by' => request()->input('lyrics_by'),
+            'is_published' => request()->input('is_published') ]);
 
-        return response()->json(['data' => 'success'], 200);
+        return response()->json(['data' => 'success', $instance], 200);
     }
 
 

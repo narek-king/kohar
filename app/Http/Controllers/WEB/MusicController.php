@@ -35,14 +35,14 @@ class MusicController extends Controller {
         ]);
 
         if ($validator->fails()) {
-            return response()->json([$validator->messages()->getMessages(), 500]);
+            return response()->json([$validator->messages()->getMessages()], 500);
         }
 
         if (request()->hasFile('lyrics_am') && request()->hasFile('lyrics_en')){
             $am = request()->file('lyrics_am');
             $en = request()->file('lyrics_en');
             if ($am->guessClientExtension() != 'json' && $en->guessClientExtension() != 'json')
-                return response()->json([['data' => 'the file format is wrong'], 500]);
+                return response()->json(['data' => 'the file format is wrong'], 500);
 
             $music = Music::forceCreate([
                 'track' => request()->input('track'),
@@ -58,7 +58,7 @@ class MusicController extends Controller {
             $am->storeAs('lyrics/'.$music->id, 'am.json');
             $en->storeAs('lyrics/'.$music->id, 'en.json');
         }
-        return response()->json(['data' => 'success'], 200);
+        return response()->json(['data' => 'success', $music], 200);
 
     }
 
@@ -77,7 +77,7 @@ class MusicController extends Controller {
         ]);
 
         if ($validator->fails()) {
-            return response()->json([$validator->messages()->getMessages(), 500]);
+            return response()->json([$validator->messages()->getMessages()], 500);
         }
 
         if (request()->hasFile('am')) {

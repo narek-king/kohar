@@ -24,20 +24,23 @@ class ConcertController extends Controller
      * @return string
      */
     public function Create(){
-        $newInstance = new Concert();
+
 
         //        $this->validate(request(), ['image' => 'required|unique:music_albums', 'country' => 'required']);
 
         if (request()->hasFile('image')){
-            $newInstance->image = request()->file('image')->store('images/concerts');
+            $image = request()->file('image')->store('images/concerts');
+
+        $instance = Music::forceCreate([
+            'country' => request()->input('country'),
+            'image' => $image,
+            'city' => request()->input('city'),
+            'place' => request()->input('place'),
+            'date' => request()->input('date'),
+            'description' => request()->input('description')]);
         }
-        $newInstance->country = request()->input('country');
-        $newInstance->city = request()->input('city');
-        $newInstance->place = request()->input('place');
-        $newInstance->date = request()->input('date');
-        $newInstance->description = request()->input('description');
-        $newInstance->save();
-        return response()->json(['data' => 'success'], 200);
+        else {return response()->json(['data' => 'error uploading file'], 500);}
+        return response()->json(['data' => 'success', $instance], 200);
     }
 
 
