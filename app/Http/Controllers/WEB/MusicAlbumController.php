@@ -82,7 +82,7 @@ class MusicAlbumController extends Controller
         }
         if (request()->hasFile('large')) {
             $large = request()->file('large');
-            if ($large->extension() != 'png') {
+            if ($large->extension() == 'png') {
                 Storage::delete('images/music/' . $id . '/large.png');
                 $large->storeAs('images/music/'.$id, 'large.'.$large->extension());
             }
