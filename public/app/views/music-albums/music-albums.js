@@ -14,11 +14,9 @@ angular.module('kohar.music-albums', [])
             $scope.storeFile = function (gridRow, gridCol, files) {
 
                 console.log('arguments ', gridRow );
+                gridRow.entity.large = files[0];
 
-                updateRow({
-                    id :  gridRow.entity.id,
-                    large : files[0]
-                }, {field : "large"}, files[0], null, gridRow.entity.imagePath);
+                updateRow(gridRow.entity, {field : "large"}, files[0], null, gridRow.entity.imagePath);
 
             };
 
@@ -50,53 +48,30 @@ angular.module('kohar.music-albums', [])
                     cellTemplate: 'ui-grid/cellTitleValidator'
                 },
                 {
-                    field: 'coverImage',
+                    field: 'Large Image',
                     cellClass:'k_height styled_file_container',
                     enableCellEdit: true,
                     type: 'file',
                     width: 200,
-                    cellTemplate: '<div>Load large image <img class="k_image_upload" ng-init="row.entity.imagePath = \'http://localhost:8000/images/music/\' + row.entity.id + \'/large.png\'" ng-src="{{row.entity.imagePath}}"></div>',
-                    //cellTemplate : '<div class="ui-grid-cell-contents">' +
-                    //    '<div class="file_container">large' +
-                    //        '<input type="file" class="form-control" ng-model="row.entity.coverImage" name="large" accept="image/*"></div>' +
-                    //        '<img class="k_image_upload" ng-src="images/music/{{row.entity.id}}/large.png">' +
-                        //'<preview-image image-name="large" image-id="{{row.entity.id}}" ng-model="row.entity.coverImage"></preview-image>' +
-                        //'<preview-image image-name="small" ng-model="row.entity.id"></preview-image>' +
-                    //'</div>',
+                    cellTemplate: '<div ng-init="row.entity.imagePath = \'http://localhost:8000/images/music/\' + row.entity.id + \'/large.png\'">Load large image ' +
+                        //'<img class="k_image_upload" ng-init="row.entity.imagePath = \'http://localhost:8000/images/music/\' + row.entity.id + \'/large.png\'" ng-src="{{row.entity.imagePath}}">' +
+                        '<photo-directive class="k_image_upload" image-src="{{row.entity.imagePath}}"></photo-directive>' +
+                    '</div>',
                     editableCellTemplate: 'ui-grid/fileChooserEditor',
                     editFileChooserCallback: $scope.storeFile
                 },
-
                 {
-                    field: 'cover',
-                    name : "Image",
-                    cellClass:'k_height',
-                    enableCellEdit: false,
-                    width: 80,
-                    cellTemplate: '<div class="ui-grid-cell-contents">' +
-                        '<photo-directive class="k_image_admin" image-src="http://localhost:8000/images/music/{{row.entity.id}}/large.png"></photo-directive>' +
-                    '</div>'
-                },
-             /*   {
-                    field: 'coverImageSmall',
+                    field: 'Small Image',
                     cellClass:'k_height styled_file_container',
                     enableCellEdit: true,
                     type: 'file',
                     width: 200,
-                    cellTemplate: '<div>Load Small image <img class="k_image_upload" ng-src="http://localhost:8000/images/music/{{row.entity.id}}/large.png"></div>',
+                    cellTemplate: '<div ng-init="row.entity.imagePath = \'http://localhost:8000/images/music/\' + row.entity.id + \'/small.png\'">Load large image ' +
+                        '<photo-directive class="k_image_upload" image-src="{{row.entity.imagePath}}"></photo-directive>' +
+                    '</div>',
                     editableCellTemplate: 'ui-grid/fileChooserEditor',
                     editFileChooserCallback: $scope.storeFile
                 },
-                {
-                    field: 'cover',
-                    name : "Image",
-                    cellClass:'k_height',
-                    enableCellEdit: false,
-                    width: 80,
-                    cellTemplate: '<div class="ui-grid-cell-contents">' +
-                        '<photo-directive class="k_image_admin" image-src="http://localhost:8000/images/music/{{row.entity.id}}/large.png"></photo-directive>' +
-                    '</div>'
-                }, */
             ],
 
             onRegisterApi : function(gridApi){
@@ -115,6 +90,14 @@ angular.module('kohar.music-albums', [])
             /**************************** UPDATE ***************************/
             /***************************************************************/
 
+            $timeout(function() {
+
+                $scope.$apply(function() {
+                    rowEntity.imagePath = 'http://localhost:8000/images/music/' + rowEntity.id + '/large.png?_ts=' + new Date().getTime()
+                });
+            });
+
+
             var dataSent = {};
 
             if(!newValue)
@@ -125,34 +108,9 @@ angular.module('kohar.music-albums', [])
             dataSent.id = rowEntity.id;
             dataSent[colDef.field] = newValue;
 
-            console.log('data to send ', dataSent);
-
-            console.log('rowEntity before updateRow ');
-            console.log(rowEntity);
 
             musicAlbumsServices.updateRow(dataSent).then(function(data, status) {
 
-                console.log('updated data ', data);
-
-                /*
-                   $timeout(function() {
-
-                    $scope.$apply(function()
-                    {
-                        //$scope.imagePaths = 'http://mywebsite/assets/now.png?_ts=' + new Date().getTime();
-                        $scope.imageSource = imagePath;
-
-                    });
-                });
-                */
-
-                console.log('rowEntity ');
-                console.log(rowEntity);
-                rowEntity.$update( function( response ) {
-                    $scope.error = null;
-                }, function( error ) {
-                    $scope.error = error;
-                });
 
             }, function (response) {
 

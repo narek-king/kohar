@@ -20,9 +20,6 @@ angular.module('kohar.services')
         },
         updateRow : function (data) {
 
-          console.log('updateRow Service');
-          console.log(data);
-
             if(data.large || data.small){
 
                 return Upload.upload({
@@ -34,7 +31,6 @@ angular.module('kohar.services')
 
                 return $http.put('http://localhost:8000/music-album/' + data.id, data);
             }
-
 
         },
         deleteRow : function (id) {

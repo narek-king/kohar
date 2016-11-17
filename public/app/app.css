@@ -167,6 +167,8 @@ footer{
 }
 .k_image_modal{
   display: inline-block;
+  width: 100%;
+  height: auto;
 }
 .k_image_admin{
   width: 25px;

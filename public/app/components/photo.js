@@ -6,10 +6,15 @@ angular.module('kohar.photo', [])
             scope : {
                 imageSrc : '@'
             },
-            template : '<img class="k_image_admin" ng-src="{{src}}" alt="my image">',
+            template : '<img class="k_image_upload" ng-src="{{src}}" alt="my image">',
             link: function ($scope, element) {
-                $scope.src = $scope.imageSrc;
                 $scope.animationsEnabled = true;
+
+                $scope.$watch('imageSrc', function (newValue) {
+                    console.log($scope.imageSrc);
+
+                    $scope.src = newValue;
+                })
 
                 angular.element(element).bind('click', function () {
                     console.log('element ', element);
