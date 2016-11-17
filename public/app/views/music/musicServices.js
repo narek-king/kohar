@@ -1,34 +1,51 @@
-/*
+console.log("musicServices ");
+
 angular.module('kohar.services', [])
-    .factory('connectWithDb', ['$http', function($http) {
-    return {
-        insertRow : function (data) {
-            console.log('insertRow ', data);
-            $http.post("http://localhost:8000/music-album", data).then(function(data, status) {
-                console.log('data ', data);
-                console.log('status ', status);
-            });
-        },
-        getAll: function() {
-            return $http({
-                method: 'GET',
-                url: 'http://kohar.horizondvp.org/api/music-album'
-            });
-        },
-        updateRow : function (data) {
+    .factory('musicServices', ['$http', 'Upload', function($http, Upload) {
 
-            $http.put('http://localhost:8000/music-album/' + data.id);
-        },
-        deleteRow : function (id) {
-            console.log('id ', id);
+        return {
+            insertRow : function (data) {
 
-            $http.delete('http://localhost:8000/music-album/' + id).then(function(data, status) {
-                console.log('data ', data);
-                console.log('status ', status);
-            });
+                console.log('data to insert : ', data);
 
-        }
+                return Upload.upload({
+                    url: 'http://localhost:8000/music',
+                    data: data,
+                });
 
-    };
-}]); */
+            },
+
+            getAll: function() {
+
+                return $http({
+                    method: 'GET',
+                    url: 'http://localhost:8000/api/music'
+                });
+
+            },
+            updateRow : function (data) {
+
+                if(data.large || data.small){
+
+                    return Upload.upload({
+                        url: 'http://localhost:8000/music' + data.id,
+                        data: data
+                    });
+
+                }else{
+
+                    return $http.put('http://localhost:8000/music' + data.id, data);
+                }
+
+            },
+            deleteRow : function (id) {
+
+                $http.delete('http://localhost:8000/music' + id).then(function(data, status) {
+                    console.log('data ', data);
+                });
+
+            }
+
+        };
+    }]);
 

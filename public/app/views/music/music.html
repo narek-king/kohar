@@ -6,49 +6,100 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-8 col-md-offset-2">
-                    <h3 class="k_content_sub_title">Music</h3>
-                    <form action="/">
-                        <div class="form-group">
-                            <label><span class="el_title">id</span><span class="el_value">4</span></label>
+                <div class="k_wrap_buttons col-md-12">
+                    <button type="button" id="addData" class="btn k_success" ng-click="addData()">Add Row</button>
+                    <button type="button" class="btn k_success" ng-click="clearAll()">Clear All</button>
+                    <button type="button" class="btn k_success" ng-click="deleteSelected()">Delete Selected</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="grid2" ui-grid-pagination ui-grid-edit ui-grid-resize-columns ui-grid-validate ui-grid-selection ui-grid="gridOptions" class="grid"></div>
+                </div>
+            </div>
+
+            <div class="row">
+                <script type="text/ng-template" id="myModalContent2.html">
+                    <div class="modal-header">
+                        <h3>Add Music</h3>
+                    </div>
+                    <form role="form" name="myForm" enctype="multipart/form-data">
+                        <div class="modal-body">
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Select Album</label>
+                                    <div class="col-sm-9">
+                                        <select type="text" class="form-control" name="select_album" ng-model="select_album">
+                                            <option value=""> --- Please select --- </option>
+                                            <option ng-repeat="(key, value) in items" value="{{key}}">{{value}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Track</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="track" ng-model="track" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Performer</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="performer" ng-model="performer" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Link</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="link" ng-model="link" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Lyrics (Arm.)</label>
+                                    <div class="col-sm-9">
+                                        <div class="file_container">
+                                            Upload
+                                            <input type="file" ngf-select ng-model="lyricsFileArm" name="lyricsFileArm" accept="image/*" ngf-max-size="2MB" required ngf-model-invalid="errorFile">
+                                        </div>
+                                        <i ng-show="myForm.fileLarge.$error.maxSize">File too large {{errorFile.size / 1000000|number:1}}MB: max 2M</i>
+                                        <!--<img ng-show="myForm.fileLarge.$valid" ngf-thumbnail="lyricsFileArm" class="thumb">-->
+                                        <button ng-click="lyricsFileArm = null" class="btn btn-danger btn_short" ng-show="lyricsFileArm">Remove</button>
+
+                                        <span class="progress" ng-show="lyricsFileArm.progress >= 0">
+                                        <div style="width:{{lyricsFileArm.progress}}%" ng-bind="lyricsFileArm.progress + '%'"></div>
+                                    </span>
+                                        <span ng-show="lyricsFileArm.result">Lyrics (Eng.) Upload Successful</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Lyrics (Eng.)</label>
+                                    <div class="col-sm-9">
+                                        <div class="file_container">
+                                            Upload
+                                            <input type="file" ngf-select ng-model="lyricsFileEng" name="lyricsFileEng" accept="image/*" ngf-max-size="2MB" required ngf-model-invalid="errorFile">
+                                        </div>
+                                        <i ng-show="myForm.fileSmall.$error.maxSize">File too large
+                                            {{errorFile.size / 1000000|number:1}}MB: max 2M</i>
+                                        <!--<img ng-show="myForm.fileSmall.$valid" ngf-thumbnail="lyricsFileEng" class="thumb">-->
+                                        <button ng-click="lyricsFileEng = null" class="btn btn-danger btn_short" ng-show="lyricsFileEng">Remove</button>
+
+                                        <span class="progress" ng-show="lyricsFileEng.progress >= 0">
+                                        <div style="width:{{lyricsFileEng.progress}}%" ng-bind="lyricsFileEng.progress + '%'"></div>
+                                    </span>
+
+                                        <span ng-show="lyricsFileEng.result">Lyrics (Arm.) Upload Successful</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label>track</label>
-                            <input type="text" class="k_input form-control" value="track">
-                        </div>
-                        <div class="form-group">
-                            <label>lyrics</label>
-                            <input type="text" class="k_input form-control" value="lyrics">
-                        </div>
-                        <div class="form-group">
-                            <label>lyrics_am</label>
-                            <input type="text" class="k_input form-control" value="lyrics_am">
-                        </div>
-                        <div class="form-group">
-                            <label>link</label>
-                            <input type="text" class="k_input form-control" value="link">
-                        </div>
-                        <div class="form-group">
-                            <label>performer</label>
-                            <input type="text" class="k_input form-control" value="performer">
-                        </div>
-                        <div class="form-group">
-                            <label>music_by</label>
-                            <input type="text" class="k_input form-control" value="music_by">
-                        </div>
-                        <div class="form-group">
-                            <label>lyrics_by</label>
-                            <input type="text" class="k_input form-control" value="lyrics_by">
-                        </div>
-                        <div class="form-group">
-                            <label>album_id</label>
-                            <input type="text" class="k_input form-control" value="album_id">
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" class="k_submit" value="Save">
+                        <div class="modal-footer">
+                            <button  class="btn btn-info" ng-disabled="!myForm.$valid" ng-click="addMusic(lyricsFileArm, lyricsFileEng)">Save</button>
+                            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+                            <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
                         </div>
                     </form>
-                </div>
+                </script><!--myModalContent-->
 
             </div>
+            
         </div>

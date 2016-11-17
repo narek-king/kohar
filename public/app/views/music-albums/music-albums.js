@@ -10,54 +10,15 @@ angular.module('kohar.music-albums', [])
     .controller('MusicAlbumsCtrl', ['$scope', '$http', '$timeout', '$rootScope', 'uiGridValidateService', 'uiGridConstants', 'musicAlbumsServices', '$uibModal',
         function($scope, $http, $timeout, $rootScope, uiGridValidateService, uiGridConstants, musicAlbumsServices, $uibModal) {
 
-
             /* Preview updated image */
             $scope.storeFile = function (gridRow, gridCol, files) {
-                // ignore all but the first file, it can only select one anyway
-                // set the filename into this column
 
-                gridRow.entity.filename = files[0].name;
+                console.log('arguments ', gridRow );
 
-                console.log('files[0] ', files[0]);
-
-                console.log(gridRow.entity.filename);
-
-                // read the file and set it into a hidden column, which we may do stuff with later
-
-                var reader = new FileReader();
-                reader.onload = function(fileContent){
-                    gridRow.entity.file = fileContent.currentTarget.result;
-                    // put it on scope so we can display it - you'd probably do something else with it
-                    //$scope.lastFile = fileContent.currentTarget.result;
-                    //$scope.$apply();
-
-                    //console.log('result ... ', fileContent.currentTarget.result);
-                    console.log('gridRow.entity ... ', gridRow.entity);
-
-                    updateRow({
-                        id :  gridRow.entity.id,
-                        large : fileContent.currentTarget.result
-                    }, {field : "large"}, fileContent);
-                };
-                reader.readAsText( files[0] );
-
-
-                /*if(files[0].name && files[0].size > 0){
-                    musicAlbumsServices.updateRow(files[0]).then(function(data, status) {
-
-                        console.log('updated data ', data);
-                        if(data.status == 500) alert('Something baaad happend');
-
-                        console.log('updated status ',  data.$status );
-
-                    }, function (response) {
-                        console.log("UPDATE then 2 ");
-                        console.log(response);
-                        if (response.status > 0){
-                            $scope.errorMsg = response.status + ': ' + response.data;
-                        }
-                    });
-                }*/
+                updateRow({
+                    id :  gridRow.entity.id,
+                    large : files[0]
+                }, {field : "large"}, files[0], null, gridRow.entity.imagePath);
 
             };
 
@@ -89,12 +50,12 @@ angular.module('kohar.music-albums', [])
                     cellTemplate: 'ui-grid/cellTitleValidator'
                 },
                 {
-                    field: 'coverImage styled_file_container',
+                    field: 'coverImage',
                     cellClass:'k_height styled_file_container',
                     enableCellEdit: true,
                     type: 'file',
-                    width: 220,
-                    cellTemplate: '<div>Load large image</div>',
+                    width: 200,
+                    cellTemplate: '<div>Load large image <img class="k_image_upload" ng-init="row.entity.imagePath = \'http://localhost:8000/images/music/\' + row.entity.id + \'/large.png\'" ng-src="{{row.entity.imagePath}}"></div>',
                     //cellTemplate : '<div class="ui-grid-cell-contents">' +
                     //    '<div class="file_container">large' +
                     //        '<input type="file" class="form-control" ng-model="row.entity.coverImage" name="large" accept="image/*"></div>' +
@@ -105,6 +66,7 @@ angular.module('kohar.music-albums', [])
                     editableCellTemplate: 'ui-grid/fileChooserEditor',
                     editFileChooserCallback: $scope.storeFile
                 },
+
                 {
                     field: 'cover',
                     name : "Image",
@@ -112,9 +74,29 @@ angular.module('kohar.music-albums', [])
                     enableCellEdit: false,
                     width: 80,
                     cellTemplate: '<div class="ui-grid-cell-contents">' +
-                        '<photo-directive class="k_image_admin" image-src="app/resources/img/1.jpg"></photo-directive>' +
+                        '<photo-directive class="k_image_admin" image-src="http://localhost:8000/images/music/{{row.entity.id}}/large.png"></photo-directive>' +
                     '</div>'
                 },
+             /*   {
+                    field: 'coverImageSmall',
+                    cellClass:'k_height styled_file_container',
+                    enableCellEdit: true,
+                    type: 'file',
+                    width: 200,
+                    cellTemplate: '<div>Load Small image <img class="k_image_upload" ng-src="http://localhost:8000/images/music/{{row.entity.id}}/large.png"></div>',
+                    editableCellTemplate: 'ui-grid/fileChooserEditor',
+                    editFileChooserCallback: $scope.storeFile
+                },
+                {
+                    field: 'cover',
+                    name : "Image",
+                    cellClass:'k_height',
+                    enableCellEdit: false,
+                    width: 80,
+                    cellTemplate: '<div class="ui-grid-cell-contents">' +
+                        '<photo-directive class="k_image_admin" image-src="http://localhost:8000/images/music/{{row.entity.id}}/large.png"></photo-directive>' +
+                    '</div>'
+                }, */
             ],
 
             onRegisterApi : function(gridApi){
@@ -123,46 +105,61 @@ angular.module('kohar.music-albums', [])
 
                 // add new row to database after edit
                 gridApi.edit.on.afterCellEdit($scope, updateRow);
+
             }
 
         };
 
-        function updateRow(rowEntity, colDef, newValue, oldValue) {
+        function updateRow(rowEntity, colDef, newValue, oldValue, imagePath) {
             /***************************************************************/
             /**************************** UPDATE ***************************/
             /***************************************************************/
 
-            var data = {};
-
-            console.log('rowEntity ', rowEntity);
-            console.log('newValue ', newValue);
+            var dataSent = {};
 
             if(!newValue)
                 return;
+            if(newValue == oldValue)
+                return;
 
-            console.log('colDef.field ', colDef);
+            dataSent.id = rowEntity.id;
+            dataSent[colDef.field] = newValue;
 
-            data.id = rowEntity.id;
-            data[colDef.field] = newValue;
+            console.log('data to send ', dataSent);
 
-            console.log('data to send ', data);
+            console.log('rowEntity before updateRow ');
+            console.log(rowEntity);
 
-            musicAlbumsServices.updateRow(data).then(function(data, status) {
+            musicAlbumsServices.updateRow(dataSent).then(function(data, status) {
 
                 console.log('updated data ', data);
-                if(data.status == 500) alert('Something bad happend');
 
-                console.log('updated status ',  data.$status );
+                /*
+                   $timeout(function() {
+
+                    $scope.$apply(function()
+                    {
+                        //$scope.imagePaths = 'http://mywebsite/assets/now.png?_ts=' + new Date().getTime();
+                        $scope.imageSource = imagePath;
+
+                    });
+                });
+                */
+
+                console.log('rowEntity ');
+                console.log(rowEntity);
+                rowEntity.$update( function( response ) {
+                    $scope.error = null;
+                }, function( error ) {
+                    $scope.error = error;
+                });
 
             }, function (response) {
-                console.log("UPDATE then 2 ");
-                console.log(response);
+
                 if (response.status > 0){
                     $scope.errorMsg = response.status + ': ' + response.data;
                 }
-                if(response.status != 200){
-                    alert("Sorry, the name has already been taken.");
-                }
+
             });
 
 
@@ -245,12 +242,11 @@ var ModalInstanceCtrl = function ($scope, $http, $rootScope, uiGridConstants, $u
         musicAlbumsServices.insertRow(add_new_row).then(function (response) {
             $timeout(function () {
 
-console.log("then ");
-console.log(response);
                 if(response.data.data == "success"){
 
-                    add_new_row.id = response.data[0].id;
+                    console.log('response.data[0] ', response);
 
+                    add_new_row.id = response.data[0].id;
                     var large_img_path = "images/music/" + add_new_row.id + "/large.png";
                     add_new_row.large_img = large_img_path;
 
@@ -265,8 +261,7 @@ console.log(response);
                 }
             });
         }, function (response) {
-            console.log("then 2 ");
-            console.log(response);
+
             if (response.status > 0){
                 $scope.errorMsg = response.status + ': ' + response.data;
             }
