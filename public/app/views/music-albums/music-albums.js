@@ -13,17 +13,15 @@ angular.module('kohar.music-albums', [])
             /* Preview updated image */
             $scope.storeFile = function (gridRow, gridCol, files) {
 
-                console.log('arguments ', gridRow );
-                gridRow.entity.large = files[0];
-
-                updateRow(gridRow.entity, {field : "large"}, files[0], null, gridRow.entity.imagePath);
+                gridRow.entity[this.image] = files[0];
+                updateRow(gridRow.entity, {field : this.image}, files[0], this.image);
 
             };
 
 
         $scope.gridOptions = {
             enableSorting: true,
-            paginationPageSizes: [25, 50, 75],
+            paginationPageSizes: [10, 25, 50],
             paginationPageSize: 10,
             enableRowSelection :  true,
             enableSelectAll: true,
@@ -52,26 +50,26 @@ angular.module('kohar.music-albums', [])
                     cellClass:'k_height styled_file_container',
                     enableCellEdit: true,
                     type: 'file',
-                    width: 200,
-                    cellTemplate: '<div ng-init="row.entity.imagePath = \'http://localhost:8000/images/music/\' + row.entity.id + \'/large.png\'">Load large image ' +
+                    width: 190,
+                    cellTemplate: '<div ng-init="row.entity.largeImagePath = \'images/music/\' + row.entity.id + \'/large.png\'">Load large image ' +
                         //'<img class="k_image_upload" ng-init="row.entity.imagePath = \'http://localhost:8000/images/music/\' + row.entity.id + \'/large.png\'" ng-src="{{row.entity.imagePath}}">' +
-                        '<photo-directive class="k_image_upload" image-src="{{row.entity.imagePath}}"></photo-directive>' +
+                        '<photo-directive class="k_image_upload" image-src="{{row.entity.largeImagePath}}"></photo-directive>' +
                     '</div>',
                     editableCellTemplate: 'ui-grid/fileChooserEditor',
-                    editFileChooserCallback: $scope.storeFile
+                    editFileChooserCallback: $scope.storeFile.bind({image: "large"})
                 },
                 {
                     field: 'Small Image',
                     cellClass:'k_height styled_file_container',
                     enableCellEdit: true,
                     type: 'file',
-                    width: 200,
-                    cellTemplate: '<div ng-init="row.entity.imagePath = \'http://localhost:8000/images/music/\' + row.entity.id + \'/small.png\'">Load large image ' +
-                        '<photo-directive class="k_image_upload" image-src="{{row.entity.imagePath}}"></photo-directive>' +
+                    width: 190,
+                    cellTemplate: '<div ng-init="row.entity.smallImagePath = \'images/music/\' + row.entity.id + \'/small.png\'">Load small image ' +
+                        '<photo-directive class="k_image_upload" image-src="{{row.entity.smallImagePath}}"></photo-directive>' +
                     '</div>',
                     editableCellTemplate: 'ui-grid/fileChooserEditor',
-                    editFileChooserCallback: $scope.storeFile
-                },
+                    editFileChooserCallback: $scope.storeFile.bind({image: "small"})
+                }
             ],
 
             onRegisterApi : function(gridApi){
@@ -81,22 +79,22 @@ angular.module('kohar.music-albums', [])
                 // add new row to database after edit
                 gridApi.edit.on.afterCellEdit($scope, updateRow);
 
+                gridApi.pagination.on.paginationChanged($scope, function (page, limit) {
+                    console.log('paginationChanged ');
+                    console.log(page);
+                    console.log(limit);
+                });
+
             }
 
         };
 
-        function updateRow(rowEntity, colDef, newValue, oldValue, imagePath) {
+        function updateRow(rowEntity, colDef, newValue, oldValue) {
             /***************************************************************/
             /**************************** UPDATE ***************************/
             /***************************************************************/
 
-            $timeout(function() {
-
-                $scope.$apply(function() {
-                    rowEntity.imagePath = 'http://localhost:8000/images/music/' + rowEntity.id + '/large.png?_ts=' + new Date().getTime()
-                });
-            });
-
+            console.log('args ', arguments);
 
             var dataSent = {};
 
@@ -110,7 +108,10 @@ angular.module('kohar.music-albums', [])
 
 
             musicAlbumsServices.updateRow(dataSent).then(function(data, status) {
+                var path = colDef.field + 'ImagePath';
 
+                if(rowEntity[path])
+                    rowEntity[path] = rowEntity[path] + '?_ts=' + new Date().getTime();
 
             }, function (response) {
 
@@ -190,7 +191,6 @@ var ModalInstanceCtrl = function ($scope, $http, $rootScope, uiGridConstants, $u
 
     $scope.uploadPic = function(fileLarge, fileSmall) {
 
-
         var add_new_row = {
             name: $scope.name,
             small: fileSmall,
@@ -202,8 +202,6 @@ var ModalInstanceCtrl = function ($scope, $http, $rootScope, uiGridConstants, $u
 
                 if(response.data.data == "success"){
 
-                    console.log('response.data[0] ', response);
-
                     add_new_row.id = response.data[0].id;
                     var large_img_path = "images/music/" + add_new_row.id + "/large.png";
                     add_new_row.large_img = large_img_path;
@@ -212,7 +210,6 @@ var ModalInstanceCtrl = function ($scope, $http, $rootScope, uiGridConstants, $u
 
                     add_new_row.small_img = small_img_path;
 
-                    console.log(add_new_row);
                     $rootScope.$broadcast('setGridOption', add_new_row);
 
                     $uibModalInstance.close();

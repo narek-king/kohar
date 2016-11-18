@@ -28,7 +28,7 @@
                           <ul class="list_entries">
                             <li><a href="#!/music-albums" class="active" title="Music">Music Albums</a></li>
                             <li><a href="#!/music" title="Music">Music</a></li>
-                            <li><a href="#!/videos" title="Videos">Videos</a></li>
+                            <li><a href="#!/video" title="Video">Video</a></li>
                             <li><a href="#!/concerts" title="Concerts">concerts</a></li>
                             <li><a href="#!/photo" title="Photo">Photo</a></li>
                           </ul>
@@ -82,11 +82,13 @@
 
   <script src="app/view1/view1.js"></script>
   <script src="app/view2/view2.js"></script>
-  <script src="app/views/videos/videos.js"></script>
-  <script src="app/views/concerts/concerts.js"></script>
-  <script src="app/views/photo/photo.js"></script>
+
   <script src="app/views/music/music.js"></script>
   <script src="app/views/music-albums/music-albums.js"></script>
+    <script src="app/views/video/video.js"></script>
+    <script src="app/views/concerts/concerts.js"></script>
+    <script src="app/views/photo/photo.js"></script>
+
   <script src="app/components/version/version.js"></script>
   <script src="app/components/version/version-directive.js"></script>
   <script src="app/components/version/interpolate-filter.js"></script>
@@ -94,6 +96,7 @@
 <!--include services-->
   <script src="app/views/music/musicServices.js"></script>
   <script src="app/views/music-albums/musicAlbumsServices.js"></script>
+  <script src="app/views/video/videoServices.js"></script>
 
 <!--include custom directive for modal window-->
   <script src="app/components/photo.js"></script>

@@ -23,7 +23,7 @@ angular.module('kohar', [
   'kohar.view2',
   'kohar.music-albums',
   'kohar.music',
-  'kohar.videos',
+  'kohar.video',
   'kohar.concerts',
   'ui.bootstrap.datepickerPopup'
 

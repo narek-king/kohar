@@ -179,7 +179,7 @@ footer{
 }
 .k_image_upload{
   width: 25px;
-  height: auto;
+  height: 25px;
   margin: 0 3px;
   display: inline-block;
   cursor: pointer;

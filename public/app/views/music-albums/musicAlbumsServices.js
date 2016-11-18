@@ -29,7 +29,7 @@ angular.module('kohar.services')
 
             }else{
 
-                return $http.put('http://localhost:8000/music-album/' + data.id, data);
+                return $http.post('http://localhost:8000/music-album/' + data.id, data);
             }
 
         },

@@ -9,9 +9,11 @@ angular.module('kohar.photo', [])
             template : '<img class="k_image_upload" ng-src="{{src}}" alt="my image">',
             link: function ($scope, element) {
                 $scope.animationsEnabled = true;
+                //$scope.src = $scope.imageSrc;
 
                 $scope.$watch('imageSrc', function (newValue) {
-                    console.log($scope.imageSrc);
+                    console.log('newValue ');
+                    console.log(newValue);
 
                     $scope.src = newValue;
                 })
