@@ -91,7 +91,7 @@ label{
   overflow: hidden;
 }
 .k_layout{
-
+  overflow: hidden;
 }
 footer{
   position: relative;
@@ -108,28 +108,34 @@ footer{
 
 #k_sidebar{
   background: #611B64;
-  color: #ffffff;
-   margin-bottom: -99999px;
+  margin-bottom: -99999px;
   padding-bottom: 99999px;
+  float: left;
+  width: 15%;
 }
 
+#k_sidebar .list_entries li{
+  display: block;
+  padding: 20px;
+}
 #k_sidebar .list_entries li a{
   display: block;
   text-align: center;
   text-transform: uppercase;
-  padding: 20px;
+
   color: #ffffff;
-  margin: 0 -15px;
 }
-#k_sidebar .list_entries li a.active,
-#k_sidebar .list_entries li a:hover{
-  background: rgba(245, 243, 243, 0.21);
+#k_sidebar .list_entries li.active,
+#k_sidebar .list_entries li:hover{
+  background: #802b84;
   color: #ffffff;
   text-decoration: none;
 }
 #k_content{
   background: #ffffff;
   color: #666;
+  float: left;
+  width: 85%;
 }
 .k_content_title, .k_content_sub_title{
   margin: 10px 0 20px 0;

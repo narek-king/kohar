@@ -8,7 +8,9 @@ angular.module('kohar', [
   'ngTouch',
   'ngFileUpload',
   'kohar.services',
+  'kohar.photo-album',
   'kohar.photo',
+  'kohar.photoDir',
   'kohar.previewImage',
   'kohar.version',
   'kohar.version',
@@ -32,4 +34,6 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
   $locationProvider.hashPrefix('!');
 
   $routeProvider.otherwise({redirectTo: '/music-albums'});
-}]);
+}]).controller('MainCtrl', function($scope){
+    $scope.activeMenu = 'music-albums';
+});

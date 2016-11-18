@@ -1,4 +1,4 @@
-angular.module('kohar.photo', [])
+angular.module('kohar.photoDir', [])
     .directive('photoDirective', function($uibModal) {
 
         return {
@@ -12,8 +12,6 @@ angular.module('kohar.photo', [])
                 //$scope.src = $scope.imageSrc;
 
                 $scope.$watch('imageSrc', function (newValue) {
-                    console.log('newValue ');
-                    console.log(newValue);
 
                     $scope.src = newValue;
                 })

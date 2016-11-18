@@ -1,14 +1,14 @@
 'use strict';
 
-angular.module('kohar.concerts', [])
+angular.module('kohar.photo-album', [])
     .config(['$routeProvider', function($routeProvider) {
-        $routeProvider.when('/concerts', {
-            templateUrl: 'app/views/concerts/concerts.html',
-            controller: 'ConcertsCtrl'
+        $routeProvider.when('/photo-album', {
+            templateUrl: 'app/views/photo-album/photo-album.html',
+            controller: 'PhotoAlbumCtrl'
         });
     }])
-    .controller('ConcertsCtrl', ['$scope', '$http', '$timeout', '$rootScope', 'uiGridValidateService', 'uiGridConstants', 'concertsServices', '$uibModal',
-        function($scope, $http, $timeout, $rootScope, uiGridValidateService, uiGridConstants, concertsServices, $uibModal) {
+    .controller('PhotoAlbumCtrl', ['$scope', '$http', '$timeout', '$rootScope', 'uiGridValidateService', 'uiGridConstants', 'photoAlbumServices', '$uibModal',
+        function($scope, $http, $timeout, $rootScope, uiGridValidateService, uiGridConstants, photoAlbumServices, $uibModal) {
 
             /* Preview updated image */
             $scope.storeFile = function (gridRow, gridCol, files) {
@@ -17,10 +17,11 @@ angular.module('kohar.concerts', [])
                 updateRow(gridRow.entity, {field : this.image}, files[0], this.image);
 
             };
-
+            
             $scope.gridOptions = {
                 enableSorting: true,
-                paginationPageSizes: [10],
+                useExternalPagination: true,
+                paginationPageSizes: [22],
                 paginationPageSize: 15,
                 enableRowSelection :  true,
                 enableSelectAll: true,
@@ -37,49 +38,31 @@ angular.module('kohar.concerts', [])
                         width: "50"
                     },
                     {
-                        field: 'Image',
-                        cellClass:'k_height styled_file_container',
-                        enableCellEdit: true,
-                        type: 'file',
-                        width: 150,
-                        cellTemplate: '<div ng-init="row.entity.largeImagePath = \'images/music/\' + row.entity.id + \'/large.png\'">Load Image ' +
-                            //'<img class="k_image_upload" ng-init="row.entity.imagePath = \'http://localhost:8000/images/music/\' + row.entity.id + \'/large.png\'" ng-src="{{row.entity.imagePath}}">' +
-                            '<photo-directive class="k_image_upload" image-src="{{row.entity.largeImagePath}}"></photo-directive>' +
-                        '</div>',
-                        editableCellTemplate: 'ui-grid/fileChooserEditor',
-                        editFileChooserCallback: $scope.storeFile.bind({image: "large"})
-                    },
-                    {
-                        field: 'country',
+                        field: 'name',
                         cellClass:'red',
                         enableCellEdit: true,
-                        minWidth: 150,
-                        validators: {required: true},
-                        cellTemplate: 'ui-grid/cellTitleValidator'
-                    },
-                    {
-                        field: 'city',
-                        cellClass:'red',
-                        enableCellEdit: true,
-                        minWidth: 150,
-                        validators: {required: true},
-                        cellTemplate: 'ui-grid/cellTitleValidator'
-                    },
-                    {
-                        field: 'place',
-                        cellClass:'red',
-                        enableCellEdit: true,
-                        minWidth: 150,
                         validators: {required: true},
                         cellTemplate: 'ui-grid/cellTitleValidator'
                     },
                     {
                         field: 'description',
-                        cellClass:'red',
                         enableCellEdit: true,
-                        minWidth: 180,
+                        minWidth: 200,
                         validators: {required: true},
                         cellTemplate: 'ui-grid/cellTitleValidator'
+                    },
+                    {
+                        field: 'Cover',
+                        cellClass:'k_height styled_file_container',
+                        enableCellEdit: true,
+                        type: 'file',
+                        width: 180,
+                        cellTemplate: '<div ng-init="row.entity.largeImagePath = \'images/music/\' + row.entity.id + \'/large.png\'">Load Cover ' +
+                            //'<img class="k_image_upload" ng-init="row.entity.imagePath = \'http://localhost:8000/images/music/\' + row.entity.id + \'/large.png\'" ng-src="{{row.entity.imagePath}}">' +
+                            '<photo-directive class="k_image_upload" image-src="{{row.entity.largeImagePath}}"></photo-directive>' +
+                        '</div>',
+                        editableCellTemplate: 'ui-grid/fileChooserEditor',
+                        editFileChooserCallback: $scope.storeFile.bind({image: "large"})
                     }
                 ],
 
@@ -91,9 +74,14 @@ angular.module('kohar.concerts', [])
                     gridApi.edit.on.afterCellEdit($scope, updateRow);
 
                     gridApi.pagination.on.paginationChanged($scope, function (page, limit) {
-                        console.log('paginationChanged ');
-                    });
 
+                        photoAlbumServices.getAll(page, {page: page}).then(function successCallback(response) {
+
+                            $scope.gridOptions.data = response.data.data;
+                            $scope.gridOptions.totalItems = response.data.total;
+
+                        });
+                    });
                 }
 
             };
@@ -103,7 +91,7 @@ angular.module('kohar.concerts', [])
                 /**************************** UPDATE ***************************/
                 /***************************************************************/
 
-                console.log('args ', arguments);
+                console.log('rowEntity ', rowEntity);
 
                 var dataSent = {};
 
@@ -112,15 +100,12 @@ angular.module('kohar.concerts', [])
                 if(newValue == oldValue)
                     return;
 
-                dataSent.id = rowEntity.id;
-                dataSent[colDef.field] = newValue;
+                dataSent = rowEntity;
 
 
-                concertsServices.updateRow(dataSent).then(function(data, status) {
-                    var path = colDef.field + 'ImagePath';
+                photoAlbumServices.updateRow(dataSent).then(function(data, status) {
 
-                    if(rowEntity[path])
-                        rowEntity[path] = rowEntity[path] + '?_ts=' + new Date().getTime();
+                    console.log('updateRow then', data);
 
                 }, function (response) {
 
@@ -137,9 +122,10 @@ angular.module('kohar.concerts', [])
             /**************************** READ *****************************/
             /***************************************************************/
             // connect with custom service and receive results from http.get() request
-            concertsServices.getAll().then(function successCallback(response) {
+            photoAlbumServices.getAll().then(function successCallback(response) {
 
                 $scope.gridOptions.data = response.data.data;
+                $scope.gridOptions.totalItems = response.data.total;
 
             });
 
@@ -152,7 +138,7 @@ angular.module('kohar.concerts', [])
                     animation: this.animationsEnabled,
                     ariaLabelledBy: 'modal-title',
                     ariaDescribedBy: 'modal-body',
-                    templateUrl: 'concertsModalContent.html',
+                    templateUrl: 'photoAlbumModalContent.html',
                     controller: ModalInstanceCtrl,
                     controllerAs: 'this',
                     resolve: {
@@ -174,7 +160,7 @@ angular.module('kohar.concerts', [])
 
                 var idArray = $scope.gridApi.selection.getSelectedRows();
                 for(var i = 0; i < idArray.length; i++){
-                    concertsServices.deleteRow(idArray[i].id);
+                    photoAlbumServices.deleteRow(idArray[i].id);
                 }
 
                 angular.forEach($scope.gridApi.selection.getSelectedRows(), function (data, index) {
@@ -195,21 +181,18 @@ angular.module('kohar.concerts', [])
         }]);
 
 
-var ModalInstanceCtrl = function ($scope, $http, $rootScope, uiGridConstants, $uibModalInstance, concertsServices, Upload,  $timeout ) {
+var ModalInstanceCtrl = function ($scope, $http, $rootScope, uiGridConstants, $uibModalInstance, photoAlbumServices, Upload,  $timeout ) {
 
 
-    $scope.uploadPic = function(concertImage) {
+    $scope.uploadPic = function(coverImage) {
 
         var add_new_row = {
-            image : concertImage,
-            country: $scope.country,
-            city: $scope.city,
-            place: $scope.place,
-            date: $scope.date,
-            description: $scope.description,
+            cover : coverImage,
+            name: $scope.name,
+            description: $scope.description
         };
 
-        concertsServices.insertRow(add_new_row).then(function (response) {
+        photoAlbumServices.insertRow(add_new_row).then(function (response) {
             $timeout(function () {
 
                 if(response.data.data == "success"){
@@ -217,8 +200,6 @@ var ModalInstanceCtrl = function ($scope, $http, $rootScope, uiGridConstants, $u
                     add_new_row.id = response.data[0].id;
                     var large_img_path = "images/music/" + add_new_row.id + "/large.png";
                     add_new_row.large_img = large_img_path;
-
-                    add_new_row.small_img = small_img_path;
 
                     $rootScope.$broadcast('setGridOption', add_new_row);
 
@@ -232,7 +213,7 @@ var ModalInstanceCtrl = function ($scope, $http, $rootScope, uiGridConstants, $u
             }
         }, function (evt) {
             // Math.min is to fix IE which reports 200% sometimes
-            concertImage.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+            coverImage.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
 
         });
 
