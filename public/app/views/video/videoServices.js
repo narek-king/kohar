@@ -6,9 +6,10 @@ angular.module('kohar.services')
     return {
         insertRow : function (data) {
 
+            console.log('insertRow ', data);
             return  $http({
                 method: 'POST',
-                url: 'http://localhost:8000/api/video',
+                url: 'http://localhost:8000/video',
                 data: data
             });
         },
@@ -18,17 +19,9 @@ angular.module('kohar.services')
         },
         updateRow : function (data) {
 
-            if(data.large || data.small){
+            console.log('updateRow ', data);
 
-                return Upload.upload({
-                    url: 'http://localhost:8000/video/' + data.id,
-                    data: data
-                });
-
-            }else{
-
-                return $http.post('http://localhost:8000/video/' + data.id, data);
-            }
+            return $http.put('http://localhost:8000/video/' + data.id, data);
 
         },
         deleteRow : function (id) {

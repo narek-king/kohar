@@ -10,15 +10,6 @@ angular.module('kohar.video', [])
     .controller('VideoCtrl', ['$scope', '$http', '$timeout', '$rootScope', 'uiGridValidateService', 'uiGridConstants', 'videoServices', '$uibModal',
         function($scope, $http, $timeout, $rootScope, uiGridValidateService, uiGridConstants, videoServices, $uibModal) {
 
-            /* Preview updated image */
-            $scope.storeFile = function (gridRow, gridCol, files) {
-
-                gridRow.entity[this.image] = files[0];
-                updateRow(gridRow.entity, {field : this.image}, files[0], this.image);
-
-            };
-
-
             $scope.gridOptions = {
                 enableSorting: true,
                 useExternalPagination: true,
@@ -81,9 +72,6 @@ angular.module('kohar.video', [])
                     gridApi.edit.on.afterCellEdit($scope, updateRow);
 
                     gridApi.pagination.on.paginationChanged($scope, function (page, limit) {
-                        console.log('paginationChanged ');
-                        console.log(page);
-                        console.log(limit);
 
                         videoServices.getAll(page, {page: page}).then(function successCallback(response) {
 
@@ -101,7 +89,7 @@ angular.module('kohar.video', [])
                 /**************************** UPDATE ***************************/
                 /***************************************************************/
 
-                console.log('args ', arguments);
+                console.log('rowEntity ', rowEntity);
 
                 var dataSent = {};
 
@@ -110,15 +98,12 @@ angular.module('kohar.video', [])
                 if(newValue == oldValue)
                     return;
 
-                dataSent.id = rowEntity.id;
-                dataSent[colDef.field] = newValue;
+                dataSent = rowEntity;
 
 
                 videoServices.updateRow(dataSent).then(function(data, status) {
-                    var path = colDef.field + 'ImagePath';
 
-                    if(rowEntity[path])
-                        rowEntity[path] = rowEntity[path] + '?_ts=' + new Date().getTime();
+                    console.log('updateRow then', data);
 
                 }, function (response) {
 
