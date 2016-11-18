@@ -26,12 +26,11 @@ class PhotoAlbomController extends Controller
 
 
         $validator = Validator::make(request()->all(), [
-            'name' => 'required|unique:photo_albums',
+            'name' => 'required',
             'cover' => 'required',
             'description' => 'required'
         ]);
 
-//        $this->validate(request(), ['name' => 'required|unique:music_albums', 'cover' => 'required']);
 
 
         if ($validator->fails()) {

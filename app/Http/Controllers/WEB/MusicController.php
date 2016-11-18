@@ -41,8 +41,8 @@ class MusicController extends Controller {
         if (request()->hasFile('lyrics_am') && request()->hasFile('lyrics_en')){
             $am = request()->file('lyrics_am');
             $en = request()->file('lyrics_en');
-            if ($am->guessClientExtension() != 'json' && $en->guessClientExtension() != 'json')
-                return response()->json(['data' => 'the file format is wrong'], 500);
+//            if ($am->guessClientExtension() != 'json' && $en->guessClientExtension() != 'json')
+//                return response()->json(['data' => 'the file format is wrong'], 500);
 
             $music = Music::forceCreate([
                 'track' => request()->input('track'),
@@ -82,17 +82,17 @@ class MusicController extends Controller {
 
         if (request()->hasFile('am')) {
             $am = request()->file('am');
-            if ($am->extension() == 'json') {
+//            if ($am->extension() == 'json') {
                 Storage::delete('lyrics/' . $id . '/am.json');
                 $am->storeAs('lyrics/' . $id , 'am.json');
-            }
+//            }
         }
         if (request()->hasFile('en')) {
             $en = request()->file('en');
-            if ($en->extension() == 'json') {
+//            if ($en->extension() == 'json') {
                 Storage::delete('lyrics/' . $id . '/en.json');
                 $en->storeAs('lyrics/' . $id , 'en.json');
-            }
+//            }
         }
         
         $instance = Music::find($id);
@@ -102,7 +102,7 @@ class MusicController extends Controller {
                    $newInstance->image = request()->file('image')->store('images/concerts');
                }
             */
-        $this->validate(request(), ['track' => 'required', 'link' => 'required']);
+//        $this->validate(request(), ['track' => 'required', 'link' => 'required']);
         $instance->track = request()->input('track');
         $instance->link = $this->SoundCloudeClient->getStreamUrlFromURL(request()->input('link'));
         $instance->duration = $this->SoundCloudeClient->getDurationFromURL(request()->input('link'));

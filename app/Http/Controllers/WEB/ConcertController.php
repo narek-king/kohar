@@ -31,7 +31,7 @@ class ConcertController extends Controller
         if (request()->hasFile('image')){
             $image = request()->file('image')->store('images/concerts');
 
-        $instance = Music::forceCreate([
+        $instance = Concert::forceCreate([
             'country' => request()->input('country'),
             'image' => $image,
             'city' => request()->input('city'),

@@ -44,14 +44,14 @@ class VideoController extends Controller
      */
     public function Update($id){
         $instance = Video::find($id);
-        $this->validate(request(), ['link' => 'required']);
+//        $this->validate(request(), ['link' => 'required']);
 
         $instance->name = request()->input('name');
         $instance->link = request()->input('link');
         $instance->performer = request()->input('performer');
         $instance->music_by = request()->input('music_by');
         $instance->lyrics_by = request()->input('lyrics_by');
-        $instance->is_published = request()->input('is_published');
+//        $instance->is_published = request()->input('is_published');
         $instance->save();
 
 
