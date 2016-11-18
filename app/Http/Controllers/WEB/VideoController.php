@@ -52,6 +52,7 @@ class VideoController extends Controller
         $instance->music_by = request()->input('music_by');
         $instance->lyrics_by = request()->input('lyrics_by');
 //        $instance->is_published = request()->input('is_published');
+
         $instance->save();
 
 

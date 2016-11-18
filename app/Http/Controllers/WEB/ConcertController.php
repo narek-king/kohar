@@ -35,6 +35,7 @@ class ConcertController extends Controller
             'country' => request()->input('country'),
             'image' => $image,
             'city' => request()->input('city'),
+            'link' => request()->input('link'),
             'place' => request()->input('place'),
             'date' => request()->input('date'),
             'description' => request()->input('description')]);
@@ -58,6 +59,7 @@ class ConcertController extends Controller
         }
         $instance->country = request()->input('country');
         $instance->city = request()->input('city');
+        $instance->link = request()->input('link');
         $instance->place = request()->input('place');
         $instance->date = request()->input('date');
         $instance->description = request()->input('description');
