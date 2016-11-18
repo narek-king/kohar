@@ -9,8 +9,8 @@ angular.module('kohar.photo', [])
             controller: 'PhotoCtrl'
         });
     }])
-    .controller('PhotoCtrl', ['$scope', '$http', '$timeout', '$rootScope', 'uiGridValidateService', 'uiGridConstants', 'photoServices', '$uibModal',
-        function($scope, $http, $timeout, $rootScope, uiGridValidateService, uiGridConstants, photoServices, $uibModal) {
+    .controller('PhotoCtrl', ['$scope', '$http', '$timeout', '$rootScope', 'uiGridValidateService', 'uiGridConstants', 'photoServices', '$uibModal', 'photoAlbumServices',
+        function($scope, $http, $timeout, $rootScope, uiGridValidateService, uiGridConstants, photoServices, $uibModal, photoAlbumServices) {
 
         console.log('PhotoCtrl 1');
 
@@ -125,6 +125,17 @@ angular.module('kohar.photo', [])
             /***************************************************************/
             /**************************** READ *****************************/
             /***************************************************************/
+            // get album id and name
+            var get_album_data = {};
+
+            photoAlbumServices.getAll().then(function successCallback(response) {
+
+                for(var i = 0; i < response.data.data.length; i++){
+
+                    get_album_data[response.data.data[i].id] = response.data.data[i].name;
+                }
+
+            });
             // connect with custom service and receive results from http.get() request
             photoServices.getAll().then(function successCallback(response) {
 
@@ -135,19 +146,20 @@ angular.module('kohar.photo', [])
 
             // add row
             $scope.addData = function () {
-
-                $scope.items = $scope.add_row;
+                
+                console.log('get_album_data ', get_album_data);
+                $scope.get_photo_album_data = get_album_data;
 
                 var modalInstance = $uibModal.open({
                     animation: this.animationsEnabled,
                     ariaLabelledBy: 'modal-title',
                     ariaDescribedBy: 'modal-body',
                     templateUrl: 'photoModalContent.html',
-                    controller: ModalInstanceCtrl,
+                    controller: PhotoModal,
                     controllerAs: 'this',
                     resolve: {
                         items: function () {
-                            return $scope.items;
+                            return $scope.get_photo_album_data;
                         }
                     }
                 });
@@ -185,7 +197,10 @@ angular.module('kohar.photo', [])
         }]);
 
 
-var ModalInstanceCtrl = function ($scope, $http, $rootScope, uiGridConstants, $uibModalInstance, photoServices, Upload,  $timeout ) {
+var PhotoModal = function ($scope, $http, $rootScope, uiGridConstants, $uibModalInstance, photoServices, Upload,  $timeout, items ) {
+
+    $scope.items = items;
+
 
 
     $scope.uploadPic = function(coverImage) {

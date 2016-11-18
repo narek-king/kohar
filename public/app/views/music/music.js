@@ -223,8 +223,6 @@ angular.module('kohar.music', [])
 
 var musicModal = function ($scope, $http, $rootScope, uiGridConstants, $uibModalInstance, musicServices, Upload,  $timeout, items ) {
 
-    console.log('musicModal ');
-
     $scope.items = items;
 
     $scope.addMusic = function(lyricsFileArm, lyricsFileEng) {

@@ -37,6 +37,15 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="col-sm-3 control-label">Select Album</label>
+                            <div class="col-sm-9">
+                                <select type="text" class="form-control" name="select_album" ng-model="select_album">
+                                    <option value=""> --- Please select --- </option>
+                                    <option ng-repeat="(key, value) in items" value="{{key}}">{{value}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-sm-3 control-label">Cover</label>
                             <div class="col-sm-9">
                                 <div class="file_container">
@@ -63,28 +72,5 @@
             </form>
         </script><!--myModalContent-->
 
-        <div class="col-md-8 col-md-offset-2">
-            <form action="/">
-                <div class="form-group">
-                    <label><span class="el_title">id</span><span class="el_value">4</span></label>
-                </div>
-                <div class="form-group">
-                    <label>Name</label>
-                    <input type="text" class="k_input form-control" value="Name">
-                </div>
-                <div class="form-group">
-                    <label>Link</label>
-                    <input type="text" class="k_input form-control" value="Link">
-                </div>
-                <div class="form-group">
-                    <label>Album id</label>
-                    <input type="text" class="k_input form-control" value="Album id">
-                </div>
-
-                <div class="form-group">
-                    <input type="submit" class="k_submit" value="Save">
-                </div>
-            </form>
-        </div>
     </div>
 </div>
