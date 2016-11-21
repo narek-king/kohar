@@ -1,14 +1,13 @@
 console.log('timeConverter ');
 
-angular.module('kohar.timeConverter').filter('timeConverter', function (){
+angular.module('kohar').filter('timeConverter', function (){
 
     return function(input) {
 
-        console.log(input);
+        var dateString = parseInt(input);
+        var newDateString = new Date(dateString).toLocaleString();
 
-        var myDate = parseInt(input);
-
-        //return new Date(myDate);
+        return newDateString;
     };
 });
 

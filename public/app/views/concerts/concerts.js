@@ -81,9 +81,10 @@ angular.module('kohar.concerts', [])
                         enableCellEdit: true,
                         minWidth: 120,
                         validators: {required: true},
-                        type: 'date',
-                        //cellFilter : 'timeConverter'
-                        //cellTemplate: 'ui-grid/cellTitleValidator'
+                        //type: 'date',
+                        cellFilter : 'timeConverter:COL_FIELD'
+                        //cellTemplate: '<div>{{row.getProperty(col.field)}}</div>'
+                        //cellTemplate: '<div>{{COL_FIELD | timeConverter}}</div>'
                     },
                     {
                         field: 'description',

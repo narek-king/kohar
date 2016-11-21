@@ -103,7 +103,7 @@
 <script src="app/components/config/constants.js"></script>
 
 <!--include custom directive for modal window-->
-  <!--<script src="app/components/filters/timeConverter.js"></script>-->
+  <script src="app/components/filters/timeConverter.js"></script>
 
   <script src="app/components/photo.js"></script>
     <script src="app/components/previewImage.js"></script>
