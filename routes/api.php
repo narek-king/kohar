@@ -18,6 +18,7 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:api');
 
 Route::get('/music-album', 'API\MusicAlbumController@musicAlbums');
+Route::get('/music-album-image', 'API\MusicAlbumController@musicAlbumsWithImage');
 Route::get('/music-album/{id}', 'API\MusicAlbumController@show');
 Route::get('/music', 'API\MusicController@musicList');
 Route::get('/music/{id}', 'API\MusicController@show');
