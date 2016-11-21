@@ -14,10 +14,10 @@ angular.module('kohar.photoDir', [])
                 $scope.$watch('imageSrc', function (newValue) {
 
                     $scope.src = newValue;
-                })
+                });
 
                 angular.element(element).bind('click', function () {
-                    console.log('element ', element);
+
                     var modal;
 
                     $scope.ok = function () {

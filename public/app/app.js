@@ -11,6 +11,7 @@ angular.module('kohar', [
   'kohar.photo-album',
   'kohar.photo',
   'kohar.photoDir',
+  //'kohar.timeConverter',
   'kohar.previewImage',
   'kohar.version',
   'kohar.version',
@@ -21,8 +22,6 @@ angular.module('kohar', [
   'ui.grid.resizeColumns',
   'ui.grid.validate',
   'ui.grid.selection',
-  'kohar.view1',
-  'kohar.view2',
   'kohar.music-albums',
   'kohar.music',
   'kohar.video',
@@ -34,6 +33,10 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
   $locationProvider.hashPrefix('!');
 
   $routeProvider.otherwise({redirectTo: '/music-albums'});
-}]).controller('MainCtrl', function($scope){
+}]).controller('MainCtrl', function($scope, myConfig){
     $scope.activeMenu = 'music-albums';
+
+  console.log('MainCtrl');
+
+  console.log(myConfig);
 });

@@ -21,27 +21,6 @@ angular.module('kohar.previewImage', [])
 
                     $scope.ngModel = e.target.files[0].name;
 
-                    /*
-                    var fileReader = new FileReader();
-
-                    $scope.file = (e.srcElement || e.target).files[0];
-
-                    if (fileReader.readAsDataURL)
-                        fileReader.readAsDataURL($scope.file);
-                    else if (fileReader.readAsDataurl)
-                        fileReader.readAsDataurl($scope.file);
-
-                     fileReader.addEventListener("load", function (e) {
-
-                         console.log('arguments ');
-
-                        $scope.image_source = fileReader.result;
-
-                        $scope.$apply(function () {
-                            $scope.ngModel = new Blob([ e.target.result ], { type: "image/png", name : "FlagKilikia.png"} );
-                        });
-
-                    }, false); */
                 })
 
             }

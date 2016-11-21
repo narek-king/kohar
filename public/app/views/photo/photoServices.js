@@ -1,7 +1,7 @@
 console.log("photoServices ");
 
 angular.module('kohar.services')
-    .factory('photoServices', ['$http', 'Upload', function($http, Upload) {
+    .factory('photoServices', ['$http', 'Upload', 'appConstants', function($http, Upload, appConstants) {
 
         return {
             insertRow : function (data) {
@@ -9,24 +9,24 @@ angular.module('kohar.services')
                 console.log('insertRow ', data);
 
                 return Upload.upload({
-                    url: 'http://localhost:8000/photo',
+                    url: appConstants.url + '/photo',
                     data: data,
                 })
             },
             getAll: function(page, options) {
 
-                return $http.get('http://localhost:8000/api/photo', { params: options});
+                return $http.get(appConstants.url + '/api/photo', { params: options});
             },
             updateRow : function (data) {
 
                 console.log('updateRow ', data);
 
-                return $http.post('http://localhost:8000/photo/' + data.id, data);
+                return $http.post(appConstants.url + '/photo/' + data.id, data);
 
             },
             deleteRow : function (id) {
 
-                $http.delete('http://localhost:8000/photo/' + id).then(function(data, status) {
+                $http.delete(appConstants.url + '/photo/' + id).then(function(data, status) {
                     console.log('data ', data);
                 });
 

@@ -18,7 +18,6 @@ angular.module('kohar.music-albums', [])
 
             };
 
-
         $scope.gridOptions = {
             enableSorting: true,
             paginationPageSizes: [10, 25, 50],
@@ -31,7 +30,7 @@ angular.module('kohar.music-albums', [])
                 { field: 'id',
                     cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
 
-                        console.log('/images/music/' + row.entity.id + '/small.png');
+                        //console.log(row);
 
                         if (grid.getCellValue(row,col) === 'Velity') {
                             return 'blue';
@@ -54,7 +53,7 @@ angular.module('kohar.music-albums', [])
                     enableCellEdit: true,
                     type: 'file',
                     width: 190,
-                    cellTemplate: '<div ng-init="row.entity.largeImagePath = \'/images/music/\' + row.entity.id + \'/large.png\'">Load large image ' +
+                    cellTemplate: '<div>Load large image ' +
                         //'<img class="k_image_upload" ng-init="row.entity.imagePath = \'http://localhost:8000/images/music/\' + row.entity.id + \'/large.png\'" ng-src="{{row.entity.imagePath}}">' +
                         '<photo-directive class="k_image_upload" image-src="{{row.entity.largeImagePath}}"></photo-directive>' +
                     '</div>',
@@ -113,10 +112,13 @@ angular.module('kohar.music-albums', [])
 
 
             musicAlbumsServices.updateRow(dataSent).then(function(data, status) {
+                console.log(colDef.field);
                 var path = colDef.field + 'ImagePath';
 
                 if(rowEntity[path])
                     rowEntity[path] = rowEntity[path] + '?_ts=' + new Date().getTime();
+
+                console.log('rowEntity[path] ', rowEntity[path]);
 
             }, function (response) {
 
@@ -126,7 +128,6 @@ angular.module('kohar.music-albums', [])
 
             });
 
-
         }
 
         /***************************************************************/
@@ -134,6 +135,8 @@ angular.module('kohar.music-albums', [])
         /***************************************************************/
         // connect with custom service and receive results from http.get() request
         musicAlbumsServices.getAll().then(function successCallback(response) {
+
+            console.log('response.data.data ', response);
 
             $scope.gridOptions.data = response.data.data;
 
@@ -193,7 +196,6 @@ angular.module('kohar.music-albums', [])
 
 var ModalInstanceCtrl = function ($scope, $http, $rootScope, uiGridConstants, $uibModalInstance, musicAlbumsServices, Upload,  $timeout ) {
 
-
     $scope.uploadPic = function(fileLarge, fileSmall) {
 
         var add_new_row = {
@@ -212,11 +214,9 @@ var ModalInstanceCtrl = function ($scope, $http, $rootScope, uiGridConstants, $u
                     add_new_row.large_img = large_img_path;
 
                     var small_img_path = "images/music/" + add_new_row.id + "/small.png";
-
                     add_new_row.small_img = small_img_path;
 
                     $rootScope.$broadcast('setGridOption', add_new_row);
-
                     $uibModalInstance.close();
                 }
             });

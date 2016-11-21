@@ -1,7 +1,7 @@
 console.log("photoAlbumServices ");
 
 angular.module('kohar.services')
-    .factory('photoAlbumServices', ['$http', 'Upload', function($http, Upload) {
+    .factory('photoAlbumServices', ['$http', 'Upload', 'appConstants', function($http, Upload, appConstants) {
 
     return {
         insertRow : function (data) {
@@ -9,24 +9,24 @@ angular.module('kohar.services')
             console.log('insertRow ', data);
 
             return Upload.upload({
-                url: 'http://localhost:8000/photo-album',
+                url: appConstants.url + '/photo-album',
                 data: data,
             })
         },
         getAll: function(page, options) {
 
-            return $http.get('http://localhost:8000/api/photo-album', { params: options});
+            return $http.get(appConstants.url + '/api/photo-album', { params: options, cache: false});
         },
         updateRow : function (data) {
 
             console.log('updateRow ', data);
 
-            return $http.post('http://localhost:8000/photo-album/' + data.id, data);
+            return $http.post(appConstants.url + '/photo-album/' + data.id, data);
 
         },
         deleteRow : function (id) {
 
-            $http.delete('http://localhost:8000/photo-album/' + id).then(function(data, status) {
+            $http.delete(appConstants.url + '/photo-album/' + id).then(function(data, status) {
                 console.log('data ', data);
             });
 

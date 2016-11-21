@@ -3,7 +3,6 @@
 angular.module('kohar.photo', [])
     .config(['$routeProvider', function($routeProvider) {
 
-        console.log('$routeProvider ', $routeProvider);
         $routeProvider.when('/photo', {
             templateUrl: 'app/views/photo/photo.html',
             controller: 'PhotoCtrl'

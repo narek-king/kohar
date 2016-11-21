@@ -1,7 +1,7 @@
 console.log("musicServices ");
 
 angular.module('kohar.services', [])
-    .factory('musicServices', ['$http', 'Upload', function($http, Upload) {
+    .factory('musicServices', ['$http', 'Upload', 'appConstants', function($http, Upload, appConstants) {
 
         return {
             insertRow : function (data) {
@@ -9,7 +9,7 @@ angular.module('kohar.services', [])
                 console.log('data to insert : ', data);
 
                 return Upload.upload({
-                    url: 'http://localhost:8000/music',
+                    url: appConstants.url + '/music',
                     data: data,
                 });
 
@@ -19,7 +19,7 @@ angular.module('kohar.services', [])
 
                 return $http({
                     method: 'GET',
-                    url: 'http://localhost:8000/api/music'
+                    url: appConstants.url + '/api/music'
                 });
 
             },
@@ -28,19 +28,19 @@ angular.module('kohar.services', [])
                 if(data.large || data.small){
 
                     return Upload.upload({
-                        url: 'http://localhost:8000/music' + data.id,
+                        url: appConstants.url + '/music' + data.id,
                         data: data
                     });
 
                 }else{
 
-                    return $http.put('http://localhost:8000/music' + data.id, data);
+                    return $http.put(appConstants.url + '/music' + data.id, data);
                 }
 
             },
             deleteRow : function (id) {
 
-                $http.delete('http://localhost:8000/music' + id).then(function(data, status) {
+                $http.delete(appConstants.url + '/music' + id).then(function(data, status) {
                     console.log('data ', data);
                 });
 

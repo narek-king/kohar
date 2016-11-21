@@ -10,6 +10,8 @@ angular.module('kohar.concerts', [])
     .controller('ConcertsCtrl', ['$scope', '$http', '$timeout', '$rootScope', 'uiGridValidateService', 'uiGridConstants', 'concertsServices', '$uibModal',
         function($scope, $http, $timeout, $rootScope, uiGridValidateService, uiGridConstants, concertsServices, $uibModal) {
 
+
+
             /* Preview updated image */
             $scope.storeFile = function (gridRow, gridCol, files) {
 
@@ -72,6 +74,16 @@ angular.module('kohar.concerts', [])
                         minWidth: 150,
                         validators: {required: true},
                         cellTemplate: 'ui-grid/cellTitleValidator'
+                    },
+                    {
+                        field: 'date',
+                        cellClass:'red',
+                        enableCellEdit: true,
+                        minWidth: 120,
+                        validators: {required: true},
+                        type: 'date',
+                        //cellFilter : 'timeConverter'
+                        //cellTemplate: 'ui-grid/cellTitleValidator'
                     },
                     {
                         field: 'description',
@@ -139,6 +151,10 @@ angular.module('kohar.concerts', [])
             // connect with custom service and receive results from http.get() request
             concertsServices.getAll().then(function successCallback(response) {
 
+
+                console.log('response.data.data ', typeof response.data.data[2].date);
+                var myInt = parseInt(response.data.data[2].date);
+                console.log('response.data.data ', typeof myInt);
                 $scope.gridOptions.data = response.data.data;
 
             });
@@ -153,7 +169,7 @@ angular.module('kohar.concerts', [])
                     ariaLabelledBy: 'modal-title',
                     ariaDescribedBy: 'modal-body',
                     templateUrl: 'concertsModalContent.html',
-                    controller: ModalInstanceCtrl,
+                    controller: ConcertInstanceCtrl,
                     controllerAs: 'this',
                     resolve: {
                         items: function () {
@@ -195,7 +211,7 @@ angular.module('kohar.concerts', [])
         }]);
 
 
-var ModalInstanceCtrl = function ($scope, $http, $rootScope, uiGridConstants, $uibModalInstance, concertsServices, Upload,  $timeout ) {
+var ConcertInstanceCtrl = function ($scope, $http, $rootScope, uiGridConstants, $uibModalInstance, concertsServices, Upload,  $timeout ) {
 
 
     $scope.uploadPic = function(concertImage) {
@@ -205,7 +221,7 @@ var ModalInstanceCtrl = function ($scope, $http, $rootScope, uiGridConstants, $u
             country: $scope.country,
             city: $scope.city,
             place: $scope.place,
-            date: $scope.date,
+            date: new Date($scope.date).getTime(),
             description: $scope.description,
         };
 

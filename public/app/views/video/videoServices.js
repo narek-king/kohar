@@ -1,7 +1,7 @@
 console.log("videoServices ");
 
 angular.module('kohar.services')
-    .factory('videoServices', ['$http', 'Upload', function($http, Upload) {
+    .factory('videoServices', ['$http', 'Upload', 'appConstants', function($http, Upload, appConstants) {
 
     return {
         insertRow : function (data) {
@@ -9,24 +9,24 @@ angular.module('kohar.services')
             console.log('insertRow ', data);
             return  $http({
                 method: 'POST',
-                url: 'http://localhost:8000/video',
+                url: appConstants.url + '/video',
                 data: data
             });
         },
         getAll: function(page, options) {
 
-            return $http.get('http://localhost:8000/api/video', { params: options});
+            return $http.get(appConstants.url + '/api/video', { params: options});
         },
         updateRow : function (data) {
 
             console.log('updateRow ', data);
 
-            return $http.put('http://localhost:8000/video/' + data.id, data);
+            return $http.put(appConstants.url + '/video/' + data.id, data);
 
         },
         deleteRow : function (id) {
 
-            $http.delete('http://localhost:8000/video/' + id).then(function(data, status) {
+            $http.delete(appConstants.url + '/video/' + id).then(function(data, status) {
                 console.log('data ', data);
             });
 

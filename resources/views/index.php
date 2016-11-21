@@ -79,9 +79,6 @@
 
   <script src="app/app.js"></script>
 
-  <script src="app/view1/view1.js"></script>
-  <script src="app/view2/view2.js"></script>
-
   <script src="app/views/music/music.js"></script>
   <script src="app/views/music-albums/music-albums.js"></script>
     <script src="app/views/video/video.js"></script>
@@ -102,7 +99,12 @@
   <script src="app/views/photo/photoServices.js"></script>
   <script src="app/views/concerts/concertsServices.js"></script>
 
+<!--include config files -->
+<script src="app/components/config/constants.js"></script>
+
 <!--include custom directive for modal window-->
+  <!--<script src="app/components/filters/timeConverter.js"></script>-->
+
   <script src="app/components/photo.js"></script>
     <script src="app/components/previewImage.js"></script>
 
