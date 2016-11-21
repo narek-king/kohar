@@ -91,7 +91,7 @@ class MusicAlbumController extends Controller
         $instance->name = request()->input('name');
         $instance->save();
         }
-
+        Response::header('Cache-Control', 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
         return response()->json(['data' => 'success'], 200);
     }
 

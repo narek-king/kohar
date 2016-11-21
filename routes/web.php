@@ -28,7 +28,7 @@ Route::group(['middleware' => 'auth'], function()
     Route::get('dashboard', function() {
         $list = MusicAlbum::find(6);
        return view('index');
- //      return view('dashboard', compact('list'));
+//       return view('dashboard', compact('list'));
     } );
 
     Route::post('/music-album', 'WEB\MusicAlbumController@Create');
