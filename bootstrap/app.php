@@ -15,6 +15,7 @@
 header('Access-Control-Allow-Origin: *');
 // add any additional headers you need to support here
 header('Access-Control-Allow-Headers: Origin, Content-Type');
+header('Cache-Control', 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
 
 
 $app = new Illuminate\Foundation\Application(
