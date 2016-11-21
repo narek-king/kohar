@@ -1,5 +1,5 @@
 'use strict';
-console.log('MusicCtrl 1');
+
 angular.module('kohar.music', [])
     .config(['$routeProvider', function($routeProvider) {
         $routeProvider.when('/music', {
@@ -10,22 +10,11 @@ angular.module('kohar.music', [])
     .controller('MusicCtrl', ['$scope', '$http', '$timeout', '$rootScope', 'uiGridValidateService', 'uiGridConstants', '$uibModal', 'musicServices', 'musicAlbumsServices',
         function($scope, $http, $timeout, $rootScope, uiGridValidateService, uiGridConstants, $uibModal, musicServices, musicAlbumsServices) {
 
-        console.log('MusicCtrl 2');
-
-            /* Preview updated image */
-            $scope.storeFile = function (gridRow, gridCol, files) {
-
-                updateRow({
-                    id :  gridRow.entity.id,
-                    large : files[0]
-                }, {field : "large"}, files[0], null, gridRow.entity.imagePath);
-
-            };
-
             $scope.gridOptions = {
                 enableSorting: true,
-                paginationPageSizes: [25, 50, 75],
-                paginationPageSize: 10,
+                useExternalPagination: true,
+                paginationPageSizes: [33],
+                paginationPageSize: 15,
                 enableRowSelection :  true,
                 enableSelectAll: true,
                 multiSelect : true,
@@ -41,12 +30,11 @@ angular.module('kohar.music', [])
                         width: "50"
                     },
                     {
-                        field: 'Track',
+                        field: 'track',
                         cellClass:'red',
                         enableCellEdit: true,
                         minWidth: 200,
                         validators: {required: true},
-                        cellTemplate: 'ui-grid/cellTitleValidator'
                     },
                     {
                         field: 'Lyrics (Arm.)',
@@ -77,25 +65,19 @@ angular.module('kohar.music', [])
                         cellTemplate: 'ui-grid/cellTitleValidator'
                     },
                     {
-                        field: 'coverImage',
-                        cellClass:'k_height styled_file_container',
+                        field: 'music_by',
+                        cellClass:'red',
                         enableCellEdit: true,
-                        type: 'file',
-                        width: 200,
-                        cellTemplate: '<div>Load large image <img class="k_image_upload" ng-init="row.entity.imagePath = \'http://localhost:8000/images/music/\' + row.entity.id + \'/large.png\'" ng-src="{{row.entity.imagePath}}"></div>',
-                        editableCellTemplate: 'ui-grid/fileChooserEditor',
-                        editFileChooserCallback: $scope.storeFile
+                        minWidth: 200,
+                        validators: {required: true},
                     },
                     {
-                        field: 'cover',
-                        name : "Image",
-                        cellClass:'k_height',
-                        enableCellEdit: false,
-                        width: 80,
-                        cellTemplate: '<div class="ui-grid-cell-contents">' +
-                        '<photo-directive class="k_image_admin" image-src="http://localhost:8000/images/music/{{row.entity.id}}/large.png"></photo-directive>' +
-                        '</div>'
-                    },
+                        field: 'music_album_id',
+                        cellClass:'red',
+                        enableCellEdit: true,
+                        minWidth: 200,
+                        validators: {required: true},
+                    }
                 ],
 
                 onRegisterApi : function(gridApi){
@@ -104,6 +86,16 @@ angular.module('kohar.music', [])
 
                     // add new row to database after edit
                     gridApi.edit.on.afterCellEdit($scope, updateRow);
+
+                    gridApi.pagination.on.paginationChanged($scope, function (page, limit) {
+
+                        musicServices.getAll(page, {page: page}).then(function successCallback(response) {
+
+                            $scope.gridOptions.data = response.data.data;
+                            $scope.gridOptions.totalItems = response.data.total;
+
+                        });
+                    });
 
                 }
 
@@ -163,6 +155,7 @@ angular.module('kohar.music', [])
             musicServices.getAll().then(function successCallback(response) {
 
                 $scope.gridOptions.data = response.data.data;
+                $scope.gridOptions.totalItems = response.data.total;
 
             });
 
@@ -186,8 +179,6 @@ angular.module('kohar.music', [])
                 });
 
                 modalInstance.result.then(function (selectedItem) {
-
-                    console.log('then ');
 
                 }, function () {
                     console.log('Modal dismissed at: ' + new Date());
@@ -227,9 +218,6 @@ var musicModal = function ($scope, $http, $rootScope, uiGridConstants, $uibModal
 
     $scope.addMusic = function(lyricsFileArm, lyricsFileEng) {
 
-
-        console.log('addMusic running');
-
         var add_new_music = {
             album_id: $scope.select_album,
             track: $scope.track,
@@ -240,28 +228,6 @@ var musicModal = function ($scope, $http, $rootScope, uiGridConstants, $uibModal
         };
 
         musicServices.insertRow(add_new_music).then(function (response) {
-
-            console.log('insertRow response ', add_new_music);
-
-            /*
-            $timeout(function () {
-
-                if(response.data.data == "success"){
-
-                    console.log('response.data[0] ', response);
-
-                    add_new_music.id = response.data[0].id;
-                    var large_img_path = "images/music/" + add_new_music.id + "/large.png";
-                    add_new_music.large_img = large_img_path;
-
-                    var small_img_path = "images/music/" + add_new_music.id + "/small.png";
-                    add_new_music.small_img = small_img_path;
-
-                    console.log(add_new_music);
-                    $rootScope.$broadcast('setGridOption', add_new_music);
-                    $uibModalInstance.close();
-                }
-            }); */
 
         }, function (response) {
 

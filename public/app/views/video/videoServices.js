@@ -1,4 +1,3 @@
-console.log("videoServices ");
 
 angular.module('kohar.services')
     .factory('videoServices', ['$http', 'Upload', 'appConstants', function($http, Upload, appConstants) {
@@ -6,7 +5,6 @@ angular.module('kohar.services')
     return {
         insertRow : function (data) {
 
-            console.log('insertRow ', data);
             return  $http({
                 method: 'POST',
                 url: appConstants.url + '/video',
@@ -18,8 +16,6 @@ angular.module('kohar.services')
             return $http.get(appConstants.url + '/api/video', { params: options});
         },
         updateRow : function (data) {
-
-            console.log('updateRow ', data);
 
             return $http.put(appConstants.url + '/video/' + data.id, data);
 

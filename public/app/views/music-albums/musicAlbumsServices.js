@@ -1,4 +1,3 @@
-console.log("musicAlbumsServices ");
 
 angular.module('kohar.services')
     .factory('musicAlbumsServices', ['$http', 'Upload', 'appConstants', function($http, Upload, appConstants) {
@@ -11,11 +10,12 @@ angular.module('kohar.services')
                 data: data,
             })
         },
-        getAll: function() {
+        getAll: function(page, options) {
 
             return $http({
                 method: 'GET',
-                url: appConstants.url + '/api/music-album-image'
+                url: appConstants.url + '/api/music-album-image',
+                params: options
             });
         },
         updateRow : function (data) {

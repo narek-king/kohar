@@ -22,7 +22,8 @@ angular.module('kohar.concerts', [])
 
             $scope.gridOptions = {
                 enableSorting: true,
-                paginationPageSizes: [10],
+                useExternalPagination: true,
+                paginationPageSizes: [17],
                 paginationPageSize: 15,
                 enableRowSelection :  true,
                 enableSelectAll: true,
@@ -43,11 +44,8 @@ angular.module('kohar.concerts', [])
                         cellClass:'k_height styled_file_container',
                         enableCellEdit: true,
                         type: 'file',
-                        width: 150,
-                        cellTemplate: '<div ng-init="row.entity.largeImagePath = \'images/music/\' + row.entity.id + \'/large.png\'">Load Image ' +
-                            //'<img class="k_image_upload" ng-init="row.entity.imagePath = \'http://localhost:8000/images/music/\' + row.entity.id + \'/large.png\'" ng-src="{{row.entity.imagePath}}">' +
-                            '<photo-directive class="k_image_upload" image-src="{{row.entity.largeImagePath}}"></photo-directive>' +
-                        '</div>',
+                        //width: 180,
+                        cellTemplate: '<div>Load large image <img class="k_image_upload" ng-init="row.entity.imagePath = \'http://localhost:8000/images/concerts/\' + row.entity.id + \'/large.png\'" ng-src="{{row.entity.imagePath}}"></div>',
                         editableCellTemplate: 'ui-grid/fileChooserEditor',
                         editFileChooserCallback: $scope.storeFile.bind({image: "large"})
                     },
@@ -81,10 +79,7 @@ angular.module('kohar.concerts', [])
                         enableCellEdit: true,
                         minWidth: 120,
                         validators: {required: true},
-                        //type: 'date',
                         cellFilter : 'timeConverter:COL_FIELD'
-                        //cellTemplate: '<div>{{row.getProperty(col.field)}}</div>'
-                        //cellTemplate: '<div>{{COL_FIELD | timeConverter}}</div>'
                     },
                     {
                         field: 'description',
@@ -104,8 +99,15 @@ angular.module('kohar.concerts', [])
                     gridApi.edit.on.afterCellEdit($scope, updateRow);
 
                     gridApi.pagination.on.paginationChanged($scope, function (page, limit) {
-                        console.log('paginationChanged ');
+
+                        concertsServices.getAll(page, {page: page}).then(function successCallback(response) {
+
+                            $scope.gridOptions.data = response.data.data;
+                            $scope.gridOptions.totalItems = response.data.total;
+
+                        });
                     });
+
 
                 }
 
@@ -115,8 +117,6 @@ angular.module('kohar.concerts', [])
                 /***************************************************************/
                 /**************************** UPDATE ***************************/
                 /***************************************************************/
-
-                console.log('args ', arguments);
 
                 var dataSent = {};
 
@@ -152,11 +152,8 @@ angular.module('kohar.concerts', [])
             // connect with custom service and receive results from http.get() request
             concertsServices.getAll().then(function successCallback(response) {
 
-
-                console.log('response.data.data ', typeof response.data.data[2].date);
-                var myInt = parseInt(response.data.data[2].date);
-                console.log('response.data.data ', typeof myInt);
                 $scope.gridOptions.data = response.data.data;
+                $scope.gridOptions.totalItems = response.data.total;
 
             });
 
@@ -233,9 +230,9 @@ var ConcertInstanceCtrl = function ($scope, $http, $rootScope, uiGridConstants, 
 
                     add_new_row.id = response.data[0].id;
                     var large_img_path = "images/music/" + add_new_row.id + "/large.png";
-                    add_new_row.large_img = large_img_path;
+                    //add_new_row.large_img = large_img_path;
 
-                    add_new_row.small_img = small_img_path;
+                    //add_new_row.small_img = small_img_path;
 
                     $rootScope.$broadcast('setGridOption', add_new_row);
 

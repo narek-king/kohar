@@ -1,4 +1,3 @@
-console.log("concertsServices ");
 
 angular.module('kohar.services')
     .factory('concertsServices', ['$http', 'Upload', 'appConstants', function($http, Upload, appConstants) {
@@ -6,18 +5,17 @@ angular.module('kohar.services')
     return {
         insertRow : function (data) {
 
-            console.log('insertRow ', data);
-
             return Upload.upload({
                 url: appConstants.url + '/concert',
                 data: data,
             })
         },
-        getAll: function() {
+        getAll: function(page, options) {
 
             return $http({
                 method: 'GET',
-                url: appConstants.url + '/api/concert'
+                url: appConstants.url + '/api/concert',
+                params: options
             });
         },
         updateRow : function (data) {

@@ -89,8 +89,6 @@ angular.module('kohar.video', [])
                 /**************************** UPDATE ***************************/
                 /***************************************************************/
 
-                console.log('rowEntity ', rowEntity);
-
                 var dataSent = {};
 
                 if(!newValue)
@@ -103,7 +101,6 @@ angular.module('kohar.video', [])
 
                 videoServices.updateRow(dataSent).then(function(data, status) {
 
-                    console.log('updateRow then', data);
 
                 }, function (response) {
 

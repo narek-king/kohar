@@ -11,8 +11,6 @@ angular.module('kohar.photo', [])
     .controller('PhotoCtrl', ['$scope', '$http', '$timeout', '$rootScope', 'uiGridValidateService', 'uiGridConstants', 'photoServices', '$uibModal', 'photoAlbumServices',
         function($scope, $http, $timeout, $rootScope, uiGridValidateService, uiGridConstants, photoServices, $uibModal, photoAlbumServices) {
 
-        console.log('PhotoCtrl 1');
-
             /* Preview updated image */
             $scope.storeFile = function (gridRow, gridCol, files) {
 
@@ -94,8 +92,6 @@ angular.module('kohar.photo', [])
                 /**************************** UPDATE ***************************/
                 /***************************************************************/
 
-                console.log('rowEntity ', rowEntity);
-
                 var dataSent = {};
 
                 if(!newValue)
@@ -108,7 +104,6 @@ angular.module('kohar.photo', [])
 
                 photoServices.updateRow(dataSent).then(function(data, status) {
 
-                    console.log('updateRow then', data);
 
                 }, function (response) {
 
@@ -141,12 +136,12 @@ angular.module('kohar.photo', [])
                 $scope.gridOptions.data = response.data.data;
                 $scope.gridOptions.totalItems = response.data.total;
 
+
             });
 
             // add row
             $scope.addData = function () {
-                
-                console.log('get_album_data ', get_album_data);
+
                 $scope.get_photo_album_data = get_album_data;
 
                 var modalInstance = $uibModal.open({

@@ -91,8 +91,6 @@ angular.module('kohar.photo-album', [])
                 /**************************** UPDATE ***************************/
                 /***************************************************************/
 
-                console.log('rowEntity ', rowEntity);
-
                 var dataSent = {};
 
                 if(!newValue)
@@ -105,7 +103,6 @@ angular.module('kohar.photo-album', [])
 
                 photoAlbumServices.updateRow(dataSent).then(function(data, status) {
 
-                    console.log('updateRow then', data);
 
                 }, function (response) {
 

@@ -18,7 +18,7 @@
 
 </head>
 <body>
-    <div class="container full_h">
+    <div class="full_h">
         <div class="k_wrapper">
             <div class="k_layout">
                 <div id="k_sidebar">

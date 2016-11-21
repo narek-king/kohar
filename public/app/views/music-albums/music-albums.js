@@ -7,8 +7,8 @@ angular.module('kohar.music-albums', [])
             controller: 'MusicAlbumsCtrl'
         });
     }])
-    .controller('MusicAlbumsCtrl', ['$scope', '$http', '$timeout', '$rootScope', 'uiGridValidateService', 'uiGridConstants', 'musicAlbumsServices', '$uibModal',
-        function($scope, $http, $timeout, $rootScope, uiGridValidateService, uiGridConstants, musicAlbumsServices, $uibModal) {
+    .controller('MusicAlbumsCtrl', ['$scope', '$http', '$timeout', '$rootScope', 'uiGridValidateService', 'uiGridConstants', 'musicAlbumsServices', '$uibModal', 'appConstants',
+        function($scope, $http, $timeout, $rootScope, uiGridValidateService, uiGridConstants, musicAlbumsServices, $uibModal, appConstants) {
 
             /* Preview updated image */
             $scope.storeFile = function (gridRow, gridCol, files) {
@@ -20,8 +20,9 @@ angular.module('kohar.music-albums', [])
 
         $scope.gridOptions = {
             enableSorting: true,
-            paginationPageSizes: [10, 25, 50],
-            paginationPageSize: 10,
+            useExternalPagination: true,
+            paginationPageSizes: [33],
+            paginationPageSize: 15,
             enableRowSelection :  true,
             enableSelectAll: true,
             multiSelect : true,
@@ -29,8 +30,6 @@ angular.module('kohar.music-albums', [])
             columnDefs: [
                 { field: 'id',
                     cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
-
-                        //console.log(row);
 
                         if (grid.getCellValue(row,col) === 'Velity') {
                             return 'blue';
@@ -66,7 +65,7 @@ angular.module('kohar.music-albums', [])
                     enableCellEdit: true,
                     type: 'file',
                     width: 190,
-                    cellTemplate: '<div ng-init="row.entity.smallImagePath = \'/images/music/\' + row.entity.id + \'/small.png\'">Load small image ' +
+                    cellTemplate: '<div>Load small image ' +
                         '<photo-directive class="k_image_upload" image-src="{{row.entity.smallImagePath}}"></photo-directive>' +
                     '</div>',
                     editableCellTemplate: 'ui-grid/fileChooserEditor',
@@ -82,9 +81,13 @@ angular.module('kohar.music-albums', [])
                 gridApi.edit.on.afterCellEdit($scope, updateRow);
 
                 gridApi.pagination.on.paginationChanged($scope, function (page, limit) {
-                    console.log('paginationChanged ');
-                    console.log(page);
-                    console.log(limit);
+
+                    musicAlbumsServices.getAll(page, {page: page}).then(function successCallback(response) {
+
+                        $scope.gridOptions.data = response.data.data;
+                        $scope.gridOptions.totalItems = response.data.total;
+
+                    });
                 });
 
             }
@@ -98,8 +101,6 @@ angular.module('kohar.music-albums', [])
             /**************************** UPDATE ***************************/
             /***************************************************************/
 
-            console.log('args ', arguments);
-
             var dataSent = {};
 
             if(!newValue)
@@ -112,13 +113,11 @@ angular.module('kohar.music-albums', [])
 
 
             musicAlbumsServices.updateRow(dataSent).then(function(data, status) {
-                console.log(colDef.field);
+
                 var path = colDef.field + 'ImagePath';
 
                 if(rowEntity[path])
                     rowEntity[path] = rowEntity[path] + '?_ts=' + new Date().getTime();
-
-                console.log('rowEntity[path] ', rowEntity[path]);
 
             }, function (response) {
 
@@ -136,9 +135,8 @@ angular.module('kohar.music-albums', [])
         // connect with custom service and receive results from http.get() request
         musicAlbumsServices.getAll().then(function successCallback(response) {
 
-            console.log('response.data.data ', response);
-
             $scope.gridOptions.data = response.data.data;
+            $scope.gridOptions.totalItems = response.data.total;
 
         });
 
