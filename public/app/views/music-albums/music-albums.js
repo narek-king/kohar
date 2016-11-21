@@ -30,6 +30,9 @@ angular.module('kohar.music-albums', [])
             columnDefs: [
                 { field: 'id',
                     cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
+
+                        console.log('/images/music/' + row.entity.id + '/small.png');
+
                         if (grid.getCellValue(row,col) === 'Velity') {
                             return 'blue';
                         }
@@ -51,7 +54,7 @@ angular.module('kohar.music-albums', [])
                     enableCellEdit: true,
                     type: 'file',
                     width: 190,
-                    cellTemplate: '<div ng-init="row.entity.largeImagePath = \'images/music/\' + row.entity.id + \'/large.png\'">Load large image ' +
+                    cellTemplate: '<div ng-init="row.entity.largeImagePath = \'/images/music/\' + row.entity.id + \'/large.png\'">Load large image ' +
                         //'<img class="k_image_upload" ng-init="row.entity.imagePath = \'http://localhost:8000/images/music/\' + row.entity.id + \'/large.png\'" ng-src="{{row.entity.imagePath}}">' +
                         '<photo-directive class="k_image_upload" image-src="{{row.entity.largeImagePath}}"></photo-directive>' +
                     '</div>',
@@ -64,7 +67,7 @@ angular.module('kohar.music-albums', [])
                     enableCellEdit: true,
                     type: 'file',
                     width: 190,
-                    cellTemplate: '<div ng-init="row.entity.smallImagePath = \'images/music/\' + row.entity.id + \'/small.png\'">Load small image ' +
+                    cellTemplate: '<div ng-init="row.entity.smallImagePath = \'/images/music/\' + row.entity.id + \'/small.png\'">Load small image ' +
                         '<photo-directive class="k_image_upload" image-src="{{row.entity.smallImagePath}}"></photo-directive>' +
                     '</div>',
                     editableCellTemplate: 'ui-grid/fileChooserEditor',
@@ -88,6 +91,8 @@ angular.module('kohar.music-albums', [])
             }
 
         };
+
+
 
         function updateRow(rowEntity, colDef, newValue, oldValue) {
             /***************************************************************/
