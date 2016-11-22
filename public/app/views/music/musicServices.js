@@ -5,8 +5,6 @@ angular.module('kohar.services', [])
         return {
             insertRow : function (data) {
 
-                console.log('insertRow ', data);
-
                 return Upload.upload({
                     url: appConstants.url + '/music',
                     data: data,
@@ -24,9 +22,7 @@ angular.module('kohar.services', [])
             },
             updateRow : function (data) {
 
-                console.log('updateRow ', data);
-
-                if(data.large || data.small){
+                if(data.lyrics_am || data.lyrics_en){
 
                     return Upload.upload({
                         url: appConstants.url + '/music/' + data.id,
@@ -41,7 +37,7 @@ angular.module('kohar.services', [])
             },
             deleteRow : function (id) {
 
-                $http.delete(appConstants.url + '/music' + id).then(function(data, status) {
+                $http.delete(appConstants.url + '/music/' + id).then(function(data, status) {
                     console.log('data ', data);
                 });
 

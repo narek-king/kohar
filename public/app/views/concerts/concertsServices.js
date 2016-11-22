@@ -20,7 +20,9 @@ angular.module('kohar.services')
         },
         updateRow : function (data) {
 
-            if(data.large || data.small){
+            if(data.imageFile){
+
+                console.log('my route ', appConstants.url + '/concert/' + data.id);
 
                 return Upload.upload({
                     url: appConstants.url + '/concert/' + data.id,
@@ -28,7 +30,7 @@ angular.module('kohar.services')
                 });
 
             }else{
-
+                console.log('else ');
                 return $http.post(appConstants.url + '/concert/' + data.id, data);
             }
 

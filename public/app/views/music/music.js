@@ -13,8 +13,8 @@ angular.module('kohar.music', [])
             /* Preview updated image */
             $scope.storeFile = function (gridRow, gridCol, files) {
 
-                gridRow.entity[this.image] = files[0];
-                updateRow(gridRow.entity, {field : this.image}, files[0], this.image);
+                gridRow.entity[this.lyrics] = files[0];
+                updateRow(gridRow.entity, {field : this.lyrics}, files[0], this.lyrics);
 
             };
 
@@ -38,24 +38,30 @@ angular.module('kohar.music', [])
                         validators: {required: true},
                     },
                     {
-                        field: 'Lyrics (Arm.)',
-                        cellClass:'k_height styled_file_container',
+                        field: 'link',
+                        cellClass:'red',
                         enableCellEdit: true,
-                        type: 'file',
-                        width: 200,
-                        cellTemplate: '<div>Load file </div>',
-                        editableCellTemplate: 'ui-grid/fileChooserEditor',
-                        editFileChooserCallback: $scope.storeFile
+                        validators: {required: true},
                     },
                     {
-                        field: 'Lyrics (Eng.)',
+                        field: 'lyrics_am',
                         cellClass:'k_height styled_file_container',
                         enableCellEdit: true,
                         type: 'file',
                         width: 200,
                         cellTemplate: '<div>Load file </div>',
                         editableCellTemplate: 'ui-grid/fileChooserEditor',
-                        editFileChooserCallback: $scope.storeFile
+                        editFileChooserCallback: $scope.storeFile.bind({lyrics: "lyrics_am"})
+                    },
+                    {
+                        field: 'lyrics_en',
+                        cellClass:'k_height styled_file_container',
+                        enableCellEdit: true,
+                        type: 'file',
+                        width: 200,
+                        cellTemplate: '<div>Load file </div>',
+                        editableCellTemplate: 'ui-grid/fileChooserEditor',
+                        editFileChooserCallback: $scope.storeFile.bind({lyrics: "lyrics_en"})
                     },
                     {
                         field: 'performer',
@@ -64,13 +70,6 @@ angular.module('kohar.music', [])
                         minWidth: 200,
                         validators: {required: true},
                         cellTemplate: 'ui-grid/cellTitleValidator'
-                    },
-                    {
-                        field: 'music_by',
-                        cellClass:'red',
-                        enableCellEdit: true,
-                        minWidth: 200,
-                        validators: {required: true},
                     },
                     {
                         field: 'music_album_id',
@@ -109,8 +108,6 @@ angular.module('kohar.music', [])
                 /**************************** UPDATE ***************************/
                 /***************************************************************/
 
-                console.log('rowEntity ', rowEntity);
-
                 var dataSent = {};
 
                 if(!newValue)
@@ -118,23 +115,19 @@ angular.module('kohar.music', [])
                 if(newValue == oldValue)
                     return;
 
-                dataSent.id = rowEntity.id;
-                dataSent.track = rowEntity.track;
-                dataSent.link = rowEntity.link;
-                dataSent.music_album_id = rowEntity.music_album_id;
-                dataSent.music_by = rowEntity.music_by;
-                dataSent.performer = rowEntity.performer;
+                dataSent = {
+                    id: rowEntity.id,
+                    track: rowEntity.track,
+                    link: rowEntity.link,
+                    music_album_id: rowEntity.music_album_id,
+                    performer: rowEntity.performer,
+                    lyrics_en: rowEntity.lyrics_en,
+                    lyrics_am: rowEntity.lyrics_am
+                }
+
                 //dataSent[colDef.field] = newValue;
 
-                console.log('dataSent ', dataSent);
-
                 musicServices.updateRow(dataSent).then(function(data, status) {
-                    /*
-                    rowEntity.$update( function( response ) {
-                        $scope.error = null;
-                    }, function( error ) {
-                        $scope.error = error;
-                    }); */
 
                 }, function (response) {
 
@@ -190,7 +183,7 @@ angular.module('kohar.music', [])
                 });
 
                 modalInstance.result.then(function (selectedItem) {
-                    console.log('Modal Closed ');
+
                 }, function () {
                     console.log('Modal dismissed at: ' + new Date());
                 });
@@ -230,7 +223,7 @@ var musicModal = function ($scope, $http, $rootScope, uiGridConstants, $uibModal
     $scope.addMusic = function(lyricsFileArm, lyricsFileEng) {
 
         var add_new_music = {
-            album_id: $scope.select_album,
+            music_album_id: $scope.select_album,
             track: $scope.track,
             performer: $scope.performer,
             link: $scope.link,

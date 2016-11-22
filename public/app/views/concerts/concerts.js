@@ -10,14 +10,17 @@ angular.module('kohar.concerts', [])
     .controller('ConcertsCtrl', ['$scope', '$http', '$timeout', '$rootScope', 'uiGridValidateService', 'uiGridConstants', 'concertsServices', '$uibModal', 'appConstants',
         function($scope, $http, $timeout, $rootScope, uiGridValidateService, uiGridConstants, concertsServices, $uibModal, appConstants) {
 
-
-
             /* Preview updated image */
             $scope.storeFile = function (gridRow, gridCol, files) {
 
-                gridRow.entity[this.image] = files[0];
-                updateRow(gridRow.entity, {field : this.image}, files[0], this.image);
+                gridRow.entity.imageFile = files[0];
+                updateRow(gridRow.entity, {field : "imageFile"}, files[0], "imageFile");
 
+            };
+
+            $scope.convertTime = function (time) {
+
+                return new Date(parseInt(time))//.toLocaleString();
             };
 
             $scope.gridOptions = {
@@ -33,14 +36,15 @@ angular.module('kohar.concerts', [])
                         width: "50"
                     },
                     {
-                        field: 'Image',
+                        field: 'image',
                         cellClass:'k_height styled_file_container',
                         enableCellEdit: true,
                         type: 'file',
-                        //width: 180,
-                        cellTemplate: '<div>Load large image <img class="k_image_upload" ng-init="row.entity.imagePath = \'http://localhost:8000/images/concerts/\' + row.entity.id + \'/large.png\'" ng-src="{{row.entity.imagePath}}"></div>',
+                        cellTemplate: '<div>Load large image {{row.entity.id}} ' +
+                            '<img class="k_image_upload" ng-src="{{row.entity.image}}">' +
+                        '</div>',
                         editableCellTemplate: 'ui-grid/fileChooserEditor',
-                        editFileChooserCallback: $scope.storeFile.bind({image: "large"})
+                        editFileChooserCallback: $scope.storeFile
                     },
                     {
                         field: 'country',
@@ -48,7 +52,7 @@ angular.module('kohar.concerts', [])
                         enableCellEdit: true,
                         minWidth: 150,
                         validators: {required: true},
-                        cellTemplate: 'ui-grid/cellTitleValidator'
+                        //cellTemplate: 'ui-grid/cellTitleValidator'
                     },
                     {
                         field: 'city',
@@ -56,7 +60,7 @@ angular.module('kohar.concerts', [])
                         enableCellEdit: true,
                         minWidth: 150,
                         validators: {required: true},
-                        cellTemplate: 'ui-grid/cellTitleValidator'
+                        //cellTemplate: 'ui-grid/cellTitleValidator'
                     },
                     {
                         field: 'place',
@@ -64,15 +68,17 @@ angular.module('kohar.concerts', [])
                         enableCellEdit: true,
                         minWidth: 150,
                         validators: {required: true},
-                        cellTemplate: 'ui-grid/cellTitleValidator'
+                        //cellTemplate: 'ui-grid/cellTitleValidator'
                     },
                     {
                         field: 'date',
                         cellClass:'red',
                         enableCellEdit: true,
-                        minWidth: 120,
+                        minWidth: 100,
                         validators: {required: true},
-                        cellFilter : 'timeConverter:COL_FIELD'
+                        //cellTemplate: '<input type="date" ui-grid-editor ng-model="grid.appScope.convertTime(COL_FIELD)">'
+                        type: 'date',
+                        //cellFilter : 'timeConverter:COL_FIELD'
                     },
                     {
                         field: 'description',
@@ -80,7 +86,7 @@ angular.module('kohar.concerts', [])
                         enableCellEdit: true,
                         minWidth: 180,
                         validators: {required: true},
-                        cellTemplate: 'ui-grid/cellTitleValidator'
+                        //cellTemplate: 'ui-grid/cellTitleValidator'
                     }
                 ],
 
@@ -119,15 +125,28 @@ angular.module('kohar.concerts', [])
                 if(newValue == oldValue)
                     return;
 
-                dataSent.id = rowEntity.id;
-                dataSent[colDef.field] = newValue;
-
+                dataSent = {
+                    id: rowEntity.id,
+                    country: rowEntity.country,
+                    city: rowEntity.city,
+                    place: rowEntity.place,
+                    date: rowEntity.date,
+                    description: rowEntity.description,
+                    imageFile: rowEntity.imageFile
+                };
 
                 concertsServices.updateRow(dataSent).then(function(data, status) {
-                    var path = colDef.field + 'ImagePath';
 
-                    if(rowEntity[path])
-                        rowEntity[path] = rowEntity[path] + '?_ts=' + new Date().getTime();
+                    //var path = colDef.field + 'ImagePath';
+
+                    console.log('data ', data);
+
+                    if(data.data.imagePath){
+
+                        rowEntity.image = data.data.imagePath + '?_ts=' + new Date().getTime();
+                        console.log('rowEntity ', rowEntity);
+                    }
+
 
                 }, function (response) {
 
@@ -148,6 +167,8 @@ angular.module('kohar.concerts', [])
 
                 $scope.gridOptions.data = response.data.data;
                 $scope.gridOptions.totalItems = response.data.total;
+
+                console.log('getAll ', response);
 
             });
 
