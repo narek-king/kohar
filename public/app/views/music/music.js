@@ -7,18 +7,19 @@ angular.module('kohar.music', [])
             controller: 'MusicCtrl'
         });
     }])
-    .controller('MusicCtrl', ['$scope', '$http', '$timeout', '$rootScope', 'uiGridValidateService', 'uiGridConstants', '$uibModal', 'musicServices', 'musicAlbumsServices',
-        function($scope, $http, $timeout, $rootScope, uiGridValidateService, uiGridConstants, $uibModal, musicServices, musicAlbumsServices) {
+    .controller('MusicCtrl', ['$scope', '$http', '$timeout', '$rootScope', 'uiGridValidateService', 'uiGridConstants', '$uibModal', 'musicServices', 'musicAlbumsServices', 'appConstants',
+        function($scope, $http, $timeout, $rootScope, uiGridValidateService, uiGridConstants, $uibModal, musicServices, musicAlbumsServices, appConstants) {
+
+            /* Preview updated image */
+            $scope.storeFile = function (gridRow, gridCol, files) {
+
+                gridRow.entity[this.image] = files[0];
+                updateRow(gridRow.entity, {field : this.image}, files[0], this.image);
+
+            };
 
             $scope.gridOptions = {
-                enableSorting: true,
-                useExternalPagination: true,
-                paginationPageSizes: [33],
                 paginationPageSize: 15,
-                enableRowSelection :  true,
-                enableSelectAll: true,
-                multiSelect : true,
-                rowHeight:35,
                 columnDefs: [
                     { field: 'id',
                         cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
@@ -101,10 +102,14 @@ angular.module('kohar.music', [])
 
             };
 
+            angular.extend($scope.gridOptions, appConstants.uiGridOptions);
+
             function updateRow(rowEntity, colDef, newValue, oldValue, imagePath) {
                 /***************************************************************/
                 /**************************** UPDATE ***************************/
                 /***************************************************************/
+
+                console.log('rowEntity ', rowEntity);
 
                 var dataSent = {};
 
@@ -114,16 +119,22 @@ angular.module('kohar.music', [])
                     return;
 
                 dataSent.id = rowEntity.id;
-                dataSent[colDef.field] = newValue;
+                dataSent.track = rowEntity.track;
+                dataSent.link = rowEntity.link;
+                dataSent.music_album_id = rowEntity.music_album_id;
+                dataSent.music_by = rowEntity.music_by;
+                dataSent.performer = rowEntity.performer;
+                //dataSent[colDef.field] = newValue;
 
+                console.log('dataSent ', dataSent);
 
                 musicServices.updateRow(dataSent).then(function(data, status) {
-                    
+                    /*
                     rowEntity.$update( function( response ) {
                         $scope.error = null;
                     }, function( error ) {
                         $scope.error = error;
-                    });
+                    }); */
 
                 }, function (response) {
 
@@ -179,7 +190,7 @@ angular.module('kohar.music', [])
                 });
 
                 modalInstance.result.then(function (selectedItem) {
-
+                    console.log('Modal Closed ');
                 }, function () {
                     console.log('Modal dismissed at: ' + new Date());
                 });
@@ -228,7 +239,10 @@ var musicModal = function ($scope, $http, $rootScope, uiGridConstants, $uibModal
         };
 
         musicServices.insertRow(add_new_music).then(function (response) {
+            if(response.data.data == "success"){
 
+                $uibModalInstance.close();
+            }
         }, function (response) {
 
             if (response.status > 0){

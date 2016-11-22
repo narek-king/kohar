@@ -7,8 +7,8 @@ angular.module('kohar.concerts', [])
             controller: 'ConcertsCtrl'
         });
     }])
-    .controller('ConcertsCtrl', ['$scope', '$http', '$timeout', '$rootScope', 'uiGridValidateService', 'uiGridConstants', 'concertsServices', '$uibModal',
-        function($scope, $http, $timeout, $rootScope, uiGridValidateService, uiGridConstants, concertsServices, $uibModal) {
+    .controller('ConcertsCtrl', ['$scope', '$http', '$timeout', '$rootScope', 'uiGridValidateService', 'uiGridConstants', 'concertsServices', '$uibModal', 'appConstants',
+        function($scope, $http, $timeout, $rootScope, uiGridValidateService, uiGridConstants, concertsServices, $uibModal, appConstants) {
 
 
 
@@ -21,14 +21,7 @@ angular.module('kohar.concerts', [])
             };
 
             $scope.gridOptions = {
-                enableSorting: true,
-                useExternalPagination: true,
-                paginationPageSizes: [17],
                 paginationPageSize: 15,
-                enableRowSelection :  true,
-                enableSelectAll: true,
-                multiSelect : true,
-                rowHeight:35,
                 columnDefs: [
                     { field: 'id',
                         cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
@@ -108,10 +101,11 @@ angular.module('kohar.concerts', [])
                         });
                     });
 
-
                 }
 
             };
+
+            angular.extend($scope.gridOptions, appConstants.uiGridOptions);
 
             function updateRow(rowEntity, colDef, newValue, oldValue) {
                 /***************************************************************/

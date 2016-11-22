@@ -5,6 +5,8 @@ angular.module('kohar.services', [])
         return {
             insertRow : function (data) {
 
+                console.log('insertRow ', data);
+
                 return Upload.upload({
                     url: appConstants.url + '/music',
                     data: data,
@@ -22,16 +24,18 @@ angular.module('kohar.services', [])
             },
             updateRow : function (data) {
 
+                console.log('updateRow ', data);
+
                 if(data.large || data.small){
 
                     return Upload.upload({
-                        url: appConstants.url + '/music' + data.id,
+                        url: appConstants.url + '/music/' + data.id,
                         data: data
                     });
 
                 }else{
 
-                    return $http.put(appConstants.url + '/music' + data.id, data);
+                    return $http.post(appConstants.url + '/music/' + data.id, data);
                 }
 
             },

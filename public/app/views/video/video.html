@@ -16,6 +16,7 @@
             <div id="grid3" ui-grid-pagination ui-grid-edit ui-grid-resize-columns ui-grid-validate ui-grid-selection ui-grid="gridOptions" class="grid"></div>
         </div>
     </div>
+
     <div class="row">
         <script type="text/ng-template" id="videoModalContent.html">
             <div class="modal-header">
@@ -57,7 +58,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button  class="btn btn-info" ng-disabled="!myForm.$valid" ng-click="addVideo()">Save</button>
+                    <button  class="btn btn-info" ng-disabled="!myForm.$valid" ng-click="addVideo(video)">Save</button>
                     <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
                     <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
                 </div>

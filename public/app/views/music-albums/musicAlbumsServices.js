@@ -20,6 +20,8 @@ angular.module('kohar.services')
         },
         updateRow : function (data) {
 
+            console.log('updateRow ', data);
+
             if(data.large || data.small){
 
                 return Upload.upload({

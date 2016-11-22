@@ -7,18 +7,11 @@ angular.module('kohar.video', [])
             controller: 'VideoCtrl'
         });
     }])
-    .controller('VideoCtrl', ['$scope', '$http', '$timeout', '$rootScope', 'uiGridValidateService', 'uiGridConstants', 'videoServices', '$uibModal',
-        function($scope, $http, $timeout, $rootScope, uiGridValidateService, uiGridConstants, videoServices, $uibModal) {
+    .controller('VideoCtrl', ['$scope', '$http', '$timeout', '$rootScope', 'uiGridValidateService', 'uiGridConstants', 'videoServices', '$uibModal', 'appConstants',
+        function($scope, $http, $timeout, $rootScope, uiGridValidateService, uiGridConstants, videoServices, $uibModal, appConstants) {
 
             $scope.gridOptions = {
-                enableSorting: true,
-                useExternalPagination: true,
-                paginationPageSizes: [22],
                 paginationPageSize: 15,
-                enableRowSelection :  true,
-                enableSelectAll: true,
-                multiSelect : true,
-                rowHeight:35,
                 columnDefs: [
                     { field: 'id',
                         cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
@@ -84,6 +77,8 @@ angular.module('kohar.video', [])
 
             };
 
+            angular.extend($scope.gridOptions, appConstants.uiGridOptions);
+
             function updateRow(rowEntity, colDef, newValue, oldValue) {
                 /***************************************************************/
                 /**************************** UPDATE ***************************/
@@ -134,7 +129,7 @@ angular.module('kohar.video', [])
                     ariaLabelledBy: 'modal-title',
                     ariaDescribedBy: 'modal-body',
                     templateUrl: 'videoModalContent.html',
-                    controller: ModalInstanceCtrl,
+                    controller: videoInstanceCtrl,
                     controllerAs: 'this',
                     resolve: {
                         items: function () {
@@ -144,7 +139,7 @@ angular.module('kohar.video', [])
                 });
 
                 modalInstance.result.then(function (selectedItem) {
-
+console.log('Modal Closed ');
                 }, function () {
                     console.log('Modal dismissed at: ' + new Date());
                 });
@@ -176,7 +171,7 @@ angular.module('kohar.video', [])
         }]);
 
 
-var ModalInstanceCtrl = function ($scope, $http, $rootScope, uiGridConstants, $uibModalInstance, videoServices, Upload,  $timeout ) {
+var videoInstanceCtrl = function ($scope, $http, $rootScope, uiGridConstants, $uibModalInstance, videoServices, Upload,  $timeout ) {
 
 
     $scope.addVideo = function() {
@@ -188,6 +183,8 @@ var ModalInstanceCtrl = function ($scope, $http, $rootScope, uiGridConstants, $u
             music_by: $scope.music_by,
             lyrics_by: $scope.lyrics_by
         };
+
+        console.log('add_new_row ', add_new_row);
 
         videoServices.insertRow(add_new_row).then(function (response) {
             $timeout(function () {

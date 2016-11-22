@@ -4,9 +4,10 @@ angular.module('kohar')
     .constant("appConstants", {
         "url": "http://localhost:8000",
         "port": "8000",
-        "common_styles" : {
+        "uiGridOptions" : {
             "enableSorting": true,
             "useExternalPagination": true,
+            "paginationPageSizes": [15],
             "enableRowSelection": true,
             "enableSelectAll": true,
             "multiSelect": true,

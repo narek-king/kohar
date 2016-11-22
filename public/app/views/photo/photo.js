@@ -8,8 +8,8 @@ angular.module('kohar.photo', [])
             controller: 'PhotoCtrl'
         });
     }])
-    .controller('PhotoCtrl', ['$scope', '$http', '$timeout', '$rootScope', 'uiGridValidateService', 'uiGridConstants', 'photoServices', '$uibModal', 'photoAlbumServices',
-        function($scope, $http, $timeout, $rootScope, uiGridValidateService, uiGridConstants, photoServices, $uibModal, photoAlbumServices) {
+    .controller('PhotoCtrl', ['$scope', '$http', '$timeout', '$rootScope', 'uiGridValidateService', 'uiGridConstants', 'photoServices', '$uibModal', 'photoAlbumServices', 'appConstants',
+        function($scope, $http, $timeout, $rootScope, uiGridValidateService, uiGridConstants, photoServices, $uibModal, photoAlbumServices, appConstants) {
 
             /* Preview updated image */
             $scope.storeFile = function (gridRow, gridCol, files) {
@@ -20,14 +20,7 @@ angular.module('kohar.photo', [])
             };
 
             $scope.gridOptions = {
-                enableSorting: true,
-                useExternalPagination: true,
-                paginationPageSizes: [22],
                 paginationPageSize: 15,
-                enableRowSelection :  true,
-                enableSelectAll: true,
-                multiSelect : true,
-                rowHeight:35,
                 columnDefs: [
                     { field: 'id',
                         cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
@@ -46,11 +39,11 @@ angular.module('kohar.photo', [])
                         cellTemplate: 'ui-grid/cellTitleValidator'
                     },
                     {
-                        field: 'description',
+                        field: 'photo_album_id',
+                        cellClass:'red',
                         enableCellEdit: true,
                         minWidth: 200,
                         validators: {required: true},
-                        cellTemplate: 'ui-grid/cellTitleValidator'
                     },
                     {
                         field: 'Cover',
@@ -86,6 +79,8 @@ angular.module('kohar.photo', [])
                 }
 
             };
+
+            angular.extend($scope.gridOptions, appConstants.uiGridOptions);
 
             function updateRow(rowEntity, colDef, newValue, oldValue) {
                 /***************************************************************/

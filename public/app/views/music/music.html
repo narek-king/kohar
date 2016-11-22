@@ -80,7 +80,6 @@
                                         </div>
                                         <i ng-show="myForm.fileSmall.$error.maxSize">File too large
                                             {{errorFile.size / 1000000|number:1}}MB: max 2M</i>
-                                        <!--<img ng-show="myForm.fileSmall.$valid" ngf-thumbnail="lyricsFileEng" class="thumb">-->
                                         <button ng-click="lyricsFileEng = null" class="btn btn-danger btn_short" ng-show="lyricsFileEng">Remove</button>
 
                                         <span class="progress" ng-show="lyricsFileEng.progress >= 0">
@@ -93,6 +92,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
+
                             <button  class="btn btn-info" ng-disabled="!myForm.$valid" ng-click="addMusic(lyricsFileArm, lyricsFileEng)">Save</button>
                             <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
                             <span class="err" ng-show="errorMsg">{{errorMsg}}</span>

@@ -11,22 +11,15 @@ angular.module('kohar.music-albums', [])
         function($scope, $http, $timeout, $rootScope, uiGridValidateService, uiGridConstants, musicAlbumsServices, $uibModal, appConstants) {
 
             /* Preview updated image */
-            $scope.storeFile = function (gridRow, gridCol, files) {
+        $scope.storeFile = function (gridRow, gridCol, files) {
 
-                gridRow.entity[this.image] = files[0];
-                updateRow(gridRow.entity, {field : this.image}, files[0], this.image);
+            gridRow.entity[this.image] = files[0];
+            updateRow(gridRow.entity, {field : this.image}, files[0], this.image);
 
-            };
+        };
 
         $scope.gridOptions = {
-            enableSorting: true,
-            useExternalPagination: true,
-            paginationPageSizes: [33],
             paginationPageSize: 15,
-            enableRowSelection :  true,
-            enableSelectAll: true,
-            multiSelect : true,
-            rowHeight:35,
             columnDefs: [
                 { field: 'id',
                     cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
@@ -94,7 +87,7 @@ angular.module('kohar.music-albums', [])
 
         };
 
-
+        angular.extend($scope.gridOptions, appConstants.uiGridOptions);
 
         function updateRow(rowEntity, colDef, newValue, oldValue) {
             /***************************************************************/

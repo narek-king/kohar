@@ -7,8 +7,8 @@ angular.module('kohar.photo-album', [])
             controller: 'PhotoAlbumCtrl'
         });
     }])
-    .controller('PhotoAlbumCtrl', ['$scope', '$http', '$timeout', '$rootScope', 'uiGridValidateService', 'uiGridConstants', 'photoAlbumServices', '$uibModal',
-        function($scope, $http, $timeout, $rootScope, uiGridValidateService, uiGridConstants, photoAlbumServices, $uibModal) {
+    .controller('PhotoAlbumCtrl', ['$scope', '$http', '$timeout', '$rootScope', 'uiGridValidateService', 'uiGridConstants', 'photoAlbumServices', '$uibModal', 'appConstants',
+        function($scope, $http, $timeout, $rootScope, uiGridValidateService, uiGridConstants, photoAlbumServices, $uibModal, appConstants) {
 
             /* Preview updated image */
             $scope.storeFile = function (gridRow, gridCol, files) {
@@ -19,14 +19,7 @@ angular.module('kohar.photo-album', [])
             };
             
             $scope.gridOptions = {
-                enableSorting: true,
-                useExternalPagination: true,
-                paginationPageSizes: [22],
                 paginationPageSize: 15,
-                enableRowSelection :  true,
-                enableSelectAll: true,
-                multiSelect : true,
-                rowHeight:35,
                 columnDefs: [
                     { field: 'id',
                         cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
@@ -85,6 +78,8 @@ angular.module('kohar.photo-album', [])
                 }
 
             };
+
+            angular.extend($scope.gridOptions, appConstants.uiGridOptions);
 
             function updateRow(rowEntity, colDef, newValue, oldValue) {
                 /***************************************************************/
