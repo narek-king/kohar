@@ -108,8 +108,6 @@ angular.module('kohar.photo-album', [])
                     console.log('updateRow ', data);
                     console.log('rowEntity before ', rowEntity);
 
-                   // var path = colDef.field + 'Image';
-                    //console.log('path ', path);
 
                     if(rowEntity.image){
                         console.log('image inside ');
@@ -187,6 +185,7 @@ angular.module('kohar.photo-album', [])
 
 
             $scope.$on('setGridOption', function (event, data) {
+
                 $scope.gridOptions.data.unshift(data);
             });
 
@@ -206,23 +205,14 @@ var photoAlbumInstanceCtrl = function ($scope, $http, $rootScope, uiGridConstant
 
         photoAlbumServices.insertRow(add_new_row).then(function (response) {
 
-            $timeout(function () {
+            if(response.data.data == "success"){
 
-            console.log('response ', response);
+                add_new_row.id = response.data[0].id;
+                add_new_row.image = "images/photo/" + add_new_row.id + "/image.png";
+                $rootScope.$broadcast('setGridOption', add_new_row);
 
-                if(response.data.data == "success"){
-
-                    add_new_row.id = response.data[0].id;
-
-                    add_new_row.cover = "images/photo/" + add_new_row.id + "/image.png";
-
-                    console.log('add_new_row ', add_new_row);
-
-                    $rootScope.$broadcast('setGridOption', add_new_row);
-
-                    $uibModalInstance.close();
-                }
-            });
+                $uibModalInstance.close();
+            }
 
         }, function (response) {
 
