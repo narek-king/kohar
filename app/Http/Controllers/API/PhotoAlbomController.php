@@ -29,6 +29,23 @@ class PhotoAlbomController extends Controller
         ApiLogger::logInfo();
         return response()->json($photoAlbumarray);
     }
+
+
+    public function photoAlbumsWithImage(){
+        $albums = PhotoAlbum::paginate(env('PAGINATE_DEFAULT'));
+
+        $photoAlbumarray = $albums->toArray();
+
+
+        foreach ($albums as $key => $photoAlbum){
+            $photoAlbumarray['data'][$key] += ['quantity' => $photoAlbum->photos->count()];
+            $photoAlbumarray['data'][$key] += ['image' => '/images/photo/'.$photoAlbum->id.'/image.png'];
+        }
+
+        ApiLogger::logInfo();
+        return response()->json($photoAlbumarray);
+    }
+
     /**
      * RRetrives singel photo album whith its list of tracks
      * @param int

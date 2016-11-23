@@ -31,6 +31,7 @@ Route::get('/news', 'API\NewsController@allNews');
 Route::get('/news/{id}', 'API\NewsController@show');
 Route::get('/news/{id}', 'API\NewsController@show');
 Route::get('/photo-album', 'API\PhotoAlbomController@photoAlbums');
+Route::get('/photo-album-image', 'API\PhotoAlbomController@photoAlbumsWithImage');
 Route::get('/photo-album/{id}', 'API\PhotoAlbomController@show');
 Route::get('/photo', 'API\PhotoController@photoList');
 Route::get('/photo/{id}', 'API\PhotoController@show');

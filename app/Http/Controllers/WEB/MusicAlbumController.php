@@ -27,7 +27,7 @@ class MusicAlbumController extends Controller
 
 
         $validator = Validator::make(request()->all(), [
-            'name' => 'required|unique:music_albums',
+            'name' => 'required',
             'small' => 'required',
             'large' => 'required',
         ]);

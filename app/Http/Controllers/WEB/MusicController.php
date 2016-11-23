@@ -92,7 +92,7 @@ class MusicController extends Controller {
             $en = request()->file('lyrics_en');
 //            if ($en->extension() == 'json') {
                 Storage::delete('lyrics/' . $id . '/en.json');
-                $en->storeAs('lyrics/' . $id , 'en.json');
+                $en->storeAs('lyrics/' . $id , '/en.json');
 //            }
         }
         
