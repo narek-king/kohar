@@ -44,7 +44,7 @@ class PhotoAlbomController extends Controller
             $album = PhotoAlbum::forceCreate([
                 'name' => request()->input('name'),
                 'description' => request()->input('description'),
-                'cover' => $image->getClientOriginalName()
+//                'cover' => $image->getClientOriginalName()
             ]);
             $image->storeAs('images/photo/'.$album->id, 'image.'.$image->extension());
         }
@@ -83,7 +83,7 @@ class PhotoAlbomController extends Controller
 
         $instance->name = request()->input('name');
         $instance->description = request()->input('description');
-        $instance->cover = 'images/photo/'.$id.'/image.png';
+//        $instance->cover = 'images/photo/'.$id.'/image.png';
         $instance->save();
 
         return response()->json(['data' => 'edited'], 200);
