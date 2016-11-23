@@ -46,7 +46,6 @@ angular.module('kohar.music-albums', [])
                     type: 'file',
                     width: 190,
                     cellTemplate: '<div>Load large image ' +
-                        //'<img class="k_image_upload" ng-init="row.entity.imagePath = \'http://localhost:8000/images/music/\' + row.entity.id + \'/large.png\'" ng-src="{{row.entity.imagePath}}">' +
                         '<photo-directive class="k_image_upload" image-src="{{row.entity.largeImagePath}}"></photo-directive>' +
                     '</div>',
                     editableCellTemplate: 'ui-grid/fileChooserEditor',
@@ -106,6 +105,8 @@ angular.module('kohar.music-albums', [])
 
 
             musicAlbumsServices.updateRow(dataSent).then(function(data, status) {
+
+                console.log('updateRow ', data);
 
                 var path = colDef.field + 'ImagePath';
 

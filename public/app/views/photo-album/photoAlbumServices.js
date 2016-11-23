@@ -14,7 +14,7 @@ angular.module('kohar.services')
         },
         getAll: function(page, options) {
 
-            return $http.get(appConstants.url + '/api/photo-album', { params: options, cache: false});
+            return $http.get(appConstants.url + '/api/photo-album-image', { params: options, cache: false});
         },
         updateRow : function (data) {
 
@@ -24,15 +24,13 @@ angular.module('kohar.services')
 
             if(data.cover && typeof data.cover == "object"){
 
-                console.log('my route ', appConstants.url + '/concert/' + data.id);
-
                 return Upload.upload({
                     url: appConstants.url + '/photo-album/' + data.id,
                     data: data
                 });
 
             }else{
-                console.log('else ');
+
                 return $http.post(appConstants.url + '/photo-album/' + data.id, data);
             }
             return $http.post(appConstants.url + '/photo-album/' + data.id, data);

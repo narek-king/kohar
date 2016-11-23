@@ -20,7 +20,7 @@ angular.module('kohar.concerts', [])
 
             $scope.convertTime = function (time) {
 
-                return new Date(parseInt(time))//.toLocaleString();
+                return new Date(parseInt(time));
             };
 
             $scope.gridOptions = {
@@ -135,12 +135,17 @@ angular.module('kohar.concerts', [])
                     imageFile: rowEntity.imageFile
                 };
 
+                console.log('dataSent ', dataSent);
+
                 concertsServices.updateRow(dataSent).then(function(data, status) {
 
+                    console.log('rowEntity before ', rowEntity);
                     if(data.data.imagePath){
 
                         rowEntity.image = data.data.imagePath + '?_ts=' + new Date().getTime();
                     }
+
+                    console.log('rowEntity after ', rowEntity);
 
                 }, function (response) {
 
@@ -149,7 +154,6 @@ angular.module('kohar.concerts', [])
                     }
 
                 });
-
 
             }
 
@@ -239,8 +243,6 @@ var ConcertInstanceCtrl = function ($scope, $http, $rootScope, uiGridConstants, 
                 if(response.data.data == "success"){
 
                     add_new_row.id = response.data[0].id;
-                    var large_img_path = "images/music/" + add_new_row.id + "/large.png";
-
                     $rootScope.$broadcast('setGridOption', add_new_row);
 
                     $uibModalInstance.close();

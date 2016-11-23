@@ -53,7 +53,7 @@ angular.module('kohar.photo-album', [])
                         type: 'file',
                         width: 180,
                         cellTemplate: '<div>Cover image ' +
-                            '<img class="k_image_upload" ng-src="images/photo/{{row.entity.id}}/image.png">' +
+                            '<img class="k_image_upload" ng-src="{{row.entity.image}}">' +
                         '</div>',
                         editableCellTemplate: 'ui-grid/fileChooserEditor',
                         editFileChooserCallback: $scope.storeFile
@@ -106,11 +106,18 @@ angular.module('kohar.photo-album', [])
                 photoAlbumServices.updateRow(dataSent).then(function(data, status) {
 
                     console.log('updateRow ', data);
+                    console.log('rowEntity before ', rowEntity);
 
-                    var path = colDef.field + 'ImagePath';
+                   // var path = colDef.field + 'Image';
+                    //console.log('path ', path);
 
-                    if(rowEntity[path])
-                        rowEntity[path] = rowEntity[path] + '?_ts=' + new Date().getTime();
+                    if(rowEntity.image){
+                        console.log('image inside ');
+                        rowEntity.image = rowEntity.image + '?_ts=' + new Date().getTime();
+                    }
+
+
+                    console.log('rowEntity after ', rowEntity);
 
                 }, function (response) {
 
@@ -206,8 +213,7 @@ var photoAlbumInstanceCtrl = function ($scope, $http, $rootScope, uiGridConstant
                 if(response.data.data == "success"){
 
                     add_new_row.id = response.data[0].id;
-                    //var image = response.data[0].cover;
-                    //var cover_img_path = "images/photo/" + add_new_row.id + "/image.png";
+
                     add_new_row.cover = "images/photo/" + add_new_row.id + "/image.png";
 
                     console.log('add_new_row ', add_new_row);

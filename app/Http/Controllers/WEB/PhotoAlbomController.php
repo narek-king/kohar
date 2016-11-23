@@ -24,6 +24,7 @@ class PhotoAlbomController extends Controller
      */
     public function Create(){
 
+
         $validator = Validator::make(request()->all(), [
             'name' => 'required',
             'cover' => 'required',
@@ -75,7 +76,7 @@ class PhotoAlbomController extends Controller
 
         if (request()->hasFile('cover')) {
             $image = request()->file('cover');
-            if ($image->extension() != 'png') {
+            if ($image->extension() == 'png') {
                 Storage::delete('images/photo/' . $id . '/cover.png');
                 $image->storeAs('images/photo/'.$id, 'image.'.$image->extension());
             }
