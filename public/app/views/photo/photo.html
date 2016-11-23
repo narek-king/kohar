@@ -39,33 +39,33 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Select Album</label>
                             <div class="col-sm-9">
-                                <select type="text" class="form-control" name="select_album" ng-model="select_album">
+                                <select type="text" class="form-control" name="photo_album_id" ng-model="photo_album_id">
                                     <option value=""> --- Please select --- </option>
                                     <option ng-repeat="(key, value) in items" value="{{key}}">{{value}}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Cover</label>
+                            <label class="col-sm-3 control-label">Photo</label>
                             <div class="col-sm-9">
                                 <div class="file_container">
                                     Large
-                                    <input type="file" ngf-select ng-model="coverImage" name="imageFile" accept="image/*" ngf-max-size="2MB" required ngf-model-invalid="errorFile">
+                                    <input type="file" ngf-select ng-model="photoImage" name="imageFile" accept="image/*" ngf-max-size="2MB" required ngf-model-invalid="errorFile">
                                 </div>
                                 <i ng-show="myForm.imageFile.$error.maxSize">File too large {{errorFile.size / 1000000|number:1}}MB: max 2M</i>
-                                <img ng-show="myForm.imageFile.$valid" ngf-thumbnail="coverImage" class="thumb">
-                                <button ng-click="coverImage = null" class="btn btn-danger btn_short" ng-show="coverImage">Remove</button>
+                                <img ng-show="myForm.imageFile.$valid" ngf-thumbnail="photoImage" class="thumb">
+                                <button ng-click="photoImage = null" class="btn btn-danger btn_short" ng-show="photoImage">Remove</button>
 
-                                <span class="progress" ng-show="coverImage.progress >= 0">
-                                        <div style="width:{{coverImage.progress}}%" ng-bind="coverImage.progress + '%'"></div>
+                                <span class="progress" ng-show="photoImage.progress >= 0">
+                                        <div style="width:{{photoImage.progress}}%" ng-bind="photoImage.progress + '%'"></div>
                                     </span>
-                                <span ng-show="coverImage.result">Cover Uploaded Successfully</span>
+                                <span ng-show="photoImage.result">Cover Uploaded Successfully</span>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button  class="btn btn-info" ng-disabled="!myForm.$valid" ng-click="uploadPic(coverImage)">Save</button>
+                    <button  class="btn btn-info" ng-disabled="!myForm.$valid" ng-click="uploadPic(photoImage)">Save</button>
                     <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
                     <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
                 </div>

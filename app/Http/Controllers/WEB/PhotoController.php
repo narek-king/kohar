@@ -22,17 +22,21 @@ class PhotoController extends Controller
      * @return string
      */
     public function Create(){
-        $newInstance = new Photo();
-        $this->validate(request(), ['image' => 'required']);
 
-        if (request()->hasFile('image')){
-            $newInstance->image = request()->file('image')->store('images/gallery');
+
+
+
+        $newInstance = new Photo();
+        $this->validate(request(), ['photo' => 'required']);
+
+        if (request()->hasFile('photo')){
+            $newInstance->photo = request()->file('photo')->store('images/gallery');
         }
         else{
             return 'File upload error';
         }
         $newInstance->name = request()->input('name');
-        $newInstance->photo_album_id = request()->input('album_id');
+        $newInstance->photo_album_id = request()->input('photo_album_id');
         $newInstance->save();
         return response()->json(['data' => 'success'], 200);
     }
@@ -47,11 +51,11 @@ class PhotoController extends Controller
         $instance = Photo::find($id);
 
         $instance->name = request()->input('name');
-        $instance->photo_album_id = request()->input('album_id');
+        $instance->photo_album_id = request()->input('photo_album_id');
 
-        if (request()->hasFile('image')){
-            Storage::delete($instance->image);
-            $instance->image = request()->file('image')->store('images/gallery');
+        if (request()->hasFile('photo')){
+            Storage::delete($instance->photo);
+            $instance->photo = request()->file('photo')->store('images/gallery');
         }
         $instance->save();
         return response()->json(['data' => 'success'], 200);
@@ -64,7 +68,7 @@ class PhotoController extends Controller
      */
     public function Delete($id){
         $instance = Photo::find($id);
-        Storage::delete($instance->image);
+        Storage::delete($instance->photo);
         $instance->delete();
         return response()->json(['data' => 'success'], 200);
     }

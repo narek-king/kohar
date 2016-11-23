@@ -192,28 +192,27 @@ var PhotoModal = function ($scope, $http, $rootScope, uiGridConstants, $uibModal
 
 
 
-    $scope.uploadPic = function(coverImage) {
+    $scope.uploadPic = function(photoImage) {
 
         var add_new_row = {
-            cover : coverImage,
+            photo : photoImage,
             name: $scope.name,
-            description: $scope.description
+            photo_album_id: $scope.photo_album_id
         };
 
+        console.log('add_new_row ',add_new_row);
+
         photoServices.insertRow(add_new_row).then(function (response) {
-            $timeout(function () {
 
-                if(response.data.data == "success"){
+            console.log('response ', response);
 
-                    add_new_row.id = response.data[0].id;
-                    var large_img_path = "images/music/" + add_new_row.id + "/large.png";
-                    add_new_row.large_img = large_img_path;
+            if(response.data.data == "success"){
 
-                    $rootScope.$broadcast('setGridOption', add_new_row);
+                add_new_row.id = response.data[0].id;
+                $rootScope.$broadcast('setGridOption', add_new_row);
 
-                    $uibModalInstance.close();
-                }
-            });
+                $uibModalInstance.close();
+            }
         }, function (response) {
 
             if (response.status > 0){
@@ -221,7 +220,7 @@ var PhotoModal = function ($scope, $http, $rootScope, uiGridConstants, $uibModal
             }
         }, function (evt) {
             // Math.min is to fix IE which reports 200% sometimes
-            coverImage.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+            photoImage.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
 
         });
 

@@ -238,8 +238,6 @@ var ConcertInstanceCtrl = function ($scope, $http, $rootScope, uiGridConstants, 
 
         concertsServices.insertRow(add_new_row).then(function (response) {
 
-            $timeout(function () {
-
                 if(response.data.data == "success"){
 
                     add_new_row.id = response.data[0].id;
@@ -247,7 +245,7 @@ var ConcertInstanceCtrl = function ($scope, $http, $rootScope, uiGridConstants, 
 
                     $uibModalInstance.close();
                 }
-            });
+
         }, function (response) {
 
             if (response.status > 0){
