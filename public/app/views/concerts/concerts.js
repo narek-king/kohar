@@ -137,16 +137,10 @@ angular.module('kohar.concerts', [])
 
                 concertsServices.updateRow(dataSent).then(function(data, status) {
 
-                    //var path = colDef.field + 'ImagePath';
-
-                    console.log('data ', data);
-
                     if(data.data.imagePath){
 
                         rowEntity.image = data.data.imagePath + '?_ts=' + new Date().getTime();
-                        console.log('rowEntity ', rowEntity);
                     }
-
 
                 }, function (response) {
 
@@ -239,15 +233,13 @@ var ConcertInstanceCtrl = function ($scope, $http, $rootScope, uiGridConstants, 
         };
 
         concertsServices.insertRow(add_new_row).then(function (response) {
+
             $timeout(function () {
 
                 if(response.data.data == "success"){
 
                     add_new_row.id = response.data[0].id;
                     var large_img_path = "images/music/" + add_new_row.id + "/large.png";
-                    //add_new_row.large_img = large_img_path;
-
-                    //add_new_row.small_img = small_img_path;
 
                     $rootScope.$broadcast('setGridOption', add_new_row);
 

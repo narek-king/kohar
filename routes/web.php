@@ -12,10 +12,10 @@
 */
 use App\MusicAlbum;
 
-Route::get('/', function () {
+//Route::get('/', function () {
 //    return view('welcome');
-    return redirect('dashboard');
-});
+//    return redirect('dashboard');
+//});
 
 Auth::routes();
 
@@ -25,7 +25,7 @@ Route::get('/test', function(){
 });
 Route::group(['middleware' => 'auth'], function()
 {
-    Route::get('dashboard', function() {
+    Route::get('/', function() {
         $list = MusicAlbum::find(6);
        return view('index');
 //       return view('dashboard', compact('list'));

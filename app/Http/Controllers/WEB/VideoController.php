@@ -43,6 +43,9 @@ class VideoController extends Controller
      * @return string
      */
     public function Update($id){
+
+    //
+
         $instance = Video::find($id);
 //        $this->validate(request(), ['link' => 'required']);
 

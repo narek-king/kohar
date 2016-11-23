@@ -37,11 +37,11 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">Cover</label>
+                            <label class="col-sm-3 control-label">Cover Image</label>
                             <div class="col-sm-9">
                                 <div class="file_container">
-                                    Large
-                                    <input type="file" ngf-select ng-model="coverImage" name="imageFile" accept="image/*" ngf-max-size="2MB" required ngf-model-invalid="errorFile">
+                                    Load
+                                    <input type="file" ngf-select ng-model="coverImage" name="coverImage" accept="image/*" ngf-max-size="2MB" required ngf-model-invalid="errorFile">
                                 </div>
                                 <i ng-show="myForm.imageFile.$error.maxSize">File too large {{errorFile.size / 1000000|number:1}}MB: max 2M</i>
                                 <img ng-show="myForm.imageFile.$valid" ngf-thumbnail="coverImage" class="thumb">

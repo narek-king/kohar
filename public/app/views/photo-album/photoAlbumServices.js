@@ -5,6 +5,8 @@ angular.module('kohar.services')
     return {
         insertRow : function (data) {
 
+            console.log('data ', data);
+
             return Upload.upload({
                 url: appConstants.url + '/photo-album',
                 data: data,
@@ -16,6 +18,23 @@ angular.module('kohar.services')
         },
         updateRow : function (data) {
 
+            console.log(data);
+            console.log(typeof data.cover);
+
+
+            if(data.cover && typeof data.cover == "object"){
+
+                console.log('my route ', appConstants.url + '/concert/' + data.id);
+
+                return Upload.upload({
+                    url: appConstants.url + '/photo-album/' + data.id,
+                    data: data
+                });
+
+            }else{
+                console.log('else ');
+                return $http.post(appConstants.url + '/photo-album/' + data.id, data);
+            }
             return $http.post(appConstants.url + '/photo-album/' + data.id, data);
 
         },

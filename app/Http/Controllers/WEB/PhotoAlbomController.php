@@ -24,7 +24,6 @@ class PhotoAlbomController extends Controller
      */
     public function Create(){
 
-
         $validator = Validator::make(request()->all(), [
             'name' => 'required',
             'cover' => 'required',
@@ -63,10 +62,11 @@ class PhotoAlbomController extends Controller
      * @return string
      */
     public function Update($id){
+
         $instance = PhotoAlbum::find($id);
 
         $validator = Validator::make(request()->all(), [
-            'name' => 'required|unique:photo_albums', 'description' => 'required']);
+            'name' => 'required', 'description' => 'required']);
 
         if ($validator->fails()) {
             return response()->json([$validator->messages()->getMessages()], 500);
@@ -77,13 +77,13 @@ class PhotoAlbomController extends Controller
             $image = request()->file('cover');
             if ($image->extension() != 'png') {
                 Storage::delete('images/photo/' . $id . '/cover.png');
-                $image->storeAs('images/music/'.$id, 'image.'.$image->extension());
+                $image->storeAs('images/photo/'.$id, 'image.'.$image->extension());
             }
         }
 
         $instance->name = request()->input('name');
         $instance->description = request()->input('description');
-        $instance->cover = 'images/music/'.$id.'/image.png';
+        $instance->cover = 'images/photo/'.$id.'/image.png';
         $instance->save();
 
         return response()->json(['data' => 'edited'], 200);

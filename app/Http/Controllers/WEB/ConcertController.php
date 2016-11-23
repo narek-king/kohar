@@ -51,11 +51,17 @@ class ConcertController extends Controller
      * @return string
      */
     public function Update($id){
-        $instance = Concert::find($id);
 
-        if (request()->hasFile('image')){
+
+
+
+        $instance = Concert::find($id);
+        $imagePath = $instance->image;
+        if (request()->hasFile('imageFile')){
             Storage::delete($instance->image);
-            $instance->image = request()->file('image')->store('images/concerts');
+            $imagePath = request()->file('imageFile')->store('images/concerts');
+            $instance->image = $imagePath;
+
         }
         $instance->country = request()->input('country');
         $instance->city = request()->input('city');
@@ -65,7 +71,7 @@ class ConcertController extends Controller
         $instance->description = request()->input('description');
         $instance->save();
 
-        return response()->json(['data' => 'success'], 200);
+        return response()->json(['data' => 'success', 'imagePath' => $imagePath], 200);
     }
 
     /**

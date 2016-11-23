@@ -32,8 +32,6 @@ class MusicAlbumController extends Controller
             'large' => 'required',
         ]);
 
-
-
         if ($validator->fails()) {
             return response()->json([$validator->messages()->getMessages(), 500]);
         }
@@ -62,7 +60,7 @@ class MusicAlbumController extends Controller
      * @param  int
      * @return string
      */
-    public function Update(int $id){
+    public function Update($id){
         $instance = MusicAlbum::find($id);
 
         $validator = Validator::make(request()->all(), [
@@ -91,7 +89,7 @@ class MusicAlbumController extends Controller
         $instance->name = request()->input('name');
         $instance->save();
         }
-        Response::header('Cache-Control', 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
+        // response()->header('Cache-Control', 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
         return response()->json(['data' => 'success'], 200);
     }
 

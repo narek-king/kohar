@@ -13,8 +13,10 @@ angular.module('kohar.photo-album', [])
             /* Preview updated image */
             $scope.storeFile = function (gridRow, gridCol, files) {
 
-                gridRow.entity[this.image] = files[0];
-                updateRow(gridRow.entity, {field : this.image}, files[0], this.image);
+                console.log('files ', files);
+
+                gridRow.entity.cover = files[0];
+                updateRow(gridRow.entity, {field : "cover"}, files[0], "cover");
 
             };
             
@@ -45,17 +47,16 @@ angular.module('kohar.photo-album', [])
                         cellTemplate: 'ui-grid/cellTitleValidator'
                     },
                     {
-                        field: 'Cover',
+                        field: 'cover',
                         cellClass:'k_height styled_file_container',
                         enableCellEdit: true,
                         type: 'file',
                         width: 180,
-                        cellTemplate: '<div ng-init="row.entity.largeImagePath = \'images/music/\' + row.entity.id + \'/large.png\'">Load Cover ' +
-                            //'<img class="k_image_upload" ng-init="row.entity.imagePath = \'http://localhost:8000/images/music/\' + row.entity.id + \'/large.png\'" ng-src="{{row.entity.imagePath}}">' +
-                            '<photo-directive class="k_image_upload" image-src="{{row.entity.largeImagePath}}"></photo-directive>' +
+                        cellTemplate: '<div>Cover image ' +
+                            '<img class="k_image_upload" ng-src="images/photo/{{row.entity.id}}/image.png">' +
                         '</div>',
                         editableCellTemplate: 'ui-grid/fileChooserEditor',
-                        editFileChooserCallback: $scope.storeFile.bind({image: "large"})
+                        editFileChooserCallback: $scope.storeFile
                     }
                 ],
 
@@ -86,6 +87,8 @@ angular.module('kohar.photo-album', [])
                 /**************************** UPDATE ***************************/
                 /***************************************************************/
 
+                console.log('rowEntity ', rowEntity);
+
                 var dataSent = {};
 
                 if(!newValue)
@@ -93,11 +96,21 @@ angular.module('kohar.photo-album', [])
                 if(newValue == oldValue)
                     return;
 
-                dataSent = rowEntity;
-
+                dataSent = {
+                    id: rowEntity.id,
+                    cover : rowEntity.cover,
+                    name: rowEntity.name,
+                    description: rowEntity.description
+                };
 
                 photoAlbumServices.updateRow(dataSent).then(function(data, status) {
 
+                    console.log('updateRow ', data);
+
+                    var path = colDef.field + 'ImagePath';
+
+                    if(rowEntity[path])
+                        rowEntity[path] = rowEntity[path] + '?_ts=' + new Date().getTime();
 
                 }, function (response) {
 
@@ -131,7 +144,7 @@ angular.module('kohar.photo-album', [])
                     ariaLabelledBy: 'modal-title',
                     ariaDescribedBy: 'modal-body',
                     templateUrl: 'photoAlbumModalContent.html',
-                    controller: ModalInstanceCtrl,
+                    controller: photoAlbumInstanceCtrl,
                     controllerAs: 'this',
                     resolve: {
                         items: function () {
@@ -173,7 +186,7 @@ angular.module('kohar.photo-album', [])
         }]);
 
 
-var ModalInstanceCtrl = function ($scope, $http, $rootScope, uiGridConstants, $uibModalInstance, photoAlbumServices, Upload,  $timeout ) {
+var photoAlbumInstanceCtrl = function ($scope, $http, $rootScope, uiGridConstants, $uibModalInstance, photoAlbumServices, Upload,  $timeout ) {
 
 
     $scope.uploadPic = function(coverImage) {
@@ -185,19 +198,26 @@ var ModalInstanceCtrl = function ($scope, $http, $rootScope, uiGridConstants, $u
         };
 
         photoAlbumServices.insertRow(add_new_row).then(function (response) {
+
             $timeout(function () {
+
+            console.log('response ', response);
 
                 if(response.data.data == "success"){
 
                     add_new_row.id = response.data[0].id;
-                    var large_img_path = "images/music/" + add_new_row.id + "/large.png";
-                    add_new_row.large_img = large_img_path;
+                    //var image = response.data[0].cover;
+                    //var cover_img_path = "images/photo/" + add_new_row.id + "/image.png";
+                    add_new_row.cover = "images/photo/" + add_new_row.id + "/image.png";
+
+                    console.log('add_new_row ', add_new_row);
 
                     $rootScope.$broadcast('setGridOption', add_new_row);
 
                     $uibModalInstance.close();
                 }
             });
+
         }, function (response) {
 
             if (response.status > 0){
@@ -208,7 +228,6 @@ var ModalInstanceCtrl = function ($scope, $http, $rootScope, uiGridConstants, $u
             coverImage.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
 
         });
-
 
     }
 

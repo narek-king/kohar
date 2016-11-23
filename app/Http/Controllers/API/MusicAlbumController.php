@@ -42,8 +42,8 @@ class MusicAlbumController extends Controller
 
         foreach ($musicAlbums as $key => $musicAlbum){
             $musicAlbumarray['data'][$key] += ['quantity' => $musicAlbum->musics->count()];
-            $musicAlbumarray['data'][$key] += ['small' => '/images/music/'.$musicAlbum->id.'/small.png'];
-            $musicAlbumarray['data'][$key] += ['large' => '/images/music/'.$musicAlbum->id.'/large.png'];
+            $musicAlbumarray['data'][$key] += ['smallImagePath' => 'http://localhost:8000/images/music/'.$musicAlbum->id.'/small.png'];
+            $musicAlbumarray['data'][$key] += ['largeImagePath' => '/images/music/'.$musicAlbum->id.'/large.png'];
         }
 
         ApiLogger::logInfo();
