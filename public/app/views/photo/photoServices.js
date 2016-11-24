@@ -21,7 +21,6 @@ angular.module('kohar.services')
                 if(data.imageFile && typeof data.imageFile == "object"){
 
                     console.log('my route ', appConstants.url + '/photo/' + data.id);
-
                     return Upload.upload({
                         url: appConstants.url + '/photo/' + data.id,
                         data: data

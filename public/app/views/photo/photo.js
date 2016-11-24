@@ -114,7 +114,6 @@ angular.module('kohar.photo', [])
 
                 });
 
-
             }
 
             /***************************************************************/
@@ -195,8 +194,6 @@ angular.module('kohar.photo', [])
 var PhotoModal = function ($scope, $http, $rootScope, uiGridConstants, $uibModalInstance, photoServices, Upload,  $timeout, items ) {
 
     $scope.items = items;
-
-
 
     $scope.uploadPic = function(photoImage) {
 
