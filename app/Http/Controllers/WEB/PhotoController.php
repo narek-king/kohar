@@ -1,18 +1,13 @@
 <?php
-
 namespace App\Http\Controllers\WEB;
-
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Photo;
 use Validator;
-
 class PhotoController extends Controller
 {
     //
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -26,25 +21,21 @@ class PhotoController extends Controller
         $validator = Validator::make(request()->all(), [
             'image' => 'required'
         ]);
-
         if ($validator->fails()) {
             return response()->json([$validator->messages()->getMessages(), 500]);
         }
-
         if (request()->hasFile('image')){
-            request()->file('image')->store('images/gallery');
+           $image = request()->file('image')->store('images/gallery');
         }
         else{
             return response()->json(['data' => 'File upload error'], 500);
         }
         $instance = Photo::forceCreate([
-        'name' => request()->input('name'),
-        'photo_album_id' => request()->input('album_id')]);
-
+            'image' => $image,
+            'name' => request()->input('name'),
+            'photo_album_id' => request()->input('album_id')]);
         return response()->json(['data' => 'success', $instance], 200);
     }
-
-
     /**
      * Update existing  instance
      * @param  int
@@ -52,12 +43,10 @@ class PhotoController extends Controller
      */
     public function Update($id){
         $instance = Photo::find($id);
-
         if(request()->has('name'))
-        $instance->name = request()->input('name');
+            $instance->name = request()->input('name');
         if(request()->has('album_id'))
-        $instance->photo_album_id = request()->input('album_id');
-
+            $instance->photo_album_id = request()->input('album_id');
         if (request()->hasFile('image')){
             Storage::delete($instance->image);
             $instance->image = request()->file('image')->store('images/gallery');
@@ -65,7 +54,6 @@ class PhotoController extends Controller
         $instance->save();
         return response()->json(['data' => 'success'], 200);
     }
-
     /**
      * Delete existing  instance
      * @param  int
