@@ -14,8 +14,8 @@ angular.module('kohar.photo', [])
             /* Preview updated image */
             $scope.storeFile = function (gridRow, gridCol, files) {
 
-                gridRow.entity[this.image] = files[0];
-                updateRow(gridRow.entity, {field : this.image}, files[0], this.image);
+                gridRow.entity.imageFile = files[0];
+                updateRow(gridRow.entity, {field : "imageFile"}, files[0], "imageFile");
 
             };
 
@@ -46,17 +46,17 @@ angular.module('kohar.photo', [])
                         validators: {required: true},
                     },
                     {
-                        field: 'Cover',
+                        name: 'Cover',
+                        field: 'image',
                         cellClass:'k_height styled_file_container',
                         enableCellEdit: true,
                         type: 'file',
                         width: 180,
-                        cellTemplate: '<div ng-init="row.entity.largeImagePath = \'images/music/\' + row.entity.id + \'/large.png\'">Load Cover ' +
-                        //'<img class="k_image_upload" ng-init="row.entity.imagePath = \'http://localhost:8000/images/music/\' + row.entity.id + \'/large.png\'" ng-src="{{row.entity.imagePath}}">' +
-                        '<photo-directive class="k_image_upload" image-src="{{row.entity.largeImagePath}}"></photo-directive>' +
+                        cellTemplate: '<div>Cover image ' +
+                            '<img class="k_image_upload" ng-src="{{row.entity.image}}">' +
                         '</div>',
                         editableCellTemplate: 'ui-grid/fileChooserEditor',
-                        editFileChooserCallback: $scope.storeFile.bind({image: "large"})
+                        editFileChooserCallback: $scope.storeFile
                     }
                 ],
 
@@ -99,6 +99,12 @@ angular.module('kohar.photo', [])
 
                 photoServices.updateRow(dataSent).then(function(data, status) {
 
+                    console.log('updateRow response ', data);
+
+                    if(rowEntity.image){
+                        console.log('image inside ');
+                        rowEntity.image = rowEntity.image + '?_ts=' + new Date().getTime();
+                    }
 
                 }, function (response) {
 
@@ -195,16 +201,12 @@ var PhotoModal = function ($scope, $http, $rootScope, uiGridConstants, $uibModal
     $scope.uploadPic = function(photoImage) {
 
         var add_new_row = {
-            photo : photoImage,
+            image : photoImage,
             name: $scope.name,
-            photo_album_id: $scope.photo_album_id
+            album_id: $scope.photo_album_id
         };
 
-        console.log('add_new_row ',add_new_row);
-
         photoServices.insertRow(add_new_row).then(function (response) {
-
-            console.log('response ', response);
 
             if(response.data.data == "success"){
 
@@ -219,6 +221,7 @@ var PhotoModal = function ($scope, $http, $rootScope, uiGridConstants, $uibModal
                 $scope.errorMsg = response.status + ': ' + response.data;
             }
         }, function (evt) {
+
             // Math.min is to fix IE which reports 200% sometimes
             photoImage.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
 

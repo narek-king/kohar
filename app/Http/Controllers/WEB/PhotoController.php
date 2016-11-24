@@ -3,6 +3,7 @@ namespace App\Http\Controllers\WEB;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use App\Photo;
 use Validator;
 class PhotoController extends Controller
@@ -18,6 +19,7 @@ class PhotoController extends Controller
      * @return string
      */
     public function Create(){
+
         $validator = Validator::make(request()->all(), [
             'image' => 'required'
         ]);
@@ -42,14 +44,18 @@ class PhotoController extends Controller
      * @return string
      */
     public function Update($id){
+
+        //print_r($_POST);
+        //print_r($_FILES);
+
         $instance = Photo::find($id);
         if(request()->has('name'))
             $instance->name = request()->input('name');
         if(request()->has('album_id'))
             $instance->photo_album_id = request()->input('album_id');
-        if (request()->hasFile('image')){
+        if (request()->hasFile('imageFile')){
             Storage::delete($instance->image);
-            $instance->image = request()->file('image')->store('images/gallery');
+            $instance->image = request()->file('imageFile')->store('images/gallery');
         }
         $instance->save();
         return response()->json(['data' => 'success'], 200);
