@@ -49,6 +49,7 @@ class PhotoController extends Controller
         //print_r($_FILES);
 
         $instance = Photo::find($id);
+        $image  = $instance->image;
         if(request()->has('name'))
             $instance->name = request()->input('name');
         if(request()->has('album_id'))
@@ -56,9 +57,10 @@ class PhotoController extends Controller
         if (request()->hasFile('imageFile')){
             Storage::delete($instance->image);
             $instance->image = request()->file('imageFile')->store('images/gallery');
+            $image = $instance->image;
         }
         $instance->save();
-        return response()->json(['data' => 'success'], 200);
+        return response()->json(['data' => 'success', 'imagePath' => $image], 200);
     }
     /**
      * Delete existing  instance
