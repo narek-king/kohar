@@ -99,11 +99,8 @@ angular.module('kohar.photo', [])
 
                 photoServices.updateRow(dataSent).then(function(data, status) {
 
-                    console.log('updateRow response ', data);
-
                     if(rowEntity.image){
-                        console.log('image inside ');
-                        rowEntity.image = rowEntity.image + '?_ts=' + new Date().getTime();
+                        rowEntity.image = data.data.imagePath + '?_ts=' + new Date().getTime();
                     }
 
                 }, function (response) {

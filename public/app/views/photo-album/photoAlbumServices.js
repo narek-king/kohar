@@ -5,8 +5,6 @@ angular.module('kohar.services')
     return {
         insertRow : function (data) {
 
-            console.log('data ', data);
-
             return Upload.upload({
                 url: appConstants.url + '/photo-album',
                 data: data,
@@ -17,10 +15,6 @@ angular.module('kohar.services')
             return $http.get(appConstants.url + '/api/photo-album-image', { params: options, cache: false});
         },
         updateRow : function (data) {
-
-            console.log(data);
-            console.log(typeof data.cover);
-
 
             if(data.cover && typeof data.cover == "object"){
 
@@ -33,7 +27,6 @@ angular.module('kohar.services')
 
                 return $http.post(appConstants.url + '/photo-album/' + data.id, data);
             }
-            return $http.post(appConstants.url + '/photo-album/' + data.id, data);
 
         },
         deleteRow : function (id) {

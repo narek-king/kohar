@@ -13,8 +13,6 @@ angular.module('kohar.photo-album', [])
             /* Preview updated image */
             $scope.storeFile = function (gridRow, gridCol, files) {
 
-                console.log('files ', files);
-
                 gridRow.entity.cover = files[0];
                 updateRow(gridRow.entity, {field : "cover"}, files[0], "cover");
 
@@ -87,8 +85,6 @@ angular.module('kohar.photo-album', [])
                 /**************************** UPDATE ***************************/
                 /***************************************************************/
 
-                console.log('rowEntity ', rowEntity);
-
                 var dataSent = {};
 
                 if(!newValue)
@@ -105,17 +101,10 @@ angular.module('kohar.photo-album', [])
 
                 photoAlbumServices.updateRow(dataSent).then(function(data, status) {
 
-                    console.log('updateRow ', data);
-                    console.log('rowEntity before ', rowEntity);
-
-
                     if(rowEntity.image){
-                        console.log('image inside ');
+
                         rowEntity.image = rowEntity.image + '?_ts=' + new Date().getTime();
                     }
-
-
-                    console.log('rowEntity after ', rowEntity);
 
                 }, function (response) {
 

@@ -16,18 +16,15 @@ angular.module('kohar.services')
             },
             updateRow : function (data) {
 
-                console.log('updateRow sent ', data);
-
                 if(data.imageFile && typeof data.imageFile == "object"){
 
-                    console.log('my route ', appConstants.url + '/photo/' + data.id);
                     return Upload.upload({
                         url: appConstants.url + '/photo/' + data.id,
                         data: data
                     });
 
                 }else{
-                    console.log('else ');
+
                     return $http.post(appConstants.url + '/photo/' + data.id, data);
                 }
 

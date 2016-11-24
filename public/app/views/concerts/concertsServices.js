@@ -22,15 +22,13 @@ angular.module('kohar.services')
 
             if(data.imageFile){
 
-                console.log('my route ', appConstants.url + '/concert/' + data.id);
-
                 return Upload.upload({
                     url: appConstants.url + '/concert/' + data.id,
                     data: data
                 });
 
             }else{
-                console.log('else ');
+
                 return $http.post(appConstants.url + '/concert/' + data.id, data);
             }
 

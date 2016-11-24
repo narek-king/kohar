@@ -106,8 +106,6 @@ angular.module('kohar.music-albums', [])
 
             musicAlbumsServices.updateRow(dataSent).then(function(data, status) {
 
-                console.log('updateRow ', data);
-
                 var path = colDef.field + 'ImagePath';
 
                 if(rowEntity[path])

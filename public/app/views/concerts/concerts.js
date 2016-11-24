@@ -135,17 +135,12 @@ angular.module('kohar.concerts', [])
                     imageFile: rowEntity.imageFile
                 };
 
-                console.log('dataSent ', dataSent);
-
                 concertsServices.updateRow(dataSent).then(function(data, status) {
 
-                    console.log('rowEntity before ', rowEntity);
                     if(data.data.imagePath){
 
                         rowEntity.image = data.data.imagePath + '?_ts=' + new Date().getTime();
                     }
-
-                    console.log('rowEntity after ', rowEntity);
 
                 }, function (response) {
 
@@ -165,8 +160,6 @@ angular.module('kohar.concerts', [])
 
                 $scope.gridOptions.data = response.data.data;
                 $scope.gridOptions.totalItems = response.data.total;
-
-                console.log('getAll ', response);
 
             });
 
