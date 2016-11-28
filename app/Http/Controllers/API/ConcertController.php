@@ -19,7 +19,7 @@ class ConcertController extends Controller
      * @return string
      */
     public function allConcerts(){
-        $concert = Concert::paginate(env('PAGINATE_DEFAULT'));
+        $concert = Concert::orderby('date', 'desc')->paginate(env('PAGINATE_DEFAULT'));
         ApiLogger::logInfo();
         return response()->json($concert);
     }
@@ -45,7 +45,7 @@ class ConcertController extends Controller
         $concerts = Concert::all();
         $result= array();
         foreach ($concerts as $concert){
-            $current = Carbon::createFromFormat('Y-m-d', $concert->date);
+            $current = Carbon::createFromTimestamp($concert->date);
             if($current->year == $year){
                array_push($result, $concert);
             }
