@@ -31,4 +31,25 @@ class NewsController extends Controller
         return response()->json($track);
 
     }
+    /**
+     * Retrives links
+     * @param
+     * @return string
+     */
+    public function links (){
+        $links = ([
+            'Website ' => 'http://koharconcert.com/',
+            'Blog ' => 'http://koharblog.com/',
+            'Library ' => 'http://koharlibrary.com/',
+            'Artisan ' => 'http://koharbookbindery.com/',
+            'Facebook' => 'https://www.facebook.com/KOHARSymphonyOrchestraChoir/',
+            'Flickr' =>'https://www.flickr.com/photos/hayasa/',
+            'Wikipedia' =>'https://en.wikipedia.org/wiki/KOHAR_Symphony_Orchestra_and_Choir/',
+//            'SoundCloud' => 'https://soundcloud.com/user-346757815/'
+        ]);
+        return response()->json($links);
+
+    }
+
+
 }

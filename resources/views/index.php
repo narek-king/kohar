@@ -9,10 +9,10 @@
   <title>My AngularJS App</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="app/bower_components/reset-css/reset.css">
-  <link rel="stylesheet" href="app/bower_components/bootstrap/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="app/bower_components/angular-bootstrap/ui-bootstrap-csp.css">
-  <link rel="stylesheet" type="text/css" href="app/bower_components/angular-ui-grid/ui-grid.min.css">
+  <link rel="stylesheet" href="/app/bower_components/reset-css/reset.css">
+  <link rel="stylesheet" href="/app/bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/app/bower_components/angular-bootstrap/ui-bootstrap-csp.css">
+  <link rel="stylesheet" type="text/css" href="/app/bower_components/angular-ui-grid/ui-grid.min.css">
   <!--<link rel="stylesheet" href="app/bower_components/angular-bootstrap-lightbox/dist/angular-bootstrap-lightbox.css">-->
   <link rel="stylesheet" href="/app/app.css">
 
@@ -39,7 +39,7 @@
                         <div class="header">
                             <div class="header_inside">
                                <div class="logo">
-                                 <a href="#"><img src="app/resources/img/logo.png" alt="Logo"></a>
+                                 <a href="#"><img src="/app/resources/img/logo.png" alt="Logo"></a>
                                </div>
                              </div>
                         </div>
@@ -65,48 +65,48 @@
   <!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
   -->
-  <script src="app/bower_components/angular/angular.js"></script>
-  <script src="app/bower_components/angular-route/angular-route.js"></script>
-  <script src="app/bower_components/angular-animate/angular-animate.js"></script>
-  <script src="app/bower_components/angular-touch/angular-touch.js"></script>
-  <script src="app/bower_components/angular-ui-grid/ui-grid.min.js"></script>
+  <script src="/app/bower_components/angular/angular.js"></script>
+  <script src="/app/bower_components/angular-route/angular-route.js"></script>
+  <script src="/app/bower_components/angular-animate/angular-animate.js"></script>
+  <script src="/app/bower_components/angular-touch/angular-touch.js"></script>
+  <script src="/app/bower_components/angular-ui-grid/ui-grid.min.js"></script>
 
-    <script src="app/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="/app/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 
     <!--image upload plugin-->
-  <script src="app/bower_components/ng-file-upload-shim/ng-file-upload-shim.js"></script>
-  <script src="app/bower_components/ng-file-upload/ng-file-upload.js"></script>
+  <script src="/app/bower_components/ng-file-upload-shim/ng-file-upload-shim.js"></script>
+  <script src="/app/bower_components/ng-file-upload/ng-file-upload.js"></script>
 
-  <script src="app/app.js"></script>
+  <script src="/app/app.js"></script>
 
-  <script src="app/views/music/music.js"></script>
-  <script src="app/views/music-albums/music-albums.js"></script>
-    <script src="app/views/video/video.js"></script>
-    <script src="app/views/concerts/concerts.js"></script>
-    <script src="app/views/photo/photo.js"></script>
-    <script src="app/views/photo-album/photo-album.js"></script>
+  <script src="/app/views/music/music.js"></script>
+  <script src="/app/views/music-albums/music-albums.js"></script>
+    <script src="/app/views/video/video.js"></script>
+    <script src="/app/views/concerts/concerts.js"></script>
+    <script src="/app/views/photo/photo.js"></script>
+    <script src="/app/views/photo-album/photo-album.js"></script>
 
 
-  <script src="app/components/version/version.js"></script>
-  <script src="app/components/version/version-directive.js"></script>
-  <script src="app/components/version/interpolate-filter.js"></script>
+  <script src="/app/components/version/version.js"></script>
+  <script src="/app/components/version/version-directive.js"></script>
+  <script src="/app/components/version/interpolate-filter.js"></script>
 
 <!--include services-->
-  <script src="app/views/music/musicServices.js"></script>
-  <script src="app/views/music-albums/musicAlbumsServices.js"></script>
-  <script src="app/views/video/videoServices.js"></script>
-  <script src="app/views/photo-album/photoAlbumServices.js"></script>
-  <script src="app/views/photo/photoServices.js"></script>
-  <script src="app/views/concerts/concertsServices.js"></script>
+  <script src="/app/views/music/musicServices.js"></script>
+  <script src="/app/views/music-albums/musicAlbumsServices.js"></script>
+  <script src="/app/views/video/videoServices.js"></script>
+  <script src="/app/views/photo-album/photoAlbumServices.js"></script>
+  <script src="/app/views/photo/photoServices.js"></script>
+  <script src="/app/views/concerts/concertsServices.js"></script>
 
 <!--include config files -->
-<script src="app/components/config/constants.js"></script>
+<script src="/app/components/config/constants.js"></script>
 
 <!--include custom directive for modal window-->
-  <script src="app/components/filters/timeConverter.js"></script>
+  <script src="/app/components/filters/timeConverter.js"></script>
 
-  <script src="app/components/photo.js"></script>
-    <script src="app/components/previewImage.js"></script>
+  <script src="/app/components/photo.js"></script>
+    <script src="/app/components/previewImage.js"></script>
 
 
 </body>
