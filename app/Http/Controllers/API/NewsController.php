@@ -43,7 +43,7 @@ class NewsController extends Controller
             'Kohar Blog' => "http://koharblog.com/",
             'Kohar Library' => "http://koharlibrary.com/",
             'Kohar Music School' =>  "",
-            'Kohar Kohar Artisan' =>  "http://koharbookbindery.com/",
+            'Kohar Kohar Artisan ' =>  "http://koharbookbindery.com/",
             'Facebook' => "https://www.facebook.com/KOHARSymphonyOrchestraChoir/",
             'Twitter' => "https://twitter.com/KOHARConcert",
             'Youtube' => "https://www.youtube.com/channel/UCnU3NnNUkCjNF70siIUI6Ag",
