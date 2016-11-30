@@ -27,8 +27,7 @@ class PhotoAlbomController extends Controller
 
         $validator = Validator::make(request()->all(), [
             'name' => 'required',
-            'cover' => 'required',
-            'description' => 'required'
+
         ]);
 
 
