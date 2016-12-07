@@ -15,7 +15,7 @@ class SoundCloudeClient
     protected  $client;
     protected $clientID;
     function __construct() {
-        $this->clientID = "69b6a6bc4f7d483fd21b170137a9cd51";
+        $this->clientID = "7vWL0yZ0JpMVtdEjFHo0lZCzUSZXm9yZ";
         $this->client = new Client([
             // Base URI is used with relative requests
             'base_uri' => 'http://api.soundcloud.com',

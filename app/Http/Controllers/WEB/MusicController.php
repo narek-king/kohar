@@ -47,8 +47,8 @@ class MusicController extends Controller {
 
             $music = Music::forceCreate([
                 'track' => request()->input('track'),
-                'link' => request()->input('link'),
-                'duration' => request()->input('link'),
+                'link' => $this->SoundCloudeClient->getStreamUrlFromURL(request()->input('link')),
+                'duration' => $this->SoundCloudeClient->getDurationFromURL(request()->input('link')),
                 'performer' => request()->input('performer'),
                 'music_by' => request()->input('music_by'),
                 'lyrics_by' => request()->input('lyrics_by'),
@@ -105,8 +105,8 @@ class MusicController extends Controller {
             */
 //        $this->validate(request(), ['track' => 'required', 'link' => 'required']);
         $instance->track = request()->input('track');
-        $instance->link = request()->input('link');
-        $instance->duration = request()->input('link');
+        $instance->link = $this->SoundCloudeClient->getStreamUrlFromURL(request()->input('link'));
+        $instance->duration = $this->SoundCloudeClient->getDurationFromURL(request()->input('link'));
         $instance->performer = request()->input('performer');
         $instance->music_by = request()->input('music_by');
         $instance->lyrics_by = request()->input('lyrics_by');
