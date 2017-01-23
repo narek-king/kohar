@@ -23,6 +23,7 @@ Route::get('/music-album/{id}', 'API\MusicAlbumController@show');
 Route::get('/music', 'API\MusicController@musicList');
 Route::get('/music/{id}', 'API\MusicController@show');
 Route::get('/music/search/{track}', 'API\MusicController@search');
+Route::get('/music/favorites/{list}', 'API\MusicController@favorites');
 Route::get('/video', 'API\VideoController@videoList');
 Route::get('/concert', 'API\ConcertController@allConcerts');
 Route::get('/concert/{id}', 'API\ConcertController@show');
@@ -36,3 +37,5 @@ Route::get('/photo-album/{id}', 'API\PhotoAlbomController@show');
 Route::get('/photo', 'API\PhotoController@photoList');
 Route::get('/photo/{id}', 'API\PhotoController@show');
 Route::get('/links', 'API\NewsController@links');
+
+

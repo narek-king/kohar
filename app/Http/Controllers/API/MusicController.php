@@ -42,4 +42,11 @@ class MusicController extends Controller
         return response()->json($result);
 
     }
+
+    public function favorites ($list)
+    {
+        $arr = explode(',', $list);
+        $result = Music::whereIn('id', $arr)->get();
+        return response($result);
+    }
 }
