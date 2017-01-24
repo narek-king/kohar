@@ -37,5 +37,6 @@ Route::get('/photo-album/{id}', 'API\PhotoAlbomController@show');
 Route::get('/photo', 'API\PhotoController@photoList');
 Route::get('/photo/{id}', 'API\PhotoController@show');
 Route::get('/links', 'API\NewsController@links');
+Route::get('/about', 'API\AboutController@index');
 
 
