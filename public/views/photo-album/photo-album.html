@@ -1,0 +1,66 @@
+<div class="photo_album">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <h2 class="k_content_title">Photo Album</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="k_wrap_buttons col-md-12">
+            <button type="button" id="addData" class="btn k_success" ng-click="addData()">Add Photo Album</button>
+            <button type="button" class="btn k_success" ng-click="clearAll()">Clear All</button>
+            <button type="button" class="btn k_success" ng-click="deleteSelected()">Delete Selected</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div id="grid3" ui-grid-pagination ui-grid-edit ui-grid-resize-columns ui-grid-validate ui-grid-selection ui-grid="gridOptions" class="grid"></div>
+        </div>
+    </div>
+    <div class="row">
+        <script type="text/ng-template" id="photoAlbumModalContent.html">
+            <div class="modal-header">
+                <h3>Add Photo Album</h3>
+            </div>
+            <form role="form" name="myForm" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Name</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="name" ng-model="name" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Description</label>
+                            <div class="col-sm-9">
+                                <textarea type="text" class="form-control" rows="5" name="description" ng-model="description" required=""></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Cover Image</label>
+                            <div class="col-sm-9">
+                                <div class="file_container">
+                                    Load
+                                    <input type="file" ngf-select ng-model="coverImage" name="coverImage" accept="image/*" ngf-max-size="2MB" required ngf-model-invalid="errorFile">
+                                </div>
+                                <i ng-show="myForm.imageFile.$error.maxSize">File too large {{errorFile.size / 1000000|number:1}}MB: max 2M</i>
+                                <img ng-show="myForm.imageFile.$valid" ngf-thumbnail="coverImage" class="thumb">
+                                <button ng-click="coverImage = null" class="btn btn-danger btn_short" ng-show="coverImage">Remove</button>
+
+                                <span class="progress" ng-show="coverImage.progress >= 0">
+                                        <div style="width:{{coverImage.progress}}%" ng-bind="coverImage.progress + '%'"></div>
+                                    </span>
+                                <span ng-show="coverImage.result">Cover Uploaded Successfully</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button  class="btn btn-info" ng-disabled="!myForm.$valid" ng-click="uploadPic(coverImage)">Save</button>
+                    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+                    <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+                </div>
+            </form>
+        </script><!--myModalContent-->
+    </div>
+</div>
