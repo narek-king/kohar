@@ -40,7 +40,7 @@ angular.module('kohar.concerts', [])
                         cellClass:'k_height styled_file_container',
                         enableCellEdit: true,
                         type: 'file',
-                        cellTemplate: '<div>Load large image {{row.entity.id}} ' +
+                        cellTemplate: '<div>Image {{row.entity.id}} ' +
                             '<img class="k_image_upload" ng-src="{{row.entity.image}}">' +
                         '</div>',
                         editableCellTemplate: 'ui-grid/fileChooserEditor',
@@ -82,6 +82,14 @@ angular.module('kohar.concerts', [])
                     },
                     {
                         field: 'description',
+                        cellClass:'red',
+                        enableCellEdit: true,
+                        minWidth: 180,
+                        validators: {required: true},
+                        //cellTemplate: 'ui-grid/cellTitleValidator'
+                    },
+                    {
+                        field: 'link',
                         cellClass:'red',
                         enableCellEdit: true,
                         minWidth: 180,
@@ -132,6 +140,7 @@ angular.module('kohar.concerts', [])
                     place: rowEntity.place,
                     date: rowEntity.date,
                     description: rowEntity.description,
+                    link: rowEntity.link,
                     imageFile: rowEntity.imageFile
                 };
 
@@ -227,6 +236,7 @@ var ConcertInstanceCtrl = function ($scope, $http, $rootScope, uiGridConstants, 
             place: $scope.place,
             date: new Date($scope.date).getTime(),
             description: $scope.description,
+            link: $scope.link,
         };
 
         concertsServices.insertRow(add_new_row).then(function (response) {

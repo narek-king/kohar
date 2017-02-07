@@ -87,7 +87,16 @@ angular.module('kohar.concerts', [])
                         minWidth: 180,
                         validators: {required: true},
                         //cellTemplate: 'ui-grid/cellTitleValidator'
+                    },
+                    {
+                        field: 'link',
+                        cellClass:'red',
+                        enableCellEdit: true,
+                        minWidth: 180,
+                        validators: {required: true},
+                        //cellTemplate: 'ui-grid/cellTitleValidator'
                     }
+
                 ],
 
                 onRegisterApi : function(gridApi){
@@ -132,7 +141,8 @@ angular.module('kohar.concerts', [])
                     place: rowEntity.place,
                     date: rowEntity.date,
                     description: rowEntity.description,
-                    imageFile: rowEntity.imageFile
+                    imageFile: rowEntity.imageFile,
+                    link: rowEntity.link
                 };
 
                 concertsServices.updateRow(dataSent).then(function(data, status) {
@@ -227,6 +237,7 @@ var ConcertInstanceCtrl = function ($scope, $http, $rootScope, uiGridConstants, 
             place: $scope.place,
             date: new Date($scope.date).getTime(),
             description: $scope.description,
+            link: $scope.link
         };
 
         concertsServices.insertRow(add_new_row).then(function (response) {
