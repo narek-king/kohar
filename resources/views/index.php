@@ -32,6 +32,7 @@
                         <li ng-class="{active : activeMenu === 'photo-album'}"><a href="#!/photo-album" title="Photo" ng-click="activeMenu = 'photo-album'">Photo Album</a></li>
                         <li ng-class="{active : activeMenu === 'photo'}"><a href="#!/photo" title="Photo" ng-click="activeMenu = 'photo'">Photo</a></li>
                         <li ng-class="{active : activeMenu === 'about'}"><a href="#!/about" title="About" ng-click="activeMenu = 'about'">About</a></li>
+                        <li ng-class="{active : activeMenu === 'links'}"><a href="#!/links" title="Links" ng-click="activeMenu = 'links'">Links</a></li>
                       </ul>
                     </nav>
                   </aside>
@@ -87,6 +88,7 @@
     <script src="/app/views/photo/photo.js"></script>
     <script src="/app/views/photo-album/photo-album.js"></script>
     <script src="/app/views/about/about.js"></script>
+    <script src="/app/views/links/links.js"></script>
 
 
   <script src="/app/components/version/version.js"></script>
