@@ -6,7 +6,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>My AngularJS App</title>
+  <title>Kohar App</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="/app/bower_components/reset-css/reset.css">
@@ -31,6 +31,7 @@
                         <li ng-class="{active : activeMenu === 'concerts'}"><a href="#!/concerts" title="Concerts" ng-click="activeMenu = 'concerts'">Concerts</a></li>
                         <li ng-class="{active : activeMenu === 'photo-album'}"><a href="#!/photo-album" title="Photo" ng-click="activeMenu = 'photo-album'">Photo Album</a></li>
                         <li ng-class="{active : activeMenu === 'photo'}"><a href="#!/photo" title="Photo" ng-click="activeMenu = 'photo'">Photo</a></li>
+                        <li ng-class="{active : activeMenu === 'about'}"><a href="#!/about" title="About" ng-click="activeMenu = 'about'">About</a></li>
                       </ul>
                     </nav>
                   </aside>
@@ -85,6 +86,7 @@
     <script src="/app/views/concerts/concerts.js"></script>
     <script src="/app/views/photo/photo.js"></script>
     <script src="/app/views/photo-album/photo-album.js"></script>
+    <script src="/app/views/about/about.js"></script>
 
 
   <script src="/app/components/version/version.js"></script>
@@ -98,6 +100,7 @@
   <script src="/app/views/photo-album/photoAlbumServices.js"></script>
   <script src="/app/views/photo/photoServices.js"></script>
   <script src="/app/views/concerts/concertsServices.js"></script>
+  <script src="/app/views/about/aboutServices.js"></script>
 
 <!--include config files -->
 <script src="/app/components/config/constants.js"></script>

@@ -58,7 +58,7 @@
                                     <div class="col-sm-9">
                                         <div class="file_container">
                                             Upload
-                                            <input type="file" ngf-select ng-model="lyricsFileArm" name="lyricsFileArm" accept="image/*" ngf-max-size="2MB" required ngf-model-invalid="errorFile">
+                                            <input type="file" ngf-select ng-model="lyricsFileArm" name="lyricsFileArm" accept="application/json" ngf-max-size="2MB" required ngf-model-invalid="errorFile">
                                         </div>
                                         <i ng-show="myForm.fileLarge.$error.maxSize">File too large {{errorFile.size / 1000000|number:1}}MB: max 2M</i>
                                         <!--<img ng-show="myForm.fileLarge.$valid" ngf-thumbnail="lyricsFileArm" class="thumb">-->
@@ -76,7 +76,7 @@
                                     <div class="col-sm-9">
                                         <div class="file_container">
                                             Upload
-                                            <input type="file" ngf-select ng-model="lyricsFileEng" name="lyricsFileEng" accept="image/*" ngf-max-size="2MB" required ngf-model-invalid="errorFile">
+                                            <input type="file" ngf-select ng-model="lyricsFileEng" name="lyricsFileEng" accept="application/json" ngf-max-size="2MB" required ngf-model-invalid="errorFile">
                                         </div>
                                         <i ng-show="myForm.fileSmall.$error.maxSize">File too large
                                             {{errorFile.size / 1000000|number:1}}MB: max 2M</i>

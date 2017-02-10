@@ -55,6 +55,8 @@ Route::group(['middleware' => 'auth'], function()
     Route::post('/photo/{id}', 'WEB\PhotoController@Update');
     Route::delete('/photo/{id}', 'WEB\PhotoController@Delete');
 
+    Route::post('/about', 'API\AboutController@edit');
+
 });
 
 /*

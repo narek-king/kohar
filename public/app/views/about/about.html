@@ -1,0 +1,54 @@
+<div class="about">
+    <div>
+        <img ng-src="/images/about.png" width="500">
+    </div>
+    <form class="form-horizontal" >
+        <fieldset>
+
+            <!-- Form Name -->
+            <legend>About</legend>
+
+           <!-- Textarea -->
+            <div class="form-group">
+                <label class="col-md-1 control-label" for="text">About Text</label>
+                <div class="col-md-8">
+                    <textarea class="form-control" id="text" ng-model="text" name="text" rows="20" cols="500"></textarea>
+                </div>
+            </div>
+
+            <!-- Button -->
+            <div class="form-group">
+                <label class="col-md-1 control-label" for="submit">Save</label>
+                <div class="col-md-4">
+                    <button id="submit" name="submit" ng-click="submitForm(text)" class="btn btn-success">Submit</button>
+                </div>
+            </div>
+
+        </fieldset>
+    </form>
+
+    <form name="myForm">
+        <fieldset>
+            <legend>Change Image (file format PNG only)</legend>
+            Photo:
+            <input type="file" ngf-select ng-model="picFile" name="file"
+                   accept="image/png" ngf-max-size="2MB"
+                   ngf-model-invalid="errorFile">
+
+            <i ng-show="myForm.file.$error.maxSize">File too large
+                {{errorFile.size / 1000000|number:1}}MB: max 2M</i>
+            <img ng-show="myForm.file.$valid" ngf-thumbnail="picFile" class="thumb"> <button ng-click="picFile = null" ng-show="picFile">Remove</button>
+            <br>
+            <button ng-disabled="!myForm.$valid"
+                    ng-click="uploadPic(picFile)">Change</button>
+            <span class="progress" ng-show="picFile.progress >= 0">
+        <div style="width:{{picFile.progress}}%"
+             ng-bind="picFile.progress + '%'"></div>
+      </span>
+            <span ng-show="picFile.result">Upload Successful</span>
+            <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+        </fieldset>
+        <br>
+    </form>
+
+</div>
